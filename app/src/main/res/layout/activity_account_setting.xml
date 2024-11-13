@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountSetting">
+
+    <ImageView
+        android:id="@+id/tvlogo"
+        android:layout_width="410dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/applogo" />
+
+    <Button
+        android:id="@+id/ProfileInformationbutton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="92dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Profile Information"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/ChangeEmailbutton"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/ChangeEmailbutton"
+        app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
+
+    <Button
+        android:id="@+id/ChangeEmailbutton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Change Email"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/Changepassbutton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Changepassbutton"
+        app:layout_constraintTop_toBottomOf="@+id/ProfileInformationbutton" />
+
+    <Button
+        android:id="@+id/Changepassbutton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Change Password"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/backk2button"
+        app:layout_constraintStart_toStartOf="@+id/backk2button"
+        app:layout_constraintTop_toBottomOf="@+id/ChangeEmailbutton" />
+
+    <Button
+        android:id="@+id/backk2button"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Back"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Changepassbutton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

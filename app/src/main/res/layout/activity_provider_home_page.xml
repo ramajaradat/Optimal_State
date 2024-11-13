@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    tools:context=".UserHomePage">
+
+    <Button
+        android:id="@+id/providerremoveClientButton"
+        android:layout_width="329dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Remove Client"
+        android:textColor="#070707"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/providerViewclientButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/providerViewclientButton"
+        app:layout_constraintTop_toBottomOf="@+id/provideraddClientButton" />
+
+    <Button
+        android:id="@+id/providerViewclientButton"
+        android:layout_width="329dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#EBC76F"
+        android:text="View Client"
+        android:textColor="#070707"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/providersettingsButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/providersettingsButton"
+        app:layout_constraintTop_toBottomOf="@+id/providerremoveClientButton" />
+
+    <Button
+        android:id="@+id/providersettingsButton"
+        android:layout_width="329dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Settings"
+        android:textColor="#070707"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/providerViewclientButton" />
+
+    <Button
+        android:id="@+id/provideraddClientButton"
+        android:layout_width="329dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Add Client"
+        android:textColor="#070707"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/providerremoveClientButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/providerremoveClientButton"
+        app:layout_constraintTop_toBottomOf="@+id/tvwelcomeprovider" />
+
+    <TextView
+        android:id="@+id/tvwelcomeprovider"
+        android:layout_width="298dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="28dp"
+        android:text="Welcom &quot;Provider&quot;"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/provideraddClientButton"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/provideraddClientButton"
+        app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
+
+    <ImageView
+        android:id="@+id/tvlogo"
+        android:layout_width="410dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/applogo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserExercise">
+
+    <ImageView
+        android:id="@+id/tvlogo"
+        android:layout_width="410dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/ExercisetextView"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/ExercisetextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/applogo" />
+
+    <Spinner
+        android:id="@+id/otherspinner"
+        android:layout_width="348dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/spinner_exercise_border"
+        android:contextClickable="false"
+        android:foreground="@android:drawable/arrow_down_float"
+        android:foregroundGravity="center|right"
+        android:foregroundTint="#050A2E"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="@+id/foodspinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/foodspinner"
+        app:layout_constraintTop_toBottomOf="@+id/breathingspinner" />
+
+    <Spinner
+        android:id="@+id/foodspinner"
+        android:layout_width="348dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/spinner_exercise_border"
+        android:contextClickable="false"
+        android:foreground="@android:drawable/arrow_down_float"
+        android:foregroundGravity="center|right"
+        android:foregroundTint="#050A2E"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="@+id/videospinner"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/videospinner"
+        app:layout_constraintTop_toBottomOf="@+id/otherspinner" />
+
+    <Spinner
+        android:id="@+id/breathingspinner"
+        android:layout_width="348dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/spinner_exercise_border"
+        android:contextClickable="false"
+        android:foreground="@android:drawable/arrow_down_float"
+        android:foregroundGravity="center|right"
+        android:foregroundTint="#050A2E"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="@+id/otherspinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/otherspinner"
+        app:layout_constraintTop_toBottomOf="@+id/ExercisetextView" />
+
+    <Spinner
+        android:id="@+id/videospinner"
+        android:layout_width="348dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/spinner_exercise_border"
+        android:contextClickable="false"
+        android:foreground="@android:drawable/arrow_down_float"
+        android:foregroundGravity="center|right"
+        android:foregroundTint="#050A2E"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodspinner" />
+
+    <TextView
+        android:id="@+id/ExercisetextView"
+        android:layout_width="117dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:text="Exercises"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/breathingspinner"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/breathingspinner"
+        app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
+
+    <Button
+        android:id="@+id/exercisesbackbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#2E5C8C"
+        android:text="Back"
+        app:layout_constraintEnd_toEndOf="@+id/videospinner"
+        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintStart_toStartOf="@+id/videospinner"
+        app:layout_constraintTop_toBottomOf="@+id/videospinner" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    tools:context=".UserHomePage">
+
+    <Button
+        android:id="@+id/usercurentExersisesButton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#1E4F80"
+        android:text="View Current Exersises"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/userviewhistoryButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/userviewhistoryButton"
+        app:layout_constraintTop_toBottomOf="@+id/userassesmentButton" />
+
+    <Button
+        android:id="@+id/userviewhistoryButton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#1E4F80"
+        android:text="View History"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/usersettingsButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/usersettingsButton"
+        app:layout_constraintTop_toBottomOf="@+id/usercurentExersisesButton" />
+
+    <Button
+        android:id="@+id/usersettingsButton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Settings"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userviewhistoryButton" />
+
+    <Button
+        android:id="@+id/userassesmentButton"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="31dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Take Assesment"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/usercurentExersisesButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/usercurentExersisesButton"
+        app:layout_constraintTop_toBottomOf="@+id/tvwelcomeuser" />
+
+    <TextView
+        android:id="@+id/tvwelcomeuser"
+        android:layout_width="298dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="21dp"
+        android:text="Welcom &quot;User&quot;"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/userassesmentButton"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="@+id/userassesmentButton"
+        app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
+
+    <ImageView
+        android:id="@+id/tvlogo"
+        android:layout_width="410dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/applogo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
