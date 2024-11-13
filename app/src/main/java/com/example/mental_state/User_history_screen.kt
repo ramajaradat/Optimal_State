@@ -1,11 +1,13 @@
 package com.example.mental_state
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -24,26 +26,28 @@ class User_history_screen : AppCompatActivity() {
     private lateinit var monthSpin: Spinner
     private lateinit var daySpin: Spinner
     private lateinit var tableLayout: TableLayout
+    private lateinit var backhistorybutton : Button
     private val TAG = "UserHistoryScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_history_screen)
-
-        // Initialize UI components
-        initializeViews()
-        setupSpinners()
-
-        // Initial load of data
-        loadUserHistory()
-    }
-
-    private fun initializeViews() {
         yearSpin = findViewById(R.id.yearspin)
         monthSpin = findViewById(R.id.monthspin)
         daySpin = findViewById(R.id.dayspin)
         tableLayout = findViewById(R.id.tableLayout)
+        backhistorybutton = findViewById(R.id.backhistorybutton)
+        backhistorybutton.setOnClickListener {
+            val intent = Intent(this@User_history_screen, UserHomePage::class.java)
+            startActivity(intent)
+        }
+
+        setupSpinners()
+
+        loadUserHistory()
     }
+
+
 
     private fun setupSpinners() {
         val calendar = Calendar.getInstance()

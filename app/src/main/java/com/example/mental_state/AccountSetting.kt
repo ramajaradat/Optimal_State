@@ -16,7 +16,6 @@ class AccountSetting : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_account_setting)
         ProfileInformationbutton=findViewById(R.id.ProfileInformationbutton)
-        ChangeEmailbutton=findViewById(R.id.ChangeEmailbutton)
         Changepassbutton=findViewById(R.id.Changepassbutton)
         backk2button=findViewById(R.id.backk2button)
 
@@ -24,10 +23,7 @@ class AccountSetting : AppCompatActivity() {
             val intent = Intent(this@AccountSetting, ChangeInfo::class.java)
             startActivity(intent)
         }
-        ChangeEmailbutton.setOnClickListener {
-            val intent = Intent(this@AccountSetting, ChangeEmail::class.java)
-            startActivity(intent)
-        }
+
         Changepassbutton.setOnClickListener {
             val intent = Intent(this@AccountSetting, ChangePass::class.java)
             startActivity(intent)

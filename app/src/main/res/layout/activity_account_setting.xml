@@ -26,35 +26,22 @@
         android:backgroundTint="#1E4F80"
         android:text="Profile Information"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/ChangeEmailbutton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/ChangeEmailbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
-
-    <Button
-        android:id="@+id/ChangeEmailbutton"
-        android:layout_width="284dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="#1E4F80"
-        android:text="Change Email"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/Changepassbutton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Changepassbutton"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileInformationbutton" />
 
     <Button
         android:id="@+id/Changepassbutton"
         android:layout_width="284dp"
         android:layout_height="64dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="#1E4F80"
         android:text="Change Password"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/backk2button"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/backk2button"
-        app:layout_constraintTop_toBottomOf="@+id/ChangeEmailbutton" />
+        app:layout_constraintTop_toBottomOf="@+id/ProfileInformationbutton" />
 
     <Button
         android:id="@+id/backk2button"
