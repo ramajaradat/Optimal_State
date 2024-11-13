@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ class Login : AppCompatActivity() {
     private lateinit var loginbutton: Button
     private lateinit var tvusername: EditText
     private lateinit var tvpassword: EditText
+    private lateinit var forgetpass: TextView
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
 
@@ -38,6 +40,12 @@ class Login : AppCompatActivity() {
         loginbutton = findViewById(R.id.loginbutton)
         tvusername = findViewById(R.id.tvusername)
         tvpassword = findViewById(R.id.tvpassword)
+        forgetpass = findViewById(R.id.forgetpass)
+
+        forgetpass.setOnClickListener {
+            val intent = Intent(this@Login, ForgetPassword::class.java)
+            startActivity(intent)
+        }
 
         signupbutton.setOnClickListener {
             val intent = Intent(this@Login, SignUp::class.java)
