@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class SettingUserPage : AppCompatActivity() {
     private lateinit var AccountSettingButton: Button
-    private lateinit var NotiButton: Button
+    private lateinit var AppearanceButton: Button
     private lateinit var Logoutbutton: Button
     private lateinit var BackButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +17,7 @@ class SettingUserPage : AppCompatActivity() {
         setContentView(R.layout.activity_setting_user_page)
 
         AccountSettingButton = findViewById(R.id.AccountSettingButton)
-        NotiButton = findViewById(R.id.NotiButton)
+        AppearanceButton = findViewById(R.id.AppearanceButton)
         Logoutbutton = findViewById(R.id.Logoutbutton)
         BackButton = findViewById(R.id.BackButton)
 
@@ -38,8 +36,8 @@ class SettingUserPage : AppCompatActivity() {
             startActivity(intent)
         }
 
-        NotiButton.setOnClickListener {
-            val intent = Intent(this@SettingUserPage, UserHomePage::class.java)
+        AppearanceButton.setOnClickListener {
+            val intent = Intent(this@SettingUserPage, Appearance::class.java)
             startActivity(intent)
         }
 

@@ -26,18 +26,18 @@
         android:backgroundTint="#1E4F80"
         android:text="Account Setting"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/NotiButton"
+        app:layout_constraintEnd_toEndOf="@+id/AppearanceButton"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/NotiButton"
+        app:layout_constraintStart_toStartOf="@+id/AppearanceButton"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
 
     <Button
-        android:id="@+id/NotiButton"
+        android:id="@+id/AppearanceButton"
         android:layout_width="284dp"
         android:layout_height="64dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#1E4F80"
-        android:text="Notification"
+        android:text="Appearance"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/Logoutbutton"
         app:layout_constraintHorizontal_bias="0.0"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="@+id/BackButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/BackButton"
-        app:layout_constraintTop_toBottomOf="@+id/NotiButton" />
+        app:layout_constraintTop_toBottomOf="@+id/AppearanceButton" />
 
     <Button
         android:id="@+id/BackButton"

@@ -14,6 +14,12 @@
         android:theme="@style/Theme.MentalState"
         tools:targetApi="31">
         <activity
+            android:name=".ChangeTheme"
+            android:exported="false" />
+        <activity
+            android:name=".Appearance"
+            android:exported="false" />
+        <activity
             android:name=".ForgetPassword"
             android:exported="false" />
         <activity

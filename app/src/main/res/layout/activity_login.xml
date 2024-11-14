@@ -18,7 +18,8 @@
         android:inputType="text"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColorHint="#121212"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tvpassword"
         app:layout_constraintHorizontal_bias="1.0"
@@ -36,7 +37,8 @@
         android:inputType="textPassword"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColorHint="#050505"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/signupbutton"
         app:layout_constraintTop_toBottomOf="@+id/tvusername" />
@@ -73,7 +75,8 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/applogo" />
+        app:srcCompat="@drawable/applogo"
+        android:textColor="@color/textColor"/>
 
     <TextView
         android:id="@+id/forgetpass"
