@@ -29,7 +29,7 @@ class AccountSetting : AppCompatActivity() {
             startActivity(intent)
         }
         backk2button.setOnClickListener {
-            val intent = Intent(this@AccountSetting, UserHomePage::class.java)
+            val intent = Intent(this@AccountSetting, SettingUserPage::class.java)
             startActivity(intent)
         }
     }

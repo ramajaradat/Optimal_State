@@ -37,7 +37,7 @@
         android:layout_height="64dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#1E4F80"
-        android:text="Appearance"
+        android:text="Change Theme"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/Logoutbutton"
         app:layout_constraintHorizontal_bias="0.0"

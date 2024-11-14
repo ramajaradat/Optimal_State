@@ -37,7 +37,7 @@ class SettingUserPage : AppCompatActivity() {
         }
 
         AppearanceButton.setOnClickListener {
-            val intent = Intent(this@SettingUserPage, Appearance::class.java)
+            val intent = Intent(this@SettingUserPage, ChangeTheme::class.java)
             startActivity(intent)
         }
 

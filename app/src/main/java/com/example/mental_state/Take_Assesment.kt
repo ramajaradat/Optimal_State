@@ -160,6 +160,7 @@ class Take_Assesment : AppCompatActivity() {
         for (item in items) {
             val checkBox = CheckBox(this)
             checkBox.text = item // Set the text for the checkbox
+            checkBox.setTextColor(getColor(android.R.color.black))
             checkBox.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

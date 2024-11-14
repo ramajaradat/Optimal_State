@@ -1,6 +1,6 @@
 package com.example.mental_state
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +10,8 @@ class ChangeTheme : AppCompatActivity() {
 
     private lateinit var darkButton: Button
     private lateinit var lightButton: Button
-    private var sharedPreferences: SharedPreferences? = null
+    private lateinit var back4button:Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,40 +20,22 @@ class ChangeTheme : AppCompatActivity() {
         // Initialize the buttons
         darkButton = findViewById(R.id.Darkbutton)
         lightButton = findViewById(R.id.Lightbutton)
+        back4button = findViewById(R.id.back4button)
 
-        // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
-
-        // Apply saved theme mode when the activity starts
-        applySavedThemeMode()
+        back4button.setOnClickListener {
+            val intent = Intent(this, SettingUserPage::class.java)
+            startActivity(intent)
+        }
 
         // Set up listeners for each button to change the theme
         darkButton.setOnClickListener {
-            setThemeMode(AppCompatDelegate.MODE_NIGHT_YES) // Apply dark theme
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            recreate() // Recreate the activity to apply the theme immediately
         }
 
         lightButton.setOnClickListener {
-            setThemeMode(AppCompatDelegate.MODE_NIGHT_NO) // Apply light theme
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            recreate() // Recreate the activity to apply the theme immediately
         }
-    }
-
-    // Function to set the theme mode
-    private fun setThemeMode(mode: Int) {
-        AppCompatDelegate.setDefaultNightMode(mode) // Change theme mode globally
-        saveThemeMode(mode) // Save the selected theme mode
-        recreate() // Recreate the activity to apply the theme immediately
-    }
-
-    // Function to save the selected theme mode to SharedPreferences
-    private fun saveThemeMode(mode: Int) {
-        sharedPreferences?.edit()?.putInt("theme_mode", mode)?.apply()
-    }
-
-    // Function to apply the saved theme mode when the app starts
-    private fun applySavedThemeMode() {
-        // Get the saved theme mode, default to follow system settings if none found
-        val savedMode = sharedPreferences?.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        AppCompatDelegate.setDefaultNightMode(savedMode)
     }
 }

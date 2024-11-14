@@ -14,7 +14,6 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mental_state.Model.UserHistory
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Calendar
@@ -26,8 +25,9 @@ class User_history_screen : AppCompatActivity() {
     private lateinit var monthSpin: Spinner
     private lateinit var daySpin: Spinner
     private lateinit var tableLayout: TableLayout
-    private lateinit var backhistorybutton : Button
+    private lateinit var backhistbutton: Button
     private val TAG = "UserHistoryScreen"
+    private var isFirstLoad = true // Flag to track first load of data
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +36,18 @@ class User_history_screen : AppCompatActivity() {
         monthSpin = findViewById(R.id.monthspin)
         daySpin = findViewById(R.id.dayspin)
         tableLayout = findViewById(R.id.tableLayout)
-        backhistorybutton = findViewById(R.id.backhistorybutton)
-        backhistorybutton.setOnClickListener {
-            val intent = Intent(this@User_history_screen, UserHomePage::class.java)
+        backhistbutton = findViewById(R.id.backhistbutton)
+
+        backhistbutton.setOnClickListener {
+            val intent = Intent(this, UserHomePage::class.java)
             startActivity(intent)
         }
 
         setupSpinners()
 
-        loadUserHistory()
+        // Load user history once when the activity is first created
+        loadUserHistory(isFirstLoad = true)
+
     }
 
 
@@ -67,11 +70,13 @@ class User_history_screen : AppCompatActivity() {
         val days = (1..31).map { it.toString() }
         setupSpinner(daySpin, days, thisDay.toString())
 
-        // Add listeners
+        // Add listeners to spinners
         val spinnerListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                loadUserHistory()
+                // Only reload data if a selection has changed
+                loadUserHistory(isFirstLoad = false)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
@@ -88,7 +93,12 @@ class User_history_screen : AppCompatActivity() {
         }
     }
 
-    private fun loadUserHistory() {
+    private fun loadUserHistory(isFirstLoad: Boolean) {
+        // Prevent reloading data on spinner selection if it's the first load
+        if (!isFirstLoad) {
+            return
+        }
+
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null) {
             Log.e(TAG, "No user logged in")
@@ -184,7 +194,7 @@ class User_history_screen : AppCompatActivity() {
 
     private fun addErrorRow(message: String) {
         Log.e(TAG, "Error: $message")
-        addMessageRow(message, true)
+        addMessageRow(message, isError = true)
     }
 
     private fun addMessageRow(message: String, isError: Boolean = false) {

@@ -1,0 +1,4 @@
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="logoTextColor">#FFFFFFFF</color> <!-- White for Dark Mode -->
+</resources>

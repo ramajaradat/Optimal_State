@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center"
     tools:context=".User_history_screen">
 
   <!-- ImageView for App Logo -->
@@ -26,7 +26,7 @@
       android:layout_height="54dp"
       android:layout_marginTop="64dp"
       android:layout_marginEnd="12dp"
-      android:background="@drawable/spinner_exercise_border"
+      android:background="@drawable/spinner_border"
       android:foreground="@android:drawable/arrow_down_float"
       android:foregroundGravity="center|right"
       android:foregroundTint="#191E6F"
@@ -40,7 +40,7 @@
       android:layout_height="54dp"
       android:layout_marginTop="64dp"
       android:layout_marginEnd="8dp"
-      android:background="@drawable/spinner_exercise_border"
+      android:background="@drawable/spinner_border"
       android:foreground="@android:drawable/arrow_down_float"
       android:foregroundGravity="center|right"
       android:foregroundTint="#191E6F"
@@ -55,7 +55,7 @@
       android:layout_marginStart="257dp"
       android:layout_marginTop="64dp"
       android:layout_marginEnd="26dp"
-      android:background="@drawable/spinner_exercise_border"
+      android:background="@drawable/spinner_border"
       android:foreground="@android:drawable/arrow_down_float"
       android:foregroundGravity="center|right"
       android:foregroundTint="#191E6F"
@@ -108,8 +108,6 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="Check Tim"
-            android:textColor="#000000"
-            android:textColorHighlight="#000000"
             android:textStyle="bold" />
 
         <TextView
@@ -119,27 +117,17 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="Status"
-            android:textColor="#000000"
-            android:textColorHighlight="#000000"
             android:textStyle="bold" />
       </TableRow>
 
     </TableLayout>
 
+    <Button
+        android:id="@+id/backhistbutton"
+        android:layout_width="377dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3543B1"
+        android:text="Back" />
   </LinearLayout>
-
-  <Button
-      android:id="@+id/backhistorybutton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="254dp"
-      android:layout_marginBottom="16dp"
-      android:backgroundTint="#1A66A2"
-      android:text="Back"
-      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

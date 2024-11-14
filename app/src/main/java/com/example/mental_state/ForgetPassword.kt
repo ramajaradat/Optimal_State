@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ForgetPassword : AppCompatActivity() {
     private lateinit var emailtorestpass:EditText
     private lateinit var restpassbutton:Button
+    private lateinit var BackrestButton:Button
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +22,13 @@ class ForgetPassword : AppCompatActivity() {
 
         emailtorestpass=findViewById(R.id.emailtorestpass)
         restpassbutton=findViewById(R.id.restpassbutton)
+        BackrestButton=findViewById(R.id.BackrestButton)
         firebaseAuth = FirebaseAuth.getInstance()
 
+        BackrestButton.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
 
         // Set button click listener
         restpassbutton.setOnClickListener {
