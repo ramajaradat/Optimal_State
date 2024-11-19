@@ -58,7 +58,7 @@
         android:background="@drawable/edit_text_rounded_corner"
         android:backgroundTint="#FFFFFF"
         android:elevation="5dp"
-        android:hint="FirstName"
+        android:hint="User E-mail"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:paddingStart="16dp"
