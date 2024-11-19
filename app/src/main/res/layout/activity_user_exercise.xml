@@ -104,6 +104,7 @@
         android:layout_marginTop="12dp"
         android:backgroundTint="#2E5C8C"
         android:text="Back"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/videospinner"
         app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toStartOf="@+id/videospinner"

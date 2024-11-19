@@ -10,4 +10,13 @@ class UserHistory(
 ) {
 
     constructor() : this("", "", 0, 0, 0, "")
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is UserHistory) return false
+        return email == other.email && time == other.time && status == other.status
+    }
+
+    override fun hashCode(): Int {
+        return listOf(email, time, status).hashCode()
+    }
 }

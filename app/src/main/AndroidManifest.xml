@@ -14,9 +14,29 @@
         android:theme="@style/Theme.MentalState"
         tools:targetApi="31">
         <activity
+            android:name=".ProChangeTheme"
+            android:exported="false" />
+        <activity
+            android:name=".prochangepass"
+            android:exported="false" />
+        <activity
+            android:name=".prochangeinfo"
+            android:exported="false" />
+        <activity
+            android:name=".proaccountsetting"
+            android:exported="false" />
+        <activity
+            android:name=".ProviderSettings"
+            android:exported="false" />
+        <activity
+            android:name=".currentclients"
+            android:exported="false" />
+        <activity
+            android:name=".RemoveClients"
+            android:exported="false" />
+        <activity
             android:name=".ChangeTheme"
             android:exported="false" />
-
         <activity
             android:name=".ForgetPassword"
             android:exported="false" />

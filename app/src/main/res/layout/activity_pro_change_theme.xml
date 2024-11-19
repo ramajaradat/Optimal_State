@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangeTheme">
+    tools:context=".ProChangeTheme">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -23,9 +23,10 @@
         android:layout_width="225dp"
         android:layout_height="64dp"
         android:layout_marginTop="124dp"
-        android:backgroundTint="#1E4F80"
+        android:backgroundTint="#EBC76F"
         android:text="Dark Theme"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
@@ -35,9 +36,10 @@
         android:layout_width="225dp"
         android:layout_height="64dp"
         android:layout_marginTop="59dp"
-        android:backgroundTint="#1E4F80"
+        android:backgroundTint="#EBC76F"
         android:text="Light Theme"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="@+id/Darkbutton"
         app:layout_constraintStart_toStartOf="@+id/Darkbutton"
         app:layout_constraintTop_toBottomOf="@+id/Darkbutton" />
@@ -47,9 +49,10 @@
         android:layout_width="225dp"
         android:layout_height="64dp"
         android:layout_marginTop="59dp"
-        android:backgroundTint="#1E4F80"
+        android:backgroundTint="#EBC76F"
         android:text="Back"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Lightbutton" />

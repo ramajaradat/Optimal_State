@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangePass">
+    tools:context=".prochangepass">
 
     <ImageView
         android:id="@+id/imageView6"
@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/userlogo" />
+        app:srcCompat="@drawable/providerlogo" />
 
     <TextView
         android:id="@+id/tvEmailtext"
@@ -92,13 +92,14 @@
 
     <Button
         android:id="@+id/pass_edit_button"
-        android:layout_width="256dp"
-        android:layout_height="52dp"
+        android:layout_width="300dp"
+        android:layout_height="53dp"
         android:layout_marginTop="24dp"
-        android:backgroundTint="#303F9F"
+        android:backgroundTint="#EBC76F"
         android:text="Set Update"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/pass_cancle_button"
         app:layout_constraintHorizontal_bias="0.0"
@@ -107,17 +108,18 @@
 
     <Button
         android:id="@+id/pass_cancle_button"
-        android:layout_width="256dp"
+        android:layout_width="300dp"
         android:layout_height="52dp"
         android:layout_marginTop="24dp"
-        android:backgroundTint="#303F9F"
+        android:backgroundTint="#EBC76F"
         android:text="Cancle"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.419"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass_edit_button" />
+        app:layout_constraintTop_toBottomOf="@+id/pass_edit_button"
+        android:textColorHint="#000000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

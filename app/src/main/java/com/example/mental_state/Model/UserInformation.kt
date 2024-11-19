@@ -10,6 +10,7 @@ data class UserInformation(
 )
 {
     constructor() : this("", "", "", "", "", "")
+
 }
 
 

@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="@+id/firstnameedite"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="@+id/firstnameedite"
-        app:srcCompat="@drawable/userlogo" />
+        app:srcCompat="@drawable/providerlogo" />
 
     <EditText
         android:id="@+id/firstnameedite"
@@ -40,8 +40,8 @@
         android:hint="FirstName"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="#101010"
-        android:textColorHint="#101010"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="@+id/secondnameedit"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="@+id/secondnameedit"
@@ -58,8 +58,8 @@
         android:hint="Second Name"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="#101010"
-        android:textColorHint="#101010"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="@+id/dateedit"
         app:layout_constraintStart_toStartOf="@+id/dateedit"
         app:layout_constraintTop_toBottomOf="@+id/firstnameedite" />
@@ -75,21 +75,21 @@
         android:hint="Date"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="#101010"
-        android:textColorHint="#101010"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondnameedit" />
 
     <Button
         android:id="@+id/setchangebutton"
-        android:layout_width="256dp"
-        android:layout_height="52dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_marginTop="60dp"
-        android:backgroundTint="#303F9F"
+        android:backgroundTint="#EBC76F"
         android:text="Update Profile"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -98,13 +98,13 @@
 
     <Button
         android:id="@+id/canclechangebutton"
-        android:layout_width="256dp"
-        android:layout_height="52dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#303F9F"
+        android:backgroundTint="#EBC76F"
         android:text="Cancle"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

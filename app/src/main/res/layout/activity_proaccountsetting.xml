@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountSetting">
+    tools:context=".proaccountsetting">
 
     <ImageView
         android:id="@+id/tvlogo"
@@ -20,12 +20,12 @@
 
     <Button
         android:id="@+id/ProfileInformationbutton"
-        android:layout_width="284dp"
-        android:layout_height="64dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_marginTop="92dp"
-        android:backgroundTint="#1E4F80"
+        android:backgroundTint="#EBC76F"
         android:text="Profile Information"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,31 +33,28 @@
 
     <Button
         android:id="@+id/Changepassbutton"
-        android:layout_width="284dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="36dp"
-        android:backgroundTint="#1E4F80"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#EBC76F"
         android:text="Change Password"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/backk2button"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/backk2button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileInformationbutton" />
 
     <Button
         android:id="@+id/backk2button"
-        android:layout_width="284dp"
-        android:layout_height="64dp"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
         android:layout_marginTop="30dp"
-        android:backgroundTint="#1E4F80"
+        android:backgroundTint="#EBC76F"
         android:text="Back"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Changepassbutton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
