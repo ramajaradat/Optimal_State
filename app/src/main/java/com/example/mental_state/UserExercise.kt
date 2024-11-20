@@ -1,11 +1,15 @@
 package com.example.mental_state
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -157,24 +161,84 @@ class UserExercise : AppCompatActivity() {
         breathingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         breathingspinner.adapter = breathingAdapter
         breathingspinner.setSelection(0)  // Set initial value as first item
+        // Set the initial value displayed in white
+        breathingspinner.setSelection(0)
+        breathingspinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0) { // Initial value
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        })
 
         // Adapter for Foods Recommended Spinner
         val foodAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialFoodValue) + foods)
         foodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         foodspinner.adapter = foodAdapter
         foodspinner.setSelection(0)  // Set initial value as first item
+        // Set the initial value displayed in white
+        foodspinner.setSelection(0)
+        foodspinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0) { // Initial value
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        })
 
         // Adapter for Other Exercise Spinner
         val otherAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialOtherValue) + otherExercises)
         otherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         otherspinner.adapter = otherAdapter
         otherspinner.setSelection(0)  // Set initial value as first item
+        // Set the initial value displayed in white
+        otherspinner.setSelection(0)
+        otherspinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0) { // Initial value
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        })
 
         // Adapter for Recommended Video Spinner
         val videoAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialVideoValue) + recommendedVideos)
         videoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         videospinner.adapter = videoAdapter
-        videospinner.setSelection(0)  // Set initial value as first item
+        videospinner.setSelection(0)
+        // Set the initial value displayed in white
+        videospinner.setSelection(0)
+        videospinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0) { // Initial value
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        })// Set initial value as first item
     }
 
 
