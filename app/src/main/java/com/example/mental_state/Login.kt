@@ -1,6 +1,7 @@
 package com.example.mental_state
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -89,11 +90,13 @@ class Login : AppCompatActivity() {
         val userRef = firebaseDatabase.getReference("users").child(user.uid)
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            @SuppressLint("ShowToast")
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userInformation = snapshot.getValue(UserInformation::class.java)
-                if (userInformation != null) {
-                    val name: String = "${userInformation.firstName} ${userInformation.lastName}"
-                    val usertype=userInformation.isprovider
+                val usertype=userInformation?.isprovider
+
+                    val name: String = "${userInformation?.firstName} ${userInformation?.lastName}"
+
                     val intent = if (usertype=="yes") {
                         Intent(this@Login, ProviderHomePage::class.java)
                     } else {
@@ -106,10 +109,7 @@ class Login : AppCompatActivity() {
                     finish()
 
                     Toast.makeText(this@Login, "Login Successful.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@Login, "User information not found.", Toast.LENGTH_SHORT)
-                        .show()
-                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

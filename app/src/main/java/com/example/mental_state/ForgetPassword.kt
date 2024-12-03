@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener
 
 class ForgetPassword : AppCompatActivity() {
     private lateinit var emailtorestpass:EditText
+    private lateinit var editTextTextPassword:EditText
     private lateinit var restpassbutton:Button
     private lateinit var BackrestButton:Button
     private lateinit var firebaseAuth: FirebaseAuth
@@ -25,6 +26,7 @@ class ForgetPassword : AppCompatActivity() {
         setContentView(R.layout.activity_forget_password)
 
         emailtorestpass=findViewById(R.id.emailtorestpass)
+        editTextTextPassword=findViewById(R.id.editTextTextPassword)
         restpassbutton=findViewById(R.id.restpassbutton)
         BackrestButton=findViewById(R.id.BackrestButton)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -34,27 +36,28 @@ class ForgetPassword : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Set button click listener
         restpassbutton.setOnClickListener {
             val email = emailtorestpass.text.toString().trim()
 
             if (email.isEmpty()) {
                 emailtorestpass.error = "Please enter your email"
                 emailtorestpass.requestFocus()
+                return@setOnClickListener
             }
-            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 emailtorestpass.error = "Please enter a valid email address"
                 emailtorestpass.requestFocus()
                 return@setOnClickListener
             }
-            else {
-                checkEmailExistsInDatabase(email) { exists ->
-                    if (exists) {
-                        sendPasswordResetEmail(email)
-                    } else {
-                        emailtorestpass.error = "Email not found in the database"
-                        emailtorestpass.requestFocus()
-                    }
+
+            checkEmailExistsInDatabase(email) { exists ->
+                if (exists) {
+                    sendPasswordResetEmail(email)
+                    promptForNewPassword(email)
+                } else {
+                    emailtorestpass.error = "Email not found in the database"
+                    emailtorestpass.requestFocus()
                 }
             }
         }
@@ -71,13 +74,52 @@ class ForgetPassword : AppCompatActivity() {
             }
     }
 
-    private fun checkEmailExistsInDatabase(email: String, callback: (Boolean) -> Unit) {
-        val databaseReference = FirebaseDatabase.getInstance().getReference("UserInformation")
+    private fun promptForNewPassword(email: String) {
+        val newPassword = editTextTextPassword.text.toString().trim()
+
+        // Update the new password in Firebase Authentication
+        firebaseAuth.signInWithEmailAndPassword(email, newPassword)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    updatePasswordInDatabase(email, newPassword)
+                } else {
+                    Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun updatePasswordInDatabase(email: String, newPassword: String) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("users")
 
         databaseReference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                // If snapshot exists, the email exists in the database
+                if (snapshot.exists()) {
+                    for (child in snapshot.children) {
+                        child.ref.child("password").setValue(newPassword)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Toast.makeText(this@ForgetPassword, "Password updated in database", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(this@ForgetPassword, "Failed to update password: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@ForgetPassword, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun checkEmailExistsInDatabase(email: String, callback: (Boolean) -> Unit) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("users")
+
+        databaseReference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
                 callback(snapshot.exists())
             }
 
@@ -87,5 +129,4 @@ class ForgetPassword : AppCompatActivity() {
             }
         })
     }
-
 }
