@@ -9,7 +9,7 @@
     android:paddingTop="10dp"
     android:paddingRight="10dp"
     android:paddingBottom="10dp"
-    tools:context=".UserHomePage">
+    tools:context=".ProviderHomePage">
 
     <Button
         android:id="@+id/providerremoveClientButton"
@@ -72,7 +72,7 @@
         android:layout_width="298dp"
         android:layout_height="71dp"
         android:layout_marginTop="28dp"
-        android:text="Welcom &quot;Provider&quot;"
+        android:text="Welcome &quot;Provider&quot;"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="34sp"

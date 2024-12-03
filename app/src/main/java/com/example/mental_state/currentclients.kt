@@ -36,6 +36,7 @@ class currentclients : AppCompatActivity() {
         clientsTableLayout = findViewById(R.id.clientsTableLayout)
         backButton = findViewById(R.id.btnBack)
 
+        // Back button functionality
         backButton.setOnClickListener {
             val intent = Intent(this, ProviderHomePage::class.java)
             startActivity(intent)
@@ -51,14 +52,16 @@ class currentclients : AppCompatActivity() {
 
         userHistoryRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    clientsTableLayout.removeAllViews()
-                    addTableHeader()
+                // Clear table and add header
+                clientsTableLayout.removeAllViews()
+                addTableHeader()
 
+                if (snapshot.exists()) {
+                    var hasData = false
+
+                    // Loop through users' history data
                     for (userHistorySnapshot in snapshot.children) {
-                        // Loop through each user's history
                         for (historySnapshot in userHistorySnapshot.children) {
-                            // Retrieve the fields from Firebase
                             val email = historySnapshot.child("email").getValue(String::class.java) ?: ""
                             val day = historySnapshot.child("day").getValue(Int::class.java) ?: 0
                             val month = historySnapshot.child("month").getValue(Int::class.java) ?: 0
@@ -66,18 +69,20 @@ class currentclients : AppCompatActivity() {
                             val time = historySnapshot.child("time").getValue(String::class.java) ?: ""
                             val status = historySnapshot.child("status").getValue(String::class.java) ?: ""
 
-                            // Format date
-                            val date = "$day/$month/$year"
-
-                            // Add client data to the table
-                            addClientRow(email, date, time, status)
-
-                            // Log the retrieved data for debugging
-                            Log.d("currentclients", "Email: $email, Date: $date, Time: $time, Status: $status")
+                            if (email.isNotEmpty()) {
+                                val date = "$day/$month/$year"
+                                addClientRow(email, date, time, status)
+                                hasData = true
+                            }
                         }
                     }
+
+                    // Show placeholder if no valid data exists
+                    if (!hasData) {
+                        showPlaceholderRow()
+                    }
                 } else {
-                    Toast.makeText(this@currentclients, "No client history found", Toast.LENGTH_SHORT).show()
+                    showPlaceholderRow()
                 }
             }
 
@@ -94,63 +99,74 @@ class currentclients : AppCompatActivity() {
         headers.forEach { headerText ->
             val header = TextView(this).apply {
                 text = headerText
-                textSize = 15f
+                textSize = 16f
                 setPadding(10, 10, 10, 10)
-                setTextColor(Color.BLACK)
+                setTextColor(Color.WHITE)
+                setBackgroundColor(Color.parseColor("#FFB74D")) // Purple header background
                 setTypeface(null, android.graphics.Typeface.BOLD)
-                setTextColor(0xFF000000.toInt())
+                // Ensures that columns are wide enough to display text
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
             }
             headerRow.addView(header)
         }
 
+        // Add header to the table layout
         clientsTableLayout.addView(headerRow)
     }
 
     private fun addClientRow(email: String, date: String, time: String, status: String) {
         val tableRow = TableRow(this).apply {
-            setPadding(8, 8, 8, 8)
+            setPadding(4, 4, 4, 4)
         }
 
-        // Email Column
-        val emailTextView = TextView(this).apply {
-            text = email
-            textSize = 15f
-            setPadding(10, 10, 10, 10)
-            setTextColor(0xFF000000.toInt())
+        val rowBackgroundColor = Color.parseColor("#F5F5F5") // Light gray background
+        tableRow.setBackgroundColor(rowBackgroundColor)
+
+        // Create TextViews for each column with dynamic width adjustment
+        val columns = listOf(email, date, time, status)
+        columns.forEach { columnText ->
+            val textView = TextView(this).apply {
+                text = columnText
+                textSize = 16f
+                setPadding(16, 16, 16, 16)
+                setTextColor(Color.BLACK)
+                // Ensures that columns have even space distribution
+                layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            tableRow.addView(textView)
         }
-
-        // Date Column
-        val dateTextView = TextView(this).apply {
-            text = date
-            textSize = 12f
-            setPadding(10, 10, 10, 10)
-            setTextColor(0xFF000000.toInt())
-        }
-
-        // Time Column
-        val timeTextView = TextView(this).apply {
-            text = time
-            textSize = 12f
-            setPadding(10, 10, 10, 10)
-            setTextColor(0xFF000000.toInt())
-        }
-
-        // Status Column
-        val statusTextView = TextView(this).apply {
-            text = status // Display status directly
-            textSize = 12f
-            setPadding(10, 10, 10, 10)
-            setTextColor(0xFF000000.toInt())
-
-        }
-
-        // Add views to the row
-        tableRow.addView(emailTextView)
-        tableRow.addView(dateTextView)
-        tableRow.addView(timeTextView)
-        tableRow.addView(statusTextView)
 
         // Add row to the table layout
         clientsTableLayout.addView(tableRow)
+
+        // Add spacing between rows
+        val spacer = TableRow(this).apply {
+            layoutParams = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                10 // Spacer height
+            )
+        }
+        clientsTableLayout.addView(spacer)
+    }
+
+    private fun showPlaceholderRow() {
+        val placeholderRow = TableRow(this)
+
+        val placeholder = TextView(this).apply {
+            text = "No client data available"
+            textSize = 16f
+            setPadding(16, 16, 16, 16)
+            setTextColor(Color.GRAY)
+            layoutParams = TableRow.LayoutParams(
+                TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            ).apply {
+                span = 4 // Span across all columns
+            }
+            gravity = android.view.Gravity.CENTER
+        }
+
+        placeholderRow.addView(placeholder)
+        clientsTableLayout.addView(placeholderRow)
     }
 }
