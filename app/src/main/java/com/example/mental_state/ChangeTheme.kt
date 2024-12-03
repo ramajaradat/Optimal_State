@@ -3,8 +3,10 @@ package com.example.mental_state
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.mentalstate.util.CustomToast
 
 class ChangeTheme : AppCompatActivity() {
 
@@ -31,11 +33,14 @@ class ChangeTheme : AppCompatActivity() {
         darkButton.setOnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             recreate() // Recreate the activity to apply the theme immediately
+            Toast.makeText(this@ChangeTheme,"Theme will change now",Toast.LENGTH_SHORT).show()
+
         }
 
         lightButton.setOnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             recreate() // Recreate the activity to apply the theme immediately
+            Toast.makeText(this@ChangeTheme,"Theme will change now",Toast.LENGTH_SHORT).show()
         }
     }
 }

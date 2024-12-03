@@ -178,6 +178,7 @@ class RemoveClients : AppCompatActivity() {
                             historySnapshot.ref.removeValue()
                         }
                         Toast.makeText(this@RemoveClients, "Client removed from UserHistory", Toast.LENGTH_SHORT).show()
+                        recreate()
                     }
 
                     override fun onCancelled(error: DatabaseError) {

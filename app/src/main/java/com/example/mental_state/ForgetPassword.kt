@@ -8,6 +8,10 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ForgetPassword : AppCompatActivity() {
     private lateinit var emailtorestpass:EditText
@@ -37,8 +41,21 @@ class ForgetPassword : AppCompatActivity() {
             if (email.isEmpty()) {
                 emailtorestpass.error = "Please enter your email"
                 emailtorestpass.requestFocus()
-            } else {
-                sendPasswordResetEmail(email)
+            }
+            else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailtorestpass.error = "Please enter a valid email address"
+                emailtorestpass.requestFocus()
+                return@setOnClickListener
+            }
+            else {
+                checkEmailExistsInDatabase(email) { exists ->
+                    if (exists) {
+                        sendPasswordResetEmail(email)
+                    } else {
+                        emailtorestpass.error = "Email not found in the database"
+                        emailtorestpass.requestFocus()
+                    }
+                }
             }
         }
     }
@@ -53,4 +70,22 @@ class ForgetPassword : AppCompatActivity() {
                 }
             }
     }
+
+    private fun checkEmailExistsInDatabase(email: String, callback: (Boolean) -> Unit) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("UserInformation")
+
+        databaseReference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // If snapshot exists, the email exists in the database
+                callback(snapshot.exists())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@ForgetPassword, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
+                callback(false)
+            }
+        })
+    }
+
 }
