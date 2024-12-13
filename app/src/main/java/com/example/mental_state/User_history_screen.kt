@@ -24,7 +24,6 @@ class User_history_screen : AppCompatActivity() {
     private lateinit var daySpinner: Spinner
     private lateinit var TableLayout: TableLayout
     private lateinit var userHistoryBackButton: Button
-    private val TAG = "UerHistoryPage"
     private var isYearSpinnerInitialized = false
     private var ismonthSpinnernerInitialized = false
     private var isDaySpinnerInitialized = false
