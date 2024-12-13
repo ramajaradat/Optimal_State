@@ -15,11 +15,12 @@ import com.google.firebase.database.ValueEventListener
 
 
 class UserHomePage : AppCompatActivity() {
-    private lateinit var userassesmentButton: Button
-    private lateinit var usercurentExersisesButton: Button
-    private lateinit var userviewhistoryButton: Button
-    private lateinit var usersettingsButton: Button
-    private lateinit var tvwelcomeuser: TextView
+    //initializeUI&Firebase
+    private lateinit var takeAssesmentButton: Button
+    private lateinit var ExersisesButton: Button
+    private lateinit var viewHistoryButton: Button
+    private lateinit var userSettingsButton: Button
+    private lateinit var userWelcomeShow: TextView
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
 
@@ -28,15 +29,20 @@ class UserHomePage : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_home_page)
 
-        userassesmentButton = findViewById(R.id.userassesmentButton)
-        usercurentExersisesButton = findViewById(R.id.usercurentExersisesButton)
-        userviewhistoryButton = findViewById(R.id.userviewhistoryButton)
-        usersettingsButton = findViewById(R.id.usersettingsButton)
-        tvwelcomeuser = findViewById(R.id.tvwelcomeuser)
+        takeAssesmentButton = findViewById(R.id.takeAssesmentButton)
+        ExersisesButton = findViewById(R.id.ExersisesButton)
+        viewHistoryButton = findViewById(R.id.viewHistoryButton)
+        userSettingsButton = findViewById(R.id.userSettingsButton)
+        userWelcomeShow = findViewById(R.id.userWelcomeShow)
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
-        // Fetch and display the user's first name
+        //Display UserName in HomePage
+        showuserName()
+        //set up buttons click
+        setupButtonClick()
+    }
+    private fun showuserName(){
         val uid = auth.currentUser?.uid
         if (uid != null) {
             val userRef = database.getReference("users").child(uid).child("firstName")
@@ -44,33 +50,32 @@ class UserHomePage : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val firstName = snapshot.getValue(String::class.java)
                     val formattedName = firstName?.replaceFirstChar { it.uppercase() } ?: ""
-                    tvwelcomeuser.text = "Welcome $formattedName"                }
+                    userWelcomeShow.text = "Welcome $formattedName"                }
 
                 override fun onCancelled(error: DatabaseError) {}
             })
         }
-
-
-
-        userassesmentButton.setOnClickListener {
+    }
+    private fun setupButtonClick(){
+        //set up Take Assessment button click
+        takeAssesmentButton.setOnClickListener {
             val intent = Intent(this@UserHomePage, Take_Assesment::class.java)
             startActivity(intent)
         }
-
-        usercurentExersisesButton.setOnClickListener {
+        //set up Exercises button click
+        ExersisesButton.setOnClickListener {
             val intent = Intent(this@UserHomePage, UserExercise::class.java)
             startActivity(intent)
         }
-        userviewhistoryButton.setOnClickListener {
+        //set up view Histor button click
+        viewHistoryButton.setOnClickListener {
             val intent = Intent(this@UserHomePage, User_history_screen::class.java)
             startActivity(intent)
         }
-        usersettingsButton.setOnClickListener {
+        //set up user Settings button click
+        userSettingsButton.setOnClickListener {
             val intent = Intent(this@UserHomePage, SettingUserPage::class.java)
             startActivity(intent)
         }
-
-
-
     }
 }

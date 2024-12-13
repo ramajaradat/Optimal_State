@@ -10,9 +10,9 @@
     tools:layout_editor_absoluteY="0dp">
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="373dp"
-        android:layout_height="171dp"
+        android:id="@+id/LogoApp2"
+        android:layout_width="347dp"
+        android:layout_height="157dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,11 +20,11 @@
         app:srcCompat="@drawable/applogo" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/txlastname"
+        android:id="@+id/lastnameinput"
         android:layout_width="148dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:hint="LastName"
@@ -34,14 +34,16 @@
         android:textColor="#000000"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LogoApp2" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/txfirstname"
+        android:id="@+id/firstnameinput"
         android:layout_width="148dp"
         android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="150dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:hint="FirstName"
@@ -50,14 +52,16 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.353"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/LogoApp2" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/birthdaydateinput"
         android:layout_width="271dp"
         android:layout_height="48dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:ems="10"
@@ -69,14 +73,28 @@
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/LogoApp2" />
+
+    <CheckBox
+        android:id="@+id/nobox"
+        android:layout_width="82dp"
+        android:layout_height="52dp"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:elevation="5dp"
+        android:padding="10dp"
+        android:text="No"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/yesbox"
+        app:layout_constraintEnd_toEndOf="@+id/birthdaydateinput"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/birthdaydateinput"
+        app:layout_constraintTop_toTopOf="@+id/yesbox" />
 
     <TextView
-        android:id="@+id/tvprovider"
-        android:layout_width="96dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
+        android:id="@+id/providershow"
+        android:layout_width="82dp"
+        android:layout_height="52dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:hint="Provider"
@@ -84,44 +102,34 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/birthdaydateinput"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/birthdaydateinput"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/yescheckbox"
-        android:layout_width="101dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="36dp"
+        android:id="@+id/yesbox"
+        android:layout_width="82dp"
+        android:layout_height="52dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:padding="10dp"
         android:text="Yes"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        app:layout_constraintStart_toEndOf="@+id/tvprovider"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
-
-    <CheckBox
-        android:id="@+id/nocheckbox"
-        android:layout_width="101dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/edit_text_rounded_corner"
-        android:elevation="5dp"
-        android:padding="10dp"
-        android:text="No"
-        android:textColor="#000000"
-        android:textColorHint="#000000"
-        app:layout_constraintStart_toEndOf="@+id/yescheckbox"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintBottom_toBottomOf="@+id/providershow"
+        app:layout_constraintEnd_toEndOf="@+id/birthdaydateinput"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/birthdaydateinput"
+        app:layout_constraintTop_toTopOf="@+id/providershow"
+        app:layout_constraintVertical_bias="0.55" />
 
     <EditText
-        android:id="@+id/txEmail"
+        android:id="@+id/Emailinput"
         android:layout_width="282dp"
         android:layout_height="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:hint="E-mail"
@@ -130,15 +138,42 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/txPassword"
-        app:layout_constraintStart_toStartOf="@+id/txPassword"
-        app:layout_constraintTop_toBottomOf="@+id/nocheckbox" />
+        app:layout_constraintEnd_toEndOf="@+id/nobox"
+        app:layout_constraintStart_toStartOf="@+id/passwordinput"
+        app:layout_constraintTop_toBottomOf="@+id/nobox" />
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="44dp"
+        android:backgroundTint="#1A66A2"
+        android:text="SignUp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/signupbackbutton"
+        app:layout_constraintTop_toBottomOf="@+id/passwordinput" />
+
+    <Button
+        android:id="@+id/signupbackbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#1A66A2"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordinput" />
 
     <EditText
-        android:id="@+id/txPassword"
+        android:id="@+id/passwordinput"
         android:layout_width="274dp"
         android:layout_height="58dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/edit_text_rounded_corner"
         android:elevation="5dp"
         android:ems="15"
@@ -149,33 +184,58 @@
         android:textColor="#000000"
         android:textColorHint="#0F0E0E"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/Emailinput" />
 
-    <Button
-        android:id="@+id/back1Button"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="23dp"
-        android:backgroundTint="#1A66A2"
-        android:text="Back"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txPassword" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03009576" />
 
-    <Button
-        android:id="@+id/signupButton"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="137dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="44dp"
-        android:backgroundTint="#1A66A2"
-        android:text="SignUp"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/back1Button"
-        app:layout_constraintTop_toBottomOf="@+id/txPassword" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="-14dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="LogoApp2,lastnameinput,firstnameinput,birthdaydateinput,nobox,providershow,yesbox,Emailinput,signinButton,signupbackbutton,passwordinput"
+        tools:ignore="UnknownId" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="2dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="nobox,yesbox,providershow,birthdaydateinput" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

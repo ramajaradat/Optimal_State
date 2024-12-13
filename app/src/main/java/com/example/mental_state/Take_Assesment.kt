@@ -19,16 +19,16 @@ import java.util.Locale
 
 class Take_Assesment : AppCompatActivity() {
 
+    //initializeUI&Firebase
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var redCard: LinearLayout
+    private lateinit var blueCard: LinearLayout
+    private lateinit var goldCard: LinearLayout
+    private lateinit var whiteCard: LinearLayout
+    private lateinit var AssesmentBackButton: Button
+    private lateinit var AssesmentsubmitButton: Button
 
-    private lateinit var redCardLayout: LinearLayout
-    private lateinit var blueCardLayout: LinearLayout
-    private lateinit var goldCardLayout: LinearLayout
-    private lateinit var whiteCardLayout: LinearLayout
-    private lateinit var backButton: Button
-    private lateinit var submitButton: Button
-
-    // Variables to store the counts of checked CheckBoxes
+    //Counts of checked CheckBoxes for each card
     private var redCheckNum = 0
     private var blueCheckNum = 0
     private var goldCheckNum = 0
@@ -39,87 +39,89 @@ class Take_Assesment : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_take_assesment)
 
-        // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
+        redCard = findViewById(R.id.redCard)
+        blueCard = findViewById(R.id.blueCard)
+        goldCard = findViewById(R.id.goldCard)
+        whiteCard = findViewById(R.id.whiteCard)
+        AssesmentBackButton = findViewById(R.id.AssesmentBackButton)
+        AssesmentsubmitButton = findViewById(R.id.AssesmentsubmitButton)
 
-        // Initialize the LinearLayouts for each card
-        redCardLayout = findViewById(R.id.redCardLayout)
-        blueCardLayout = findViewById(R.id.blueCardLayout)
-        goldCardLayout = findViewById(R.id.goldCardLayout)
-        whiteCardLayout = findViewById(R.id.whiteCardLayout)
-        backButton = findViewById(R.id.backButton)
-        submitButton = findViewById(R.id.submitButton)
-
-        // Fetch the emotional states from Firestore
+        // Get the emotional states from Dataset on Firestore
         fetchEmotionalStates()
-        backButton.setOnClickListener {
+        //set up user buttons click
+        setupButtonClick()
+    }
+
+    private fun setupButtonClick() {
+
+        AssesmentBackButton.setOnClickListener {
             val intent = Intent(this@Take_Assesment, UserHomePage::class.java)
             startActivity(intent)
         }
         // Set up the submit button click listener
-        submitButton.setOnClickListener {
-
-            // Calculate the checked counts for each card layout
-            val redCheckNum = getCheckedCount(redCardLayout)
-            val blueCheckNum = getCheckedCount(blueCardLayout)
-            val goldCheckNum = getCheckedCount(goldCardLayout)
-            val whiteCheckNum = getCheckedCount(whiteCardLayout)
-
-            // Log the counts for debugging
-            Log.d("Take_Assessment", "Red Checked Count: $redCheckNum")
-            Log.d("Take_Assessment", "Blue Checked Count: $blueCheckNum")
-            Log.d("Take_Assessment", "Gold Checked Count: $goldCheckNum")
-            Log.d("Take_Assessment", "White Checked Count: $whiteCheckNum")
-
-            // Initialize a mutable list to store statuses
-            val statuses = mutableListOf<String>()
-
-            // Check counts and add to statuses if greater than 2
-            if (redCheckNum >= 2) statuses.add("Red")
-            if (blueCheckNum >= 2) statuses.add("Blue")
-            if (goldCheckNum >= 2) statuses.add("Gold")
-            if (whiteCheckNum >= 2) statuses.add("White")
-
-            // Join the statuses into a single string
-            val status = statuses.joinToString(", ")
-
-            // Retrieve the current user’s email from Firebase Authentication
-            val userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown User"
-
-            // Get the current date and time in "9:00 PM" format
-            val calendar = Calendar.getInstance()
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-            val month = calendar.get(Calendar.MONTH) + 1  // Months are 0-based, so add 1
-            val year = calendar.get(Calendar.YEAR)
-            val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.time)
-
-            // Create a UserHistory object
-            val userHistory = UserHistory(
-                email = userEmail,
-                status = status,
-                day = day,
-                month = month,
-                year = year,
-                time = time
-            )
-
-            // Reference to the Firebase real-time database
-            val database = FirebaseDatabase.getInstance()
-            val userHistoryRef = database.getReference("UserHistory").child(FirebaseAuth.getInstance().currentUser?.uid ?: "UnknownUID")
-
-            // Push the UserHistory object to the database
-            userHistoryRef.push().setValue(userHistory)
-                .addOnSuccessListener {
-                    Log.d("Firebase", "User history successfully written!")
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Firebase", "Failed to write user history", e)
-                }
-            val intent = Intent(this@Take_Assesment, UserExercise::class.java)
-            startActivity(intent)
+        AssesmentsubmitButton.setOnClickListener {
+            setupAssesmentsubmitButton()
         }
+    }
 
+    private fun setupAssesmentsubmitButton() {
+        // Calculate the checked counts for each card layout
+        val redCheckNum = getCheckedCount(redCard)
+        val blueCheckNum = getCheckedCount(blueCard)
+        val goldCheckNum = getCheckedCount(goldCard)
+        val whiteCheckNum = getCheckedCount(whiteCard)
 
+        // Log the counts for debugging
+        Log.d("Take_Assessment", "Red Checked Count: $redCheckNum")
+        Log.d("Take_Assessment", "Blue Checked Count: $blueCheckNum")
+        Log.d("Take_Assessment", "Gold Checked Count: $goldCheckNum")
+        Log.d("Take_Assessment", "White Checked Count: $whiteCheckNum")
+
+        val statuses = mutableListOf<String>()
+
+        // Check counts for each card if check equal or more 2 the save status
+        if (redCheckNum >= 2) statuses.add("Red")
+        if (blueCheckNum >= 2) statuses.add("Blue")
+        if (goldCheckNum >= 2) statuses.add("Gold")
+        if (whiteCheckNum >= 2) statuses.add("White")
+
+        val status = statuses.joinToString(", ")
+
+        // Get  current user’s email
+        val userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown User"
+
+        // Get the current date and time
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1  // Months are 0-based, so add 1
+        val year = calendar.get(Calendar.YEAR)
+        val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.time)
+
+        // Create a UserHistory object
+        val userHistory = UserHistory(
+            email = userEmail,
+            status = status,
+            day = day,
+            month = month,
+            year = year,
+            time = time
+        )
+
+        val database = FirebaseDatabase.getInstance()
+        val userHistoryRef = database.getReference("UserHistory")
+            .child(FirebaseAuth.getInstance().currentUser?.uid ?: "UnknownUID")
+
+        // Push the UserHistory info to the database
+        userHistoryRef.push().setValue(userHistory)
+            .addOnSuccessListener {
+                Log.d("Firebase", "User history successfully written!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firebase", "Failed to write user history", e)
+            }
+        val intent = Intent(this@Take_Assesment, UserExercise::class.java)
+        startActivity(intent)
     }
 
     private fun fetchEmotionalStates() {
@@ -139,16 +141,20 @@ class Take_Assesment : AppCompatActivity() {
                     Log.d("Take_Assesment", "Gold Items: $goldItems")
                     Log.d("Take_Assesment", "White Items: $whiteItems")
 
-                    addCheckBoxes(redItems, redCardLayout)
-                    addCheckBoxes(blueItems, blueCardLayout)
-                    addCheckBoxes(goldItems, goldCardLayout)
-                    addCheckBoxes(whiteItems, whiteCardLayout)
+                    addCheckBoxes(redItems, redCard)
+                    addCheckBoxes(blueItems, blueCard)
+                    addCheckBoxes(goldItems, goldCard)
+                    addCheckBoxes(whiteItems, whiteCard)
                 } else {
                     Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error getting documents: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Error getting documents: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 

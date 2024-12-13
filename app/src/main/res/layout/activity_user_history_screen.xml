@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,51 +20,40 @@
       app:srcCompat="@drawable/applogo" />
 
   <!-- Spinner for Month -->
-  <Spinner
-      android:id="@+id/monthspin"
-      android:layout_width="112dp"
-      android:layout_height="54dp"
-      android:layout_marginTop="64dp"
-      android:layout_marginEnd="12dp"
-      android:background="@drawable/spinner_border"
-      android:foreground="@android:drawable/arrow_down_float"
-      android:foregroundGravity="center|right"
-      android:foregroundTint="#191E6F"
-      app:layout_constraintEnd_toStartOf="@+id/yearspin"
-      app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
   <!-- Spinner for Day -->
-  <Spinner
-      android:id="@+id/dayspin"
-      android:layout_width="112dp"
-      android:layout_height="54dp"
-      android:layout_marginTop="64dp"
-      android:layout_marginEnd="8dp"
-      android:background="@drawable/spinner_border"
-      android:foreground="@android:drawable/arrow_down_float"
-      android:foregroundGravity="center|right"
-      android:foregroundTint="#191E6F"
-      app:layout_constraintEnd_toStartOf="@+id/monthspin"
-      app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
   <!-- Spinner for Year -->
+
+  <!-- TextView for Title -->
+
   <Spinner
-      android:id="@+id/yearspin"
-      android:layout_width="112dp"
-      android:layout_height="54dp"
-      android:layout_marginStart="257dp"
-      android:layout_marginTop="64dp"
-      android:layout_marginEnd="26dp"
+      android:id="@+id/monthspin"
+      android:layout_width="99dp"
+      android:layout_height="51dp"
+      android:layout_marginTop="68dp"
       android:background="@drawable/spinner_border"
       android:foreground="@android:drawable/arrow_down_float"
       android:foregroundGravity="center|right"
       android:foregroundTint="#191E6F"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintHorizontal_bias="0.467"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-  <!-- TextView for Title -->
+  <Spinner
+      android:id="@+id/dayspin"
+      android:layout_width="99dp"
+      android:layout_height="51dp"
+      android:layout_marginStart="28dp"
+      android:layout_marginTop="68dp"
+      android:background="@drawable/spinner_border"
+      android:foreground="@android:drawable/arrow_down_float"
+      android:foregroundGravity="center|right"
+      android:foregroundTint="#191E6F"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
   <TextView
       android:id="@+id/historytextView"
       android:layout_width="79dp"
@@ -75,21 +63,36 @@
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
+  <Spinner
+      android:id="@+id/yearspin"
+      android:layout_width="99dp"
+      android:layout_height="51dp"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="68dp"
+      android:layout_marginEnd="26dp"
+      android:background="@drawable/spinner_border"
+      android:foreground="@android:drawable/arrow_down_float"
+      android:foregroundGravity="center|right"
+      android:foregroundTint="#191E6F"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.942"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
   <LinearLayout
       android:id="@+id/linearLayout"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="36dp"
+      android:layout_width="366dp"
+      android:layout_height="334dp"
+      android:layout_marginTop="184dp"
       android:orientation="vertical"
       android:padding="16dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/monthspin">
+      app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -127,11 +130,27 @@
 
     <Button
         android:id="@+id/backhistbutton"
-        android:layout_width="377dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#3543B1"
         android:text="Back"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="417dp" />
   </LinearLayout>
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline6"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_begin="20dp" />
+
+  <androidx.constraintlayout.widget.Barrier
+      android:id="@+id/barrier2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="left"
+      app:constraint_referenced_ids="monthspin,yearspin,dayspin,linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

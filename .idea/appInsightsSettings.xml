@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.mental_state" />
-                  <option name="mobileSdkAppId" value="1:576327940493:android:37bc16150c900ea44d25c4" />
-                  <option name="projectId" value="mental-state-data" />
-                  <option name="projectNumber" value="576327940493" />
+                  <option name="mobileSdkAppId" value="1:229735309286:android:d1777fa8cf9e8958794027" />
+                  <option name="projectId" value="mental-state-data-5deca" />
+                  <option name="projectNumber" value="229735309286" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

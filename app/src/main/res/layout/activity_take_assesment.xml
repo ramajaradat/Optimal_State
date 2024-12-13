@@ -39,7 +39,7 @@
                 android:elevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/redCardLayout"
+                    android:id="@+id/redCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -57,7 +57,7 @@
                 android:elevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/blueCardLayout"
+                    android:id="@+id/blueCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -75,7 +75,7 @@
                 android:elevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/goldCardLayout"
+                    android:id="@+id/goldCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -93,7 +93,7 @@
                 android:elevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/whiteCardLayout"
+                    android:id="@+id/whiteCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -110,7 +110,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/backButton"
+                android:id="@+id/AssesmentBackButton"
                 android:layout_width="131dp"
                 android:layout_height="52dp"
                 android:layout_marginEnd="16dp"
@@ -121,7 +121,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/submitButton"
+                android:id="@+id/AssesmentsubmitButton"
                 android:layout_width="131dp"
                 android:layout_height="52dp"
                 android:backgroundTint="#1A66A2"

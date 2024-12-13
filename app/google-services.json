@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "576327940493",
-    "project_id": "mental-state-data",
-    "storage_bucket": "mental-state-data.firebasestorage.app"
+    "project_number": "229735309286",
+    "project_id": "mental-state-data-5deca",
+    "storage_bucket": "mental-state-data-5deca.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:576327940493:android:37bc16150c900ea44d25c4",
+        "mobilesdk_app_id": "1:229735309286:android:d1777fa8cf9e8958794027",
         "android_client_info": {
           "package_name": "com.example.mental_state"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBEjKRmfeY_kb2xujhjG-u5b6FFtnuC5jQ"
+          "current_key": "AIzaSyCKaBFlOd9JUg7zYoLWnzA5j6_3t5ezLkM"
         }
       ],
       "services": {

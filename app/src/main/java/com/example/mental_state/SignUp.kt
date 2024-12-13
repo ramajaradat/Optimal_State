@@ -18,118 +18,145 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class SignUp : AppCompatActivity() {
-    private lateinit var txfirstname: EditText
-    private lateinit var txlastname: EditText
-    private lateinit var editTextDate: EditText
-    private lateinit var yescheckbox: CheckBox
-    private lateinit var nocheckbox: CheckBox
-    private lateinit var txEmail: EditText
-    private lateinit var txPassword: EditText
+    //initializeUI&Firebase
+
+    private lateinit var firstnameinput: EditText
+    private lateinit var lastnameinput: EditText
+    private lateinit var birthdaydateinput: EditText
+    private lateinit var yesbox: CheckBox
+    private lateinit var nobox: CheckBox
+    private lateinit var Emailinput: EditText
+    private lateinit var passwordinput: EditText
     private lateinit var signinButton: Button
-    private lateinit var back1Button: Button
-    private lateinit var tvprovider: TextView
-    private lateinit var mFirebaseAuth: FirebaseAuth
+    private lateinit var signupbackbutton: Button
+    private lateinit var providershow: TextView
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_sign_up)
-        txfirstname = findViewById(R.id.txfirstname)
-        txlastname = findViewById(R.id.txlastname)
-        editTextDate = findViewById(R.id.editTextDate)
-        yescheckbox = findViewById(R.id.yescheckbox)
-        nocheckbox = findViewById(R.id.nocheckbox)
-        txEmail = findViewById(R.id.txEmail)
-        txPassword = findViewById(R.id.txPassword)
+        firstnameinput = findViewById(R.id.firstnameinput)
+        lastnameinput = findViewById(R.id.lastnameinput)
+        birthdaydateinput = findViewById(R.id.birthdaydateinput)
+        yesbox = findViewById(R.id.yesbox)
+        nobox = findViewById(R.id.nobox)
+        Emailinput = findViewById(R.id.Emailinput)
+        passwordinput = findViewById(R.id.passwordinput)
         signinButton = findViewById(R.id.signupButton)
-        back1Button = findViewById(R.id.back1Button)
-        tvprovider = findViewById(R.id.tvprovider)
+        signupbackbutton = findViewById(R.id.signupbackbutton)
+        providershow = findViewById(R.id.providershow)
 
-        mFirebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
+        //set up user buttons click
+        setupButtonClick()
+    }
 
-        yescheckbox.setOnCheckedChangeListener { _, isChecked ->
+    private fun setupButtonClick() {
+        //to allow user just check yes or no
+        yesbox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                nocheckbox.isChecked = false // Uncheck "No" if "Yes" is checked
+                nobox.isChecked = false // Uncheck "No" if "Yes" is checked
             }
         }
 
-        nocheckbox.setOnCheckedChangeListener { _, isChecked ->
+        nobox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                yescheckbox.isChecked = false // Uncheck "Yes" if "No" is checked
+                yesbox.isChecked = false // Uncheck "Yes" if "No" is checked
             }
         }
-        back1Button.setOnClickListener {
+        //set up signup back buttons click
+        signupbackbutton.setOnClickListener {
             val intent = Intent(this@SignUp, Login::class.java)
             startActivity(intent)
         }
-
+        //set up signup buttons click
         signinButton.setOnClickListener {
-            val firstname = txfirstname.text.toString().trim()
-            val lastname = txlastname.text.toString().trim()
-            val dob = editTextDate.text.toString().trim()
-            val email = txEmail.text.toString().trim()
-            val pass = txPassword.text.toString().trim()
-            val providerStatus = if (yescheckbox.isChecked) "yes" else "no"
+
+            val firstname = firstnameinput.text.toString().trim()
+            val lastname = lastnameinput.text.toString().trim()
+            val dob = birthdaydateinput.text.toString().trim()
+            val email = Emailinput.text.toString().trim()
+            val pass = passwordinput.text.toString().trim()
+            val providerStatus = if (yesbox.isChecked) "yes" else "no"
 
             // Validate names contain only alphabetic characters
             val nameRegex = Regex("^[a-zA-Z]+$")
             if (!nameRegex.matches(firstname)) {
-                txfirstname.error = "Firstname should contain only letters"
-                txfirstname.requestFocus()
+                firstnameinput.error = "Firstname should contain only letters"
+                firstnameinput.requestFocus()
                 return@setOnClickListener
             }
 
             if (!nameRegex.matches(lastname)) {
-                txlastname.error = "Lastname should contain only letters"
-                txlastname.requestFocus()
+                lastnameinput.error = "Lastname should contain only letters"
+                lastnameinput.requestFocus()
                 return@setOnClickListener
             }
 
-            // Validate date of birth format (dd/MM/yyyy or d/M/yyyy)
+            // format for date of birth  (dd/MM/yyyy or d/M/yyyy)
             val dobRegex = Regex("^(\\d{1,2})/(\\d{1,2})/(\\d{4})$")
             if (!dobRegex.matches(dob)) {
-                editTextDate.error = "Date of Birth should be in dd/MM/yyyy or d/M/yyyy format"
-                editTextDate.requestFocus()
+                birthdaydateinput.error = "Date of Birth should be in dd/MM/yyyy or d/M/yyyy format"
+                birthdaydateinput.requestFocus()
                 return@setOnClickListener
             }
 
-            // Validate email format
+            // Validate email
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                txEmail.error = "Please enter a valid email address"
-                txEmail.requestFocus()
+                Emailinput.error = "Please enter a valid email address"
+                Emailinput.requestFocus()
                 return@setOnClickListener
             }
 
 
-
-            // Validate password length and complexity
-            if (pass.length < 8 || !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>]).+$").containsMatchIn(pass)) {
-                txPassword.error = "Password must be at least 8 characters, with one uppercase, one lowercase letter, and one symbol"
-                txPassword.requestFocus()
+            // Validate password
+            if (pass.length < 8 || !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>]).+$").containsMatchIn(
+                    pass
+                )
+            ) {
+                passwordinput.error =
+                    "Password must be at least 8 characters, with one uppercase, one lowercase letter, and one symbol"
+                passwordinput.requestFocus()
                 return@setOnClickListener
             }
 
-            // Check if only one checkbox is selected
-            if (!yescheckbox.isChecked && !nocheckbox.isChecked) {
-                tvprovider.error = "Please select the type of your account"
-                tvprovider.requestFocus()
+            // Check checkbox is selected
+            if (!yesbox.isChecked && !nobox.isChecked) {
+                providershow.error = "Please select the type of your account"
+                providershow.requestFocus()
                 return@setOnClickListener
             }
-            // Check if email already exists in Firebase Realtime Database
-            val databaseRef = FirebaseDatabase.getInstance().getReference("users")
-            databaseRef.orderByChild("email").equalTo(email)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
+            handelSignUpButton(email, pass, firstname, lastname, dob, providerStatus)
+        }
 
-                            Toast.makeText(this@SignUp, "Email already Exist Please try again", Toast.LENGTH_SHORT).show()
-                        }
+    }
 
-           else {
+    private fun handelSignUpButton(
+        email: String,
+        pass: String,
+        firstname: String,
+        lastname: String,
+        dob: String,
+        providerStatus: String,
+    ) {
+        // Check if email already exists in dataset
+        val databaseRef = FirebaseDatabase.getInstance().getReference("users")
+        databaseRef.orderByChild("email").equalTo(email)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
 
-                        mFirebaseAuth.createUserWithEmailAndPassword(email, pass)
+                        Toast.makeText(
+                            this@SignUp,
+                            "Email already Exist Please try again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+
+                        firebaseAuth.createUserWithEmailAndPassword(email, pass)
                             .addOnCompleteListener(this@SignUp) { task ->
                                 if (!task.isSuccessful) {
                                     CustomToast.createToast(
@@ -147,24 +174,30 @@ class SignUp : AppCompatActivity() {
                                         pass
                                     )
                                     val uid = task.result?.user?.uid
-                                    firebaseDatabase.getReference("users").child(uid.toString()).setValue(userInformation)
+                                    firebaseDatabase.getReference("users").child(uid.toString())
+                                        .setValue(userInformation)
                                         .addOnSuccessListener {
                                             val intent = Intent(this@SignUp, Login::class.java)
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                             startActivity(intent)
                                         }
                                         .addOnFailureListener {
-                                            CustomToast.createToast(this@SignUp, "Error occurred while saving user information!", true)
+                                            CustomToast.createToast(
+                                                this@SignUp,
+                                                "Error occurred while saving user information!",
+                                                true
+                                            )
                                         }
                                 }
                             }
                     }
                 }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@SignUp, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
-                    }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@SignUp, "Error: ${error.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
-                })
+            })
     }
-}}
+}

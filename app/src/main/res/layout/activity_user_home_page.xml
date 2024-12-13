@@ -12,36 +12,36 @@
     tools:context=".UserHomePage">
 
     <Button
-        android:id="@+id/usercurentExersisesButton"
-        android:layout_width="284dp"
+        android:id="@+id/ExersisesButton"
+        android:layout_width="260dp"
         android:layout_height="64dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#1E4F80"
         android:text="View Current Exersises"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/userviewhistoryButton"
+        app:layout_constraintEnd_toEndOf="@+id/viewHistoryButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/userviewhistoryButton"
-        app:layout_constraintTop_toBottomOf="@+id/userassesmentButton" />
+        app:layout_constraintStart_toStartOf="@+id/viewHistoryButton"
+        app:layout_constraintTop_toBottomOf="@+id/takeAssesmentButton" />
 
     <Button
-        android:id="@+id/userviewhistoryButton"
-        android:layout_width="284dp"
+        android:id="@+id/viewHistoryButton"
+        android:layout_width="260dp"
         android:layout_height="64dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#1E4F80"
         android:text="View History"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/usersettingsButton"
+        app:layout_constraintEnd_toEndOf="@+id/userSettingsButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/usersettingsButton"
-        app:layout_constraintTop_toBottomOf="@+id/usercurentExersisesButton" />
+        app:layout_constraintStart_toStartOf="@+id/userSettingsButton"
+        app:layout_constraintTop_toBottomOf="@+id/ExersisesButton" />
 
     <Button
-        android:id="@+id/usersettingsButton"
-        android:layout_width="284dp"
+        android:id="@+id/userSettingsButton"
+        android:layout_width="260dp"
         android:layout_height="64dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#1E4F80"
@@ -51,24 +51,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userviewhistoryButton" />
+        app:layout_constraintTop_toBottomOf="@+id/viewHistoryButton" />
 
     <Button
-        android:id="@+id/userassesmentButton"
-        android:layout_width="284dp"
+        android:id="@+id/takeAssesmentButton"
+        android:layout_width="260dp"
         android:layout_height="64dp"
         android:layout_marginTop="31dp"
         android:backgroundTint="#1E4F80"
         android:text="Take Assesment"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/usercurentExersisesButton"
+        app:layout_constraintEnd_toEndOf="@+id/ExersisesButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/usercurentExersisesButton"
-        app:layout_constraintTop_toBottomOf="@+id/tvwelcomeuser" />
+        app:layout_constraintStart_toStartOf="@+id/ExersisesButton"
+        app:layout_constraintTop_toBottomOf="@+id/userWelcomeShow" />
 
     <TextView
-        android:id="@+id/tvwelcomeuser"
+        android:id="@+id/userWelcomeShow"
         android:layout_width="298dp"
         android:layout_height="71dp"
         android:layout_marginTop="21dp"
@@ -77,15 +77,15 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/userassesmentButton"
+        app:layout_constraintEnd_toEndOf="@+id/takeAssesmentButton"
         app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="@+id/userassesmentButton"
-        app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
+        app:layout_constraintStart_toStartOf="@+id/takeAssesmentButton"
+        app:layout_constraintTop_toBottomOf="@+id/LogoApp3" />
 
     <ImageView
-        android:id="@+id/tvlogo"
-        android:layout_width="410dp"
-        android:layout_height="153dp"
+        android:id="@+id/LogoApp3"
+        android:layout_width="380dp"
+        android:layout_height="141dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
