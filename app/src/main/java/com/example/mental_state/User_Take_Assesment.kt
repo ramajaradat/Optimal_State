@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class Take_Assesment : AppCompatActivity() {
+class User_Take_Assesment : AppCompatActivity() {
 
     //initializeUI&Firebase
     private lateinit var firestore: FirebaseFirestore
@@ -37,7 +37,7 @@ class Take_Assesment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_take_assesment)
+        setContentView(R.layout.activity_user_take_assesment)
 
         firestore = FirebaseFirestore.getInstance()
         redCard = findViewById(R.id.redCard)
@@ -56,7 +56,7 @@ class Take_Assesment : AppCompatActivity() {
     private fun setupButtonClick() {
 
         AssesmentBackButton.setOnClickListener {
-            val intent = Intent(this@Take_Assesment, UserHomePage::class.java)
+            val intent = Intent(this@User_Take_Assesment, UserHomePage::class.java)
             startActivity(intent)
         }
         // Set up the submit button click listener
@@ -120,7 +120,7 @@ class Take_Assesment : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.e("Firebase", "Failed to write user history", e)
             }
-        val intent = Intent(this@Take_Assesment, UserExercise::class.java)
+        val intent = Intent(this@User_Take_Assesment, UserExercise::class.java)
         startActivity(intent)
     }
 
@@ -136,10 +136,10 @@ class Take_Assesment : AppCompatActivity() {
                     val whiteItems = document.get("White") as? List<String> ?: emptyList()
 
                     // Log the fetched items
-                    Log.d("Take_Assesment", "Red Items: $redItems")
-                    Log.d("Take_Assesment", "Blue Items: $blueItems")
-                    Log.d("Take_Assesment", "Gold Items: $goldItems")
-                    Log.d("Take_Assesment", "White Items: $whiteItems")
+                    Log.d("User_Take_Assesment", "Red Items: $redItems")
+                    Log.d("User_Take_Assesment", "Blue Items: $blueItems")
+                    Log.d("User_Take_Assesment", "Gold Items: $goldItems")
+                    Log.d("User_Take_Assesment", "White Items: $whiteItems")
 
                     addCheckBoxes(redItems, redCard)
                     addCheckBoxes(blueItems, blueCard)

@@ -9,33 +9,39 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import java.util.Date
 
 
-class ChangeInfo : AppCompatActivity() {
-    private lateinit var firstnameedite:EditText
-    private lateinit var secondnameedit:EditText
-    private lateinit var dateedit:EditText
-    private lateinit var setchangebutton:Button
-    private lateinit var canclechangebutton:Button
+class UserChangeProfileInfo : AppCompatActivity() {
+    private lateinit var UserFirstNameChange: EditText
+    private lateinit var UserSecondNameChange: EditText
+    private lateinit var UserBirthdayEdite: EditText
+    private lateinit var UserApplyProfileChangeButton: Button
+    private lateinit var UserCancelChangeProfileChange: Button
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_change_info)
-
-        firstnameedite = findViewById(R.id.firstnameedite)
-        secondnameedit = findViewById(R.id.secondnameedit)
-        dateedit = findViewById(R.id.dateedit)
-        setchangebutton = findViewById(R.id.setchangebutton)
-        canclechangebutton = findViewById(R.id.canclechangebutton)
-
+        setContentView(R.layout.activity_user_change_profile_info)
+        //Initialize UI&Firrebase
+        UserFirstNameChange = findViewById(R.id.UserFirstNameChange)
+        UserSecondNameChange = findViewById(R.id.UserSecondNameChange)
+        UserBirthdayEdite = findViewById(R.id.UserBirthdayEdite)
+        UserApplyProfileChangeButton = findViewById(R.id.UserApplyProfileChangeButton)
+        UserCancelChangeProfileChange = findViewById(R.id.UserCancelChangeProfileChange)
         mFirebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
 
-        // Get the current user UID and load their data
+        // Get the current user UID and load user data
+        loadCurrentUserData()
+        //setup Button
+        setupButton()
+
+
+    }
+
+    private fun loadCurrentUserData() {
         val currentUser = mFirebaseAuth.currentUser
         if (currentUser != null) {
             val userUid = currentUser.uid
@@ -47,9 +53,15 @@ class ChangeInfo : AppCompatActivity() {
             userRef.get().addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
                     // Set the original data into EditText fields
-                    firstnameedite.setText(snapshot.child("firstName").getValue(String::class.java) ?: "")
-                    secondnameedit.setText(snapshot.child("lastName").getValue(String::class.java) ?: "")
-                    dateedit.setText(snapshot.child("dob").getValue(String::class.java) ?: "")
+                    UserFirstNameChange.setText(
+                        snapshot.child("firstName").getValue(String::class.java) ?: ""
+                    )
+                    UserSecondNameChange.setText(
+                        snapshot.child("lastName").getValue(String::class.java) ?: ""
+                    )
+                    UserBirthdayEdite.setText(
+                        snapshot.child("dob").getValue(String::class.java) ?: ""
+                    )
                 } else {
                     Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show()
                 }
@@ -59,36 +71,36 @@ class ChangeInfo : AppCompatActivity() {
         } else {
             Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    private fun setupButton() {
         // Cancel button action
-        canclechangebutton.setOnClickListener {
-            val intent = Intent(this@ChangeInfo, AccountSetting::class.java)
+        UserCancelChangeProfileChange.setOnClickListener {
+            val intent = Intent(this@UserChangeProfileInfo, UserAccountSetting::class.java)
             startActivity(intent)
         }
-
-        // Set change button action
-        setchangebutton.setOnClickListener {
-            val firstname = firstnameedite.text.toString().trim()
-            val lastname = secondnameedit.text.toString().trim()
-            val dob = dateedit.text.toString().trim()
+        UserApplyProfileChangeButton.setOnClickListener {
+            val firstname = UserFirstNameChange.text.toString().trim()
+            val lastname = UserSecondNameChange.text.toString().trim()
+            val dob = UserBirthdayEdite.text.toString().trim()
 
             val nameRegex = Regex("^[a-zA-Z]+$")
             if (!nameRegex.matches(firstname)) {
-                firstnameedite.error = "Firstname should contain only letters"
-                firstnameedite.requestFocus()
+                UserFirstNameChange.error = "Firstname should contain only letters"
+                UserFirstNameChange.requestFocus()
                 return@setOnClickListener
             }
 
             if (!nameRegex.matches(lastname)) {
-                secondnameedit.error = "Lastname should contain only letters"
-                secondnameedit.requestFocus()
+                UserSecondNameChange.error = "Lastname should contain only letters"
+                UserSecondNameChange.requestFocus()
                 return@setOnClickListener
             }
 
             val dobRegex = Regex("^(\\d{1,2})/(\\d{1,2})/(\\d{4})$")
             if (!dobRegex.matches(dob)) {
-                dateedit.error = "Date of Birth should be in dd/MM/yyyy or d/M/yyyy format"
-                dateedit.requestFocus()
+                UserBirthdayEdite.error = "Date of Birth should be in dd/MM/yyyy or d/M/yyyy format"
+                UserBirthdayEdite.requestFocus()
                 return@setOnClickListener
             }
 
@@ -105,16 +117,25 @@ class ChangeInfo : AppCompatActivity() {
                 userRef.child("lastName").setValue(lastname)
                 userRef.child("dob").setValue(dob).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Update successful, navigate to AccountSetting or show a success message
-                        startActivity(Intent(this@ChangeInfo, AccountSetting::class.java))
+                        // Update successful, navigate to UserAccountSetting or show a success message
+                        startActivity(
+                            Intent(
+                                this@UserChangeProfileInfo,
+                                UserAccountSetting::class.java
+                            )
+                        )
                     } else {
                         // Handle errors
-                        Toast.makeText(this, "Failed to update. Try again!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Failed to update. Try again!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             } else {
                 Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
             }
+
         }
+
     }
+
 }

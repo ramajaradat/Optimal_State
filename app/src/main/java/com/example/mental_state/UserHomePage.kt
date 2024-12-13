@@ -59,7 +59,7 @@ class UserHomePage : AppCompatActivity() {
     private fun setupButtonClick(){
         //set up Take Assessment button click
         takeAssesmentButton.setOnClickListener {
-            val intent = Intent(this@UserHomePage, Take_Assesment::class.java)
+            val intent = Intent(this@UserHomePage, User_Take_Assesment::class.java)
             startActivity(intent)
         }
         //set up Exercises button click
@@ -74,7 +74,7 @@ class UserHomePage : AppCompatActivity() {
         }
         //set up user Settings button click
         userSettingsButton.setOnClickListener {
-            val intent = Intent(this@UserHomePage, SettingUserPage::class.java)
+            val intent = Intent(this@UserHomePage, UserSettingPage::class.java)
             startActivity(intent)
         }
     }

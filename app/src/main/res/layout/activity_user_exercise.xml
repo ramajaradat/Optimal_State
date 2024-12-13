@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/applogo" />
 
     <Spinner
-        android:id="@+id/otherspinner"
+        android:id="@+id/otherListSpinner"
         android:layout_width="348dp"
         android:layout_height="64dp"
         android:layout_marginTop="40dp"
@@ -29,13 +29,13 @@
         android:foregroundGravity="center|right"
         android:foregroundTint="#050A2E"
         android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="@+id/foodspinner"
+        app:layout_constraintEnd_toEndOf="@+id/foodListSpinner"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/foodspinner"
-        app:layout_constraintTop_toBottomOf="@+id/breathingspinner" />
+        app:layout_constraintStart_toStartOf="@+id/foodListSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/breathingListSpinner" />
 
     <Spinner
-        android:id="@+id/foodspinner"
+        android:id="@+id/foodListSpinner"
         android:layout_width="348dp"
         android:layout_height="64dp"
         android:layout_marginTop="40dp"
@@ -45,13 +45,13 @@
         android:foregroundGravity="center|right"
         android:foregroundTint="#050A2E"
         android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="@+id/videospinner"
+        app:layout_constraintEnd_toEndOf="@+id/videoListSpinner"
         app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/videospinner"
-        app:layout_constraintTop_toBottomOf="@+id/otherspinner" />
+        app:layout_constraintStart_toStartOf="@+id/videoListSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/otherListSpinner" />
 
     <Spinner
-        android:id="@+id/breathingspinner"
+        android:id="@+id/breathingListSpinner"
         android:layout_width="348dp"
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
@@ -62,13 +62,13 @@
         android:foregroundGravity="center|right"
         android:foregroundTint="#050A2E"
         android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="@+id/otherspinner"
+        app:layout_constraintEnd_toEndOf="@+id/otherListSpinner"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/otherspinner"
+        app:layout_constraintStart_toStartOf="@+id/otherListSpinner"
         app:layout_constraintTop_toBottomOf="@+id/ExercisetextView" />
 
     <Spinner
-        android:id="@+id/videospinner"
+        android:id="@+id/videoListSpinner"
         android:layout_width="348dp"
         android:layout_height="64dp"
         android:layout_marginTop="44dp"
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodspinner" />
+        app:layout_constraintTop_toBottomOf="@+id/foodListSpinner" />
 
     <TextView
         android:id="@+id/ExercisetextView"
@@ -92,23 +92,23 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/breathingspinner"
+        app:layout_constraintEnd_toEndOf="@+id/breathingListSpinner"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/breathingspinner"
+        app:layout_constraintStart_toStartOf="@+id/breathingListSpinner"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
 
     <Button
-        android:id="@+id/exercisesbackbutton"
+        android:id="@+id/backExersisesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:backgroundTint="#2E5C8C"
         android:text="Back"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/videospinner"
+        app:layout_constraintEnd_toEndOf="@+id/videoListSpinner"
         app:layout_constraintHorizontal_bias="0.553"
-        app:layout_constraintStart_toStartOf="@+id/videospinner"
-        app:layout_constraintTop_toBottomOf="@+id/videospinner" />
+        app:layout_constraintStart_toStartOf="@+id/videoListSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/videoListSpinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

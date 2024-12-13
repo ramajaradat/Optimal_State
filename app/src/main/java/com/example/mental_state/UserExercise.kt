@@ -17,69 +17,84 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserExercise : AppCompatActivity() {
-
-    private lateinit var otherspinner: Spinner
-    private lateinit var foodspinner: Spinner
-    private lateinit var breathingspinner: Spinner
-    private lateinit var videospinner: Spinner
-    private lateinit var exercisesbackbutton:Button
+    // Initialize spinners
+    private lateinit var otherListSpinner: Spinner
+    private lateinit var foodListSpinner: Spinner
+    private lateinit var breathingListSpinner: Spinner
+    private lateinit var videoListSpinner: Spinner
+    private lateinit var backExersisesButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_exercise)
+        otherListSpinner = findViewById(R.id.otherListSpinner)
+        foodListSpinner = findViewById(R.id.foodListSpinner)
+        breathingListSpinner = findViewById(R.id.breathingListSpinner)
+        videoListSpinner = findViewById(R.id.videoListSpinner)
+        backExersisesButton = findViewById(R.id.backExersisesButton)
+        //Setup User Buttons
+        setupUserButton()
+        //Get user last status
+        getLastStatus()
+    }
 
-        // Initialize spinners
-        otherspinner = findViewById(R.id.otherspinner)
-        foodspinner = findViewById(R.id.foodspinner)
-        breathingspinner = findViewById(R.id.breathingspinner)
-        videospinner = findViewById(R.id.videospinner)
-        exercisesbackbutton=findViewById(R.id.exercisesbackbutton)
-
-        exercisesbackbutton.setOnClickListener {
+    private fun setupUserButton() {
+        backExersisesButton.setOnClickListener {
             val intent = Intent(this@UserExercise, UserHomePage::class.java)
             startActivity(intent)
         }
+    }
 
+    private fun getLastStatus() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             val userUid = currentUser.uid
-            val userHistoryRef = FirebaseDatabase.getInstance().getReference("UserHistory").child(userUid)
+            val userHistoryRef =
+                FirebaseDatabase.getInstance().getReference("UserHistory").child(userUid)
 
-            // Query to get the last entry's status
-            userHistoryRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        val lastStatus = snapshot.children.iterator().next().child("status").getValue(String::class.java)
-                        Toast.makeText(this@UserExercise, "Last status: $lastStatus", Toast.LENGTH_SHORT).show()
-                        val statuses = lastStatus?.split(",")?.map { it.trim() } ?: emptyList()
+            // Get Last Status From Dataset on Firestore
+            userHistoryRef.orderByKey().limitToLast(1)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            val lastStatus = snapshot.children.iterator().next().child("status")
+                                .getValue(String::class.java)
+                            Toast.makeText(
+                                this@UserExercise, "Last status: $lastStatus", Toast.LENGTH_SHORT
+                            ).show()
+                            val statuses = lastStatus?.split(",")?.map { it.trim() } ?: emptyList()
 
-                        // Fetch data from Firestore based on the statuses
-                        fetchDataFromFirestore(statuses)
-                    } else {
-                        Toast.makeText(this@UserExercise, "No status history available for the current user.", Toast.LENGTH_SHORT).show()
+                            // Get data from Dataset based on the user status
+                            fetchDataFromFirestore(statuses)
+                        } else {
+                            Toast.makeText(
+                                this@UserExercise,
+                                "No status history available for the current user.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@UserExercise, "Error retrieving user history: ${error.message}", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(
+                            this@UserExercise,
+                            "Error retrieving user history: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
         }
     }
 
     private fun fetchDataFromFirestore(statuses: List<String>) {
         val db = FirebaseFirestore.getInstance()
-
-        // To store data to populate the spinners
+        //  store data to  spinners
         val breathingExercises = mutableListOf<String>()
         val foods = mutableListOf<String>()
         val otherExercises = mutableListOf<String>()
         val recommendedVideos = mutableListOf<String>()
 
-        // A counter to track the number of completed Firestore requests
-        var completedRequests = 0
-
-        // Define a map for the status to Firestore document IDs
+        // to get info from each query on firestore dataset
         val statusToDocId = mapOf(
             "Red" to "HgVJpyoUYLZgMfq1TMM9",
             "Blue" to "IeQGuaztpUb0iY1YPiwX",
@@ -87,24 +102,26 @@ class UserExercise : AppCompatActivity() {
             "White" to "iEUt0GdunvMBjfyTOGI9"
         )
 
-        // Initialize a counter to track completed status fetches
+        // counter to get all exercises from dataset
         var statusProcessedCount = 0
 
-        // Iterate through each status and fetch data from Firestore
+        // get exercises for each status from dataset
         statuses.forEach { status ->
             val docId = statusToDocId[status]
             if (docId != null) {
-                val statusDocRef = db.collection(status).document(docId)  // Get document by ID
+                val statusDocRef = db.collection(status).document(docId)
                 statusDocRef.get().addOnSuccessListener { document ->
                     if (document.exists()) {
                         try {
                             // Safely cast the fields to Lists of Strings
-                            val breathingList = document.get("Breath") as? List<String> ?: emptyList()
+                            val breathingList =
+                                document.get("Breath") as? List<String> ?: emptyList()
                             val foodList = document.get("Food") as? List<String> ?: emptyList()
-                            val otherExerciseList = document.get("Other") as? List<String> ?: emptyList()
+                            val otherExerciseList =
+                                document.get("Other") as? List<String> ?: emptyList()
                             val videoList = document.get("Video") as? List<String> ?: emptyList()
 
-                            // Add each element from the arrays to the respective lists
+                            // Add all exercise element  into list
                             breathingExercises.addAll(breathingList)
                             foods.addAll(foodList)
                             otherExercises.addAll(otherExerciseList)
@@ -126,16 +143,20 @@ class UserExercise : AppCompatActivity() {
                     // Increment the counter when each document fetch is completed
                     statusProcessedCount++
 
-                    // If all requests are completed, update the spinners
+                    // all requests are completed show it in spinner
                     if (statusProcessedCount == statuses.size) {
                         Log.d("UserExercise", "All statuses processed, updating spinners.")
                         runOnUiThread {
-                            updateSpinners(breathingExercises, foods, otherExercises, recommendedVideos)
+                            updateSpinners(
+                                breathingExercises, foods, otherExercises, recommendedVideos
+                            )
                         }
                     }
                 }.addOnFailureListener { e ->
-                    Log.e("UserExercise", "Error fetching document for status $status: ${e.message}")
-                    statusProcessedCount++ // Still increment to prevent hanging if one request fails
+                    Log.e(
+                        "UserExercise", "Error fetching document for status $status: ${e.message}"
+                    )
+                    statusProcessedCount++ // if one request fails
                 }
             } else {
                 Log.e("UserExercise", "No Firestore document found for status: $status")
@@ -143,104 +164,132 @@ class UserExercise : AppCompatActivity() {
         }
     }
 
-    private fun updateSpinners(breathingExercises: List<String>, foods: List<String>, otherExercises: List<String>, recommendedVideos: List<String>) {
-        // Log the final lists to ensure they have been populated correctly
+    private fun updateSpinners(
+        breathingExercises: List<String>,
+        foods: List<String>,
+        otherExercises: List<String>,
+        recommendedVideos: List<String>
+    ) {
+        //to ensure that all exercises element insert correctly on spinner
         Log.d("UserExercise", "Final Breathing List: $breathingExercises")
         Log.d("UserExercise", "Final Foods List: $foods")
         Log.d("UserExercise", "Final Other Exercises List: $otherExercises")
         Log.d("UserExercise", "Final Recommended Videos List: $recommendedVideos")
 
-        // Set initial values
+        //  initial values for each spinner
         val initialBreathingValue = "Breathing Exercises"
         val initialFoodValue = "Recommended Foods"
         val initialOtherValue = "Other Exercises"
         val initialVideoValue = "Watch Video"
 
-        // Adapter for Breathing Exercise Spinner
-        val breathingAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialBreathingValue) + breathingExercises)
-        breathingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        breathingspinner.adapter = breathingAdapter
-        breathingspinner.setSelection(0)  // Set initial value as first item
-        // Set the initial value displayed in white
-        breathingspinner.setSelection(0)
-        breathingspinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) { // Initial value
-                    (view as? TextView)?.setTextColor(Color.WHITE)
-                } else {
-                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        })
-
+        // Adapter for Breath Recommended Spinner
+        breathAdapter(initialBreathingValue, breathingExercises)
         // Adapter for Foods Recommended Spinner
-        val foodAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialFoodValue) + foods)
-        foodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        foodspinner.adapter = foodAdapter
-        foodspinner.setSelection(0)  // Set initial value as first item
-        // Set the initial value displayed in white
-        foodspinner.setSelection(0)
-        foodspinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) { // Initial value
-                    (view as? TextView)?.setTextColor(Color.WHITE)
-                } else {
-                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        })
-
+        foodsAdapter(initialFoodValue, foods)
         // Adapter for Other Exercise Spinner
-        val otherAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialOtherValue) + otherExercises)
-        otherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        otherspinner.adapter = otherAdapter
-        otherspinner.setSelection(0)  // Set initial value as first item
-        // Set the initial value displayed in white
-        otherspinner.setSelection(0)
-        otherspinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) { // Initial value
-                    (view as? TextView)?.setTextColor(Color.WHITE)
-                } else {
-                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        })
-
+        otherAdapter(initialOtherValue, otherExercises)
         // Adapter for Recommended Video Spinner
-        val videoAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(initialVideoValue) + recommendedVideos)
-        videoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        videospinner.adapter = videoAdapter
-        videospinner.setSelection(0)
-        // Set the initial value displayed in white
-        videospinner.setSelection(0)
-        videospinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) { // Initial value
-                    (view as? TextView)?.setTextColor(Color.WHITE)
-                } else {
-                    (view as? TextView)?.setTextColor(Color.BLACK) // Default color for other items
-                }
-            }
+        videoAdapter(initialVideoValue, recommendedVideos)
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        })// Set initial value as first item
     }
 
+    private fun breathAdapter(initialBreathingValue: String, breathingExercises: List<String>) {
+        val breathingAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            listOf(initialBreathingValue) + breathingExercises
+        )
+        breathingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        breathingListSpinner.adapter = breathingAdapter
+        breathingListSpinner.setSelection(0)
+        breathingListSpinner.setSelection(0)
+        breathingListSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                if (position == 0) {
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+
+    }
+
+    private fun foodsAdapter(initialFoodValue: String, foods: List<String>) {
+        val foodAdapter = ArrayAdapter(
+            this, android.R.layout.simple_spinner_item, listOf(initialFoodValue) + foods
+        )
+        foodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        foodListSpinner.adapter = foodAdapter
+        foodListSpinner.setSelection(0)
+        foodListSpinner.setSelection(0)
+        foodListSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                if (position == 0) {
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+
+    }
+
+    private fun otherAdapter(initialOtherValue: String, otherExercises: List<String>) {
+        val otherAdapter = ArrayAdapter(
+            this, android.R.layout.simple_spinner_item, listOf(initialOtherValue) + otherExercises
+        )
+        otherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        otherListSpinner.adapter = otherAdapter
+        otherListSpinner.setSelection(0)
+        otherListSpinner.setSelection(0)
+        otherListSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                if (position == 0) {
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+    }
+
+    private fun videoAdapter(initialVideoValue: String, recommendedVideos: List<String>) {
+        val videoAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            listOf(initialVideoValue) + recommendedVideos
+        )
+        videoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        videoListSpinner.adapter = videoAdapter
+        videoListSpinner.setSelection(0)
+        videoListSpinner.setSelection(0)
+        videoListSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                if (position == 0) {
+                    (view as? TextView)?.setTextColor(Color.WHITE)
+                } else {
+                    (view as? TextView)?.setTextColor(Color.BLACK)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+    }
 
 
 }

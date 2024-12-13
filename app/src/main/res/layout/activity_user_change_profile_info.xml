@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangeInfo">
+    tools:context=".UserChangeProfileInfo">
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"
@@ -24,13 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="488dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/firstnameedite"
+        app:layout_constraintEnd_toEndOf="@+id/UserFirstNameChange"
         app:layout_constraintHorizontal_bias="0.55"
-        app:layout_constraintStart_toStartOf="@+id/firstnameedite"
+        app:layout_constraintStart_toStartOf="@+id/UserFirstNameChange"
         app:srcCompat="@drawable/userlogo" />
 
     <EditText
-        android:id="@+id/firstnameedite"
+        android:id="@+id/UserFirstNameChange"
         android:layout_width="200dp"
         android:layout_height="62dp"
         android:layout_margin="10dp"
@@ -42,13 +42,13 @@
         android:padding="10dp"
         android:textColor="#101010"
         android:textColorHint="#101010"
-        app:layout_constraintEnd_toEndOf="@+id/secondnameedit"
+        app:layout_constraintEnd_toEndOf="@+id/UserSecondNameChange"
         app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="@+id/secondnameedit"
+        app:layout_constraintStart_toStartOf="@+id/UserSecondNameChange"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <EditText
-        android:id="@+id/secondnameedit"
+        android:id="@+id/UserSecondNameChange"
         android:layout_width="200dp"
         android:layout_height="62dp"
         android:layout_margin="10dp"
@@ -60,12 +60,12 @@
         android:padding="10dp"
         android:textColor="#101010"
         android:textColorHint="#101010"
-        app:layout_constraintEnd_toEndOf="@+id/dateedit"
-        app:layout_constraintStart_toStartOf="@+id/dateedit"
-        app:layout_constraintTop_toBottomOf="@+id/firstnameedite" />
+        app:layout_constraintEnd_toEndOf="@+id/UserBirthdayEdite"
+        app:layout_constraintStart_toStartOf="@+id/UserBirthdayEdite"
+        app:layout_constraintTop_toBottomOf="@+id/UserFirstNameChange" />
 
     <EditText
-        android:id="@+id/dateedit"
+        android:id="@+id/UserBirthdayEdite"
         android:layout_width="200dp"
         android:layout_height="62dp"
         android:layout_margin="10dp"
@@ -79,10 +79,10 @@
         android:textColorHint="#101010"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondnameedit" />
+        app:layout_constraintTop_toBottomOf="@+id/UserSecondNameChange" />
 
     <Button
-        android:id="@+id/setchangebutton"
+        android:id="@+id/UserApplyProfileChangeButton"
         android:layout_width="256dp"
         android:layout_height="52dp"
         android:layout_marginTop="60dp"
@@ -94,10 +94,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateedit" />
+        app:layout_constraintTop_toBottomOf="@+id/UserBirthdayEdite" />
 
     <Button
-        android:id="@+id/canclechangebutton"
+        android:id="@+id/UserCancelChangeProfileChange"
         android:layout_width="256dp"
         android:layout_height="52dp"
         android:layout_marginTop="20dp"
@@ -108,7 +108,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setchangebutton" />
+        app:layout_constraintTop_toBottomOf="@+id/UserApplyProfileChangeButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

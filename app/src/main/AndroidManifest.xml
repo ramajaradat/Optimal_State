@@ -35,7 +35,7 @@
             android:name=".RemoveClients"
             android:exported="false" />
         <activity
-            android:name=".ChangeTheme"
+            android:name=".UserChangeTheme"
             android:exported="false" />
         <activity
             android:name=".ForgetPassword"
@@ -50,13 +50,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChangeInfo"
+            android:name=".UserChangeProfileInfo"
             android:exported="false" />
         <activity
-            android:name=".AccountSetting"
+            android:name=".UserAccountSetting"
             android:exported="false" />
         <activity
-            android:name=".SettingUserPage"
+            android:name=".UserSettingPage"
             android:exported="false" />
         <activity
             android:name=".AddClients"
@@ -68,7 +68,7 @@
             android:name=".UserExercise"
             android:exported="false" />
         <activity
-            android:name=".Take_Assesment"
+            android:name=".User_Take_Assesment"
             android:exported="false" />
         <activity
             android:name=".ProviderHomePage"
@@ -80,7 +80,7 @@
             android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".ChangePass"
+            android:name=".UserChangePass"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

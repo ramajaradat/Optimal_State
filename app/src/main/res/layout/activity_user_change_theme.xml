@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChangeTheme">
+    tools:context=".UserChangeTheme">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/applogo" />
 
     <Button
-        android:id="@+id/Darkbutton"
+        android:id="@+id/UserDarkThemeButton"
         android:layout_width="225dp"
         android:layout_height="64dp"
         android:layout_marginTop="124dp"
@@ -31,19 +31,19 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <Button
-        android:id="@+id/Lightbutton"
+        android:id="@+id/UserLightThemeButton"
         android:layout_width="225dp"
         android:layout_height="64dp"
         android:layout_marginTop="59dp"
         android:backgroundTint="#1E4F80"
         android:text="Light Theme"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/Darkbutton"
-        app:layout_constraintStart_toStartOf="@+id/Darkbutton"
-        app:layout_constraintTop_toBottomOf="@+id/Darkbutton" />
+        app:layout_constraintEnd_toEndOf="@+id/UserDarkThemeButton"
+        app:layout_constraintStart_toStartOf="@+id/UserDarkThemeButton"
+        app:layout_constraintTop_toBottomOf="@+id/UserDarkThemeButton" />
 
     <Button
-        android:id="@+id/back4button"
+        android:id="@+id/UserBackChangeThemeButton"
         android:layout_width="225dp"
         android:layout_height="64dp"
         android:layout_marginTop="59dp"
@@ -52,5 +52,5 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Lightbutton" />
+        app:layout_constraintTop_toBottomOf="@+id/UserLightThemeButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

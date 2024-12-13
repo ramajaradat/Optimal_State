@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingUserPage">
+    tools:context=".UserAccountSetting">
 
     <ImageView
         android:id="@+id/tvlogo"
@@ -19,49 +19,34 @@
         app:srcCompat="@drawable/applogo" />
 
     <Button
-        android:id="@+id/AccountSettingButton"
+        android:id="@+id/UserProfilInfoButton"
         android:layout_width="284dp"
         android:layout_height="64dp"
         android:layout_marginTop="92dp"
         android:backgroundTint="#1E4F80"
-        android:text="Account Setting"
+        android:text="Profile Information"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/AppearanceButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/AppearanceButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
 
     <Button
-        android:id="@+id/AppearanceButton"
+        android:id="@+id/UserChangePassButton"
         android:layout_width="284dp"
         android:layout_height="64dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="#1E4F80"
-        android:text="Change Theme"
+        android:text="Change Password"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/Logoutbutton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Logoutbutton"
-        app:layout_constraintTop_toBottomOf="@+id/AccountSettingButton" />
+        app:layout_constraintEnd_toEndOf="@+id/UserChangAccountBackButton"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/UserChangAccountBackButton"
+        app:layout_constraintTop_toBottomOf="@+id/UserProfilInfoButton" />
 
     <Button
-        android:id="@+id/Logoutbutton"
-        android:layout_width="284dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#1E4F80"
-        android:text="LogOut"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/BackButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/BackButton"
-        app:layout_constraintTop_toBottomOf="@+id/AppearanceButton" />
-
-    <Button
-        android:id="@+id/BackButton"
+        android:id="@+id/UserChangAccountBackButton"
         android:layout_width="284dp"
         android:layout_height="64dp"
         android:layout_marginTop="30dp"
@@ -70,9 +55,9 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Logoutbutton" />
+        app:layout_constraintTop_toBottomOf="@+id/UserChangePassButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
