@@ -35,11 +35,11 @@ class ProviderSettings : AppCompatActivity() {
         }
 
         AccountSettingButton.setOnClickListener {
-            val intent = Intent(this@ProviderSettings, proaccountsetting::class.java)
+            val intent = Intent(this@ProviderSettings, ProviderAccountSetting::class.java)
             startActivity(intent)
         }
         NotiButton.setOnClickListener {
-            val intent = Intent(this@ProviderSettings, ProChangeTheme::class.java)
+            val intent = Intent(this@ProviderSettings, ProviderChangeTheme::class.java)
             startActivity(intent)
         }
 

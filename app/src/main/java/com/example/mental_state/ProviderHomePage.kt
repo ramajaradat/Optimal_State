@@ -61,12 +61,12 @@ class ProviderHomePage : AppCompatActivity() {
         }
 
         providerremoveClientButton.setOnClickListener {
-            val intent = Intent(this@ProviderHomePage, RemoveClients::class.java)
+            val intent = Intent(this@ProviderHomePage, ProviderRemoveClients::class.java)
             startActivity(intent)
         }
 
         providerViewclientButton.setOnClickListener {
-            val intent = Intent(this@ProviderHomePage, currentclients::class.java)
+            val intent = Intent(this@ProviderHomePage, ProviderCurrentClients::class.java)
             startActivity(intent)
         }
 

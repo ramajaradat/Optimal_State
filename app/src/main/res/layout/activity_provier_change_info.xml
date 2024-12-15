@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserChangeProfileInfo">
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="488dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/firstnameedite"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="@+id/firstnameedite"
+        app:srcCompat="@drawable/providerlogo" />
+
+    <EditText
+        android:id="@+id/firstnameedite"
+        android:layout_width="200dp"
+        android:layout_height="62dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="92dp"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:elevation="5dp"
+        android:hint="FirstName"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/secondnameedit"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="@+id/secondnameedit"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <EditText
+        android:id="@+id/secondnameedit"
+        android:layout_width="200dp"
+        android:layout_height="62dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:elevation="5dp"
+        android:hint="Second Name"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/dateedit"
+        app:layout_constraintStart_toStartOf="@+id/dateedit"
+        app:layout_constraintTop_toBottomOf="@+id/firstnameedite" />
+
+    <EditText
+        android:id="@+id/dateedit"
+        android:layout_width="200dp"
+        android:layout_height="62dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="148dp"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:elevation="5dp"
+        android:hint="Date"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secondnameedit" />
+
+    <Button
+        android:id="@+id/setchangebutton"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Update Profile"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateedit" />
+
+    <Button
+        android:id="@+id/canclechangebutton"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Cancle"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setchangebutton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
