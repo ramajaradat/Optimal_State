@@ -1,3 +1,5 @@
+
+
 package com.example.mental_state
 
 import android.os.Bundle
@@ -14,33 +16,33 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class AddClients : AppCompatActivity() {
-    private lateinit var backButton: Button
-    private lateinit var emailEditText: EditText
-    private lateinit var addClientButton: Button
+class ProviderAddClients : AppCompatActivity() {
+    private lateinit var BackAddClient: Button
+    private lateinit var EnterUserEmail: EditText
+    private lateinit var ApplyAddClinetButton: Button
     private lateinit var database: FirebaseDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_add_clintes)
+        setContentView(R.layout.activity_provider_add_clintes)
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance()
-        emailEditText = findViewById(R.id.emailEditText)
-        addClientButton = findViewById(R.id.addClientButton)
-        backButton = findViewById(R.id.backButton)
+        EnterUserEmail = findViewById(R.id.EnterUserEmail)
+        ApplyAddClinetButton = findViewById(R.id.ApplyAddClinetButton)
+        BackAddClient = findViewById(R.id.BackAddClient)
 
-        backButton.setOnClickListener {
+        BackAddClient.setOnClickListener {
             val intent = Intent(this, ProviderHomePage::class.java)
             startActivity(intent)
             finish()
         }
 
-        addClientButton.setOnClickListener {
-            val email = emailEditText.text.toString().trim() // Move email assignment here
+        ApplyAddClinetButton.setOnClickListener {
+            val email = EnterUserEmail.text.toString().trim() // Move email assignment here
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                emailEditText.error = "Please enter a valid email address"
-                emailEditText.requestFocus()
+                EnterUserEmail.error = "Please enter a valid email address"
+                EnterUserEmail.requestFocus()
                 return@setOnClickListener
             }
 
@@ -50,7 +52,7 @@ class AddClients : AppCompatActivity() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             Toast.makeText(
-                                this@AddClients,
+                                this@ProviderAddClients,
                                 "Email already exists. Please try again.",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -69,7 +71,7 @@ class AddClients : AppCompatActivity() {
 
                     override fun onCancelled(p0: DatabaseError) {
                         Toast.makeText(
-                            this@AddClients,"Database error: ${p0.message}",Toast.LENGTH_SHORT).show()
+                            this@ProviderAddClients,"Database error: ${p0.message}",Toast.LENGTH_SHORT).show()
                     }
                 })
         }
@@ -83,9 +85,9 @@ class AddClients : AppCompatActivity() {
             databaseRef.child(userId).setValue(userInformation)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        CustomToast.createToast(this@AddClients, "Client added successfully!", false)
+                        CustomToast.createToast(this@ProviderAddClients, "Client added successfully!", false)
                     } else {
-                        CustomToast.createToast(this@AddClients, "Failed to add client. Please try again.", true)
+                        CustomToast.createToast(this@ProviderAddClients, "Failed to add client. Please try again.", true)
                     }
                 }
         }

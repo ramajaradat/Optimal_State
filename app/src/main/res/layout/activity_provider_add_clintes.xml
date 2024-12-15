@@ -6,9 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".AddClients">
+    tools:context=".ProviderAddClients">
 
-    <!-- Logo Image -->
     <ImageView
         android:id="@+id/logoImageView"
         android:layout_width="300dp"
@@ -20,7 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/applogo" />
 
-    <!-- Title TextView -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -35,7 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logoImageView" />
 
-    <!-- Enter Client Email TextView -->
     <TextView
         android:id="@+id/enterEmailTextView"
         android:layout_width="wrap_content"
@@ -49,9 +46,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
-    <!-- Email EditText -->
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/EnterUserEmail"
         android:layout_width="350dp"
         android:layout_height="88dp"
         android:layout_marginTop="44dp"
@@ -70,9 +66,8 @@
         app:layout_constraintTop_toBottomOf="@id/enterEmailTextView"
         app:layout_constraintWidth_percent="0.9" />
 
-    <!-- Add Client Button -->
     <Button
-        android:id="@+id/addClientButton"
+        android:id="@+id/ApplyAddClinetButton"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginTop="44dp"
@@ -83,11 +78,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@id/EnterUserEmail" />
 
-    <!-- Back Button -->
     <Button
-        android:id="@+id/backButton"
+        android:id="@+id/BackAddClient"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginTop="24dp"
@@ -98,6 +92,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addClientButton" />
+        app:layout_constraintTop_toBottomOf="@id/ApplyAddClinetButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

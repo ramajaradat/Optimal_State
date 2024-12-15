@@ -54,9 +54,9 @@ class ProviderHomePage : AppCompatActivity() {
             })
         }
 
-        // Navigate to AddClients page
+        // Navigate to ProviderAddClients page
         provideraddClientButton.setOnClickListener {
-            val intent = Intent(this@ProviderHomePage, AddClients::class.java)
+            val intent = Intent(this@ProviderHomePage, ProviderAddClients::class.java)
             startActivity(intent)
         }
 

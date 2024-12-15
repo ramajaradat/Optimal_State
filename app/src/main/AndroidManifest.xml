@@ -59,7 +59,7 @@
             android:name=".UserSettingPage"
             android:exported="false" />
         <activity
-            android:name=".AddClients"
+            android:name=".ProviderAddClients"
             android:exported="false" />
         <activity
             android:name=".User_history_screen"
