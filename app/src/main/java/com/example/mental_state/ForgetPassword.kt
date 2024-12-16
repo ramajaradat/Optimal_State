@@ -53,7 +53,7 @@ class ForgetPassword : AppCompatActivity() {
 
             checkEmailExistsInDatabase(email) { exists ->
                 if (exists) {
-                    sendPasswordResetEmail(email)
+                   // sendPasswordResetEmail(email)
                     promptForNewPassword(email)
                 } else {
                     emailtorestpass.error = "Email not found in the database"
