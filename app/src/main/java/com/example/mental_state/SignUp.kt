@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+
 class SignUp : AppCompatActivity() {
     //initializeUI&Firebase
 
@@ -164,7 +165,40 @@ class SignUp : AppCompatActivity() {
                                         "Sign Up Unsuccessful, Please Try Again! " + task.exception?.message,
                                         true
                                     )
+
                                 } else {
+                                    if (providerStatus.toString()=="yes") {
+                                        // Format the email to be Firebase-compatible
+                                        val formattedEmail =
+                                            email.replace(".", "_").replace("@", "_")
+
+
+                                        // Reference to the Firebase Realtime Database
+                                        val database =
+                                            FirebaseDatabase.getInstance().getReference("Providers")
+
+
+                                        // Create an entry with an empty email column
+                                        val providerData: MutableMap<String, Any> = HashMap()
+                                        providerData["email"] = ""
+                                        database.child(formattedEmail).setValue(providerData)
+                                            .addOnSuccessListener { aVoid: Void? ->
+                                                Toast.makeText(
+                                                    this@SignUp,
+                                                    "Provider dataset created successfully!",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                            }
+                                            .addOnFailureListener { e: Exception ->
+                                                Toast.makeText(
+                                                    this@SignUp,
+                                                    "Failed to create dataset: ",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                    }
+
                                     val userInformation = UserInformation(
                                         firstname,
                                         lastname,
@@ -199,5 +233,14 @@ class SignUp : AppCompatActivity() {
                 }
 
             })
+    }
+    class ProviderModel {
+        var email: String? = null
+
+        constructor()
+
+        constructor(email: String?) {
+            this.email = email
+        }
     }
 }
