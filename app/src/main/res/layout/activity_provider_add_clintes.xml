@@ -72,12 +72,11 @@
         app:layout_constraintWidth_percent="0.9" />
 
 
-
     <Button
         android:id="@+id/ApplyAddClinetButton"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="#EBC76F"
         android:text="Add Client"
         android:textColor="#000000"
@@ -89,12 +88,11 @@
 
     <TextView
         android:id="@+id/ClientNameShow"
-        android:layout_width="5dp"
-        android:layout_height="14dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="28dp"
-        android:textColorHighlight="#000000"
-        android:textColorHint="#000000"
-        android:textColorLink="#000000"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -109,8 +107,8 @@
         android:layout_marginTop="12dp"
         android:backgroundTint="#EBC76F"
         android:text="Back"
-        android:textColor="#000000"
         android:textSize="22sp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

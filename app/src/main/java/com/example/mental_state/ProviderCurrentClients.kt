@@ -4,11 +4,13 @@ package com.example.mental_state
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class ProviderCurrentClients : AppCompatActivity() {
@@ -16,6 +18,8 @@ class ProviderCurrentClients : AppCompatActivity() {
     private lateinit var clientsTableLayout: TableLayout
     private lateinit var database: FirebaseDatabase
     private lateinit var backButton: Button
+    private lateinit var mFirebaseAuth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,13 @@ class ProviderCurrentClients : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         clientsTableLayout = findViewById(R.id.clientsTableLayout)
         backButton = findViewById(R.id.btnBack)
+        mFirebaseAuth = FirebaseAuth.getInstance()
+
+
+        // Format current provider email to match the Firebase structure
+        val firebaseProvider = mFirebaseAuth.currentUser
+        val providerEmail = firebaseProvider?.email.toString()
+        val formattedProviderEmail = providerEmail.replace(".", "_").replace("@", "_")
 
         // Back button functionality
         backButton.setOnClickListener {
@@ -42,46 +53,66 @@ class ProviderCurrentClients : AppCompatActivity() {
         }
 
         // Load client data from Firebase
-        loadClientData()
+        loadClientData(formattedProviderEmail)
     }
 
-    private fun loadClientData() {
+    private fun loadClientData(formattedProviderEmail:String) {
         val userHistoryRef = database.reference.child("UserHistory")
+        val providerRef = database.reference.child("Providers") // Assuming the provider data is stored under "Providers" node
 
-        userHistoryRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // Clear table and add header
-                clientsTableLayout.removeAllViews()
-                addTableHeader()
+        providerRef.child(formattedProviderEmail).child("clients").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(providerSnapshot: DataSnapshot) {
+                // Get the list of clients associated with this provider
+                val clientEmails = mutableSetOf<String>()
+                for (clientSnapshot in providerSnapshot.children) {
+                    val clientEmail = clientSnapshot.getValue(String::class.java) ?: ""
+                    if (clientEmail.isNotEmpty()) {
+                        clientEmails.add(clientEmail)
+                    }
+                }
 
-                if (snapshot.exists()) {
-                    var hasData = false
+                // Now load user history, but only for these clients
+                userHistoryRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        // Clear table and add header
+                        clientsTableLayout.removeAllViews()
+                        addTableHeader()
 
-                    // Loop through users' history data
-                    for (userHistorySnapshot in snapshot.children) {
-                        for (historySnapshot in userHistorySnapshot.children) {
-                            val email = historySnapshot.child("email").getValue(String::class.java) ?: ""
-                            val day = historySnapshot.child("day").getValue(Int::class.java) ?: 0
-                            val month = historySnapshot.child("month").getValue(Int::class.java) ?: 0
-                            val year = historySnapshot.child("year").getValue(Int::class.java) ?: 0
-                            val time = historySnapshot.child("time").getValue(String::class.java) ?: ""
-                            val status = historySnapshot.child("status").getValue(String::class.java) ?: ""
+                        if (snapshot.exists()) {
+                            var hasData = false
 
-                            if (email.isNotEmpty()) {
-                                val date = "$day/$month/$year"
-                                addClientRow(email, date, time, status)
-                                hasData = true
+                            // Loop through users' history data
+                            for (userHistorySnapshot in snapshot.children) {
+                                for (historySnapshot in userHistorySnapshot.children) {
+                                    val email = historySnapshot.child("email").getValue(String::class.java) ?: ""
+                                    val day = historySnapshot.child("day").getValue(Int::class.java) ?: 0
+                                    val month = historySnapshot.child("month").getValue(Int::class.java) ?: 0
+                                    val year = historySnapshot.child("year").getValue(Int::class.java) ?: 0
+                                    val time = historySnapshot.child("time").getValue(String::class.java) ?: ""
+                                    val status = historySnapshot.child("status").getValue(String::class.java) ?: ""
+
+                                    // Check if the email is in the list of clients for this provider
+                                    if (clientEmails.contains(email) && email.isNotEmpty()) {
+                                        val date = "$day/$month/$year"
+                                        addClientRow(email, date, time, status)
+                                        hasData = true
+                                    }
+                                }
                             }
+
+                            // Show placeholder if no valid data exists
+                            if (!hasData) {
+                                showPlaceholderRow()
+                            }
+                        } else {
+                            showPlaceholderRow()
                         }
                     }
 
-                    // Show placeholder if no valid data exists
-                    if (!hasData) {
-                        showPlaceholderRow()
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@ProviderCurrentClients, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    showPlaceholderRow()
-                }
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -89,6 +120,8 @@ class ProviderCurrentClients : AppCompatActivity() {
             }
         })
     }
+
+
 
     private fun addTableHeader() {
         val headerRow = TableRow(this)
@@ -168,3 +201,8 @@ class ProviderCurrentClients : AppCompatActivity() {
         clientsTableLayout.addView(placeholderRow)
     }
 }
+
+
+
+
+

@@ -204,8 +204,7 @@ class SignUp : AppCompatActivity() {
                                         lastname,
                                         dob,
                                         providerStatus,
-                                        email,
-                                        pass
+                                        email
                                     )
                                     val uid = task.result?.user?.uid
                                     firebaseDatabase.getReference("users").child(uid.toString())
