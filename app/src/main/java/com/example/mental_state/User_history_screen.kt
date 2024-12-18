@@ -35,18 +35,20 @@ class User_history_screen : AppCompatActivity() {
         setContentView(R.layout.activity_user_history_screen)
 
         // Initialize UI
-        yearSpinner = findViewById(R.id.yearspin)
-        monthSpinner = findViewById(R.id.monthSpinner)
-        daySpinner = findViewById(R.id.dayspin)
-        TableLayout = findViewById(R.id.TableLayout)
-        userHistoryBackButton = findViewById(R.id.userHistoryBackButton)
-
+        initializeUI()
         //Setup Spinner
         setupSpinners()
         //set up button click
         setupButton()
     }
 
+    private fun initializeUI(){
+        yearSpinner = findViewById(R.id.yearspin)
+        monthSpinner = findViewById(R.id.monthSpinner)
+        daySpinner = findViewById(R.id.dayspin)
+        TableLayout = findViewById(R.id.TableLayout)
+        userHistoryBackButton = findViewById(R.id.userHistoryBackButton)
+    }
     private fun setupButton() {
         userHistoryBackButton.setOnClickListener {
             val intent = Intent(this@User_history_screen, UserHomePage::class.java)

@@ -14,11 +14,15 @@ class UserAccountSetting : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_account_setting)
+        //Initialize UI
+        initializeUI()
+        //SetUp Bttons
+        setupButton()
+    }
+    private fun initializeUI(){
         UserProfilInfoButton=findViewById(R.id.UserProfilInfoButton)
         UserChangePassButton=findViewById(R.id.UserChangePassButton)
         UserChangAccountBackButton=findViewById(R.id.UserChangAccountBackButton)
-        //SetUp Bttons
-        setupButton()
     }
     private fun setupButton(){
         UserProfilInfoButton.setOnClickListener {

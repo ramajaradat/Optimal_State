@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.util.Calendar
 
 
 class UserChangeProfileInfo : AppCompatActivity() {
@@ -25,6 +26,16 @@ class UserChangeProfileInfo : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_change_profile_info)
         //Initialize UI&Firrebase
+        initializeUI()
+        // Get the current user UID and load user data
+        loadCurrentUserData()
+        //setup Button
+        setupButton()
+
+
+    }
+
+    private fun initializeUI(){
         UserFirstNameChange = findViewById(R.id.UserFirstNameChange)
         UserSecondNameChange = findViewById(R.id.UserSecondNameChange)
         UserBirthdayEdite = findViewById(R.id.UserBirthdayEdite)
@@ -32,13 +43,6 @@ class UserChangeProfileInfo : AppCompatActivity() {
         UserCancelChangeProfileChange = findViewById(R.id.UserCancelChangeProfileChange)
         mFirebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
-
-        // Get the current user UID and load user data
-        loadCurrentUserData()
-        //setup Button
-        setupButton()
-
-
     }
 
     private fun loadCurrentUserData() {
@@ -100,6 +104,40 @@ class UserChangeProfileInfo : AppCompatActivity() {
             val dobRegex = Regex("^(\\d{1,2})/(\\d{1,2})/(\\d{4})$")
             if (!dobRegex.matches(dob)) {
                 UserBirthdayEdite.error = "Date of Birth should be in dd/MM/yyyy or d/M/yyyy format"
+                UserBirthdayEdite.requestFocus()
+                return@setOnClickListener
+            }
+            val matchResult = dobRegex.find(dob)
+            val (dayString, monthString, yearString) = matchResult?.destructured ?: return@setOnClickListener
+            //test the date valid or not
+            val day = dayString.toInt()
+            val month = monthString.toInt()
+            val year = yearString.toInt()
+
+            if (month !in 1..12) {
+                UserBirthdayEdite.error = "Month should be between 1 and 12"
+                UserBirthdayEdite.requestFocus()
+                return@setOnClickListener
+            }
+
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            if (year !in 1900..currentYear) {
+                UserBirthdayEdite.error = "Year should be between 1900 and $currentYear"
+                UserBirthdayEdite.requestFocus()
+                return@setOnClickListener
+            }
+
+            val isLeapYear = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+
+            val maxDaysInMonth = when (month) {
+                1, 3, 5, 7, 8, 10, 12 -> 31
+                4, 6, 9, 11 -> 30
+                2 -> if (isLeapYear) 29 else 28 // February
+                else -> 0
+            }
+
+            if (day !in 1..maxDaysInMonth) {
+                UserBirthdayEdite.error = "Day should be valid for the given month"
                 UserBirthdayEdite.requestFocus()
                 return@setOnClickListener
             }

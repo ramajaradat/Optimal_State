@@ -17,7 +17,6 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserExercise : AppCompatActivity() {
-    // Initialize spinners
     private lateinit var otherListSpinner: Spinner
     private lateinit var foodListSpinner: Spinner
     private lateinit var breathingListSpinner: Spinner
@@ -27,17 +26,21 @@ class UserExercise : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_exercise)
+        // Initialize UI
+        initializeUI()
+        setupUserButton()
+        //Get user last status
+        getLastStatus()
+    }
+
+    private fun initializeUI(){
         otherListSpinner = findViewById(R.id.otherListSpinner)
         foodListSpinner = findViewById(R.id.foodListSpinner)
         breathingListSpinner = findViewById(R.id.breathingListSpinner)
         videoListSpinner = findViewById(R.id.videoListSpinner)
         backExersisesButton = findViewById(R.id.backExersisesButton)
         //Setup User Buttons
-        setupUserButton()
-        //Get user last status
-        getLastStatus()
     }
-
     private fun setupUserButton() {
         backExersisesButton.setOnClickListener {
             val intent = Intent(this@UserExercise, UserHomePage::class.java)

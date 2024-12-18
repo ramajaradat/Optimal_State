@@ -28,6 +28,15 @@ class UserChangePass : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_change_pass)
         //Initialize UI and Firebase
+        initializeUI()
+        // Show Current user email
+        currentUserEmail()
+        //user setup button
+        setupButton()
+
+    }
+
+    private fun initializeUI(){
         UserEmailShow = findViewById(R.id.UserEmailShow)
         UserCurentPass = findViewById(R.id.UserCurentPass)
         UserNewPass = findViewById(R.id.UserNewPass)
@@ -36,12 +45,6 @@ class UserChangePass : AppCompatActivity() {
         CancelChangePassButton = findViewById(R.id.CancelChangePassButton)
         mFirebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
-
-        // Show Current user email
-        currentUserEmail()
-        //user setup button
-        setupButton()
-
     }
 
     private fun currentUserEmail() {

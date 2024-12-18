@@ -19,12 +19,14 @@ class UserChangeTheme : AppCompatActivity() {
         setContentView(R.layout.activity_user_change_theme)
 
         // Initialize UI
+        initializeUI()
+        //setup button
+        setupbutton()
+    }
+    private fun initializeUI(){
         UserDarkThemeButton = findViewById(R.id.UserDarkThemeButton)
         UserLightThemeButton = findViewById(R.id.UserLightThemeButton)
         UserBackChangeThemeButton = findViewById(R.id.UserBackChangeThemeButton)
-
-        //setup button
-        setupbutton()
     }
     private fun setupbutton(){
         UserBackChangeThemeButton.setOnClickListener {

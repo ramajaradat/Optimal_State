@@ -1,6 +1,5 @@
 package com.example.mental_state
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -13,9 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-
 class UserHomePage : AppCompatActivity() {
-    //initializeUI&Firebase
     private lateinit var takeAssesmentButton: Button
     private lateinit var ExersisesButton: Button
     private lateinit var viewHistoryButton: Button
@@ -28,25 +25,26 @@ class UserHomePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_home_page)
-
+        //initializeUI&Firebase
+        initializeUI()
+        //Display UserName in HomePage
+        showuserName()
+        //set up buttons click
+        setupButtonClick()
+    }
+    private fun initializeUI(){
         takeAssesmentButton = findViewById(R.id.takeAssesmentButton)
         ExersisesButton = findViewById(R.id.ExersisesButton)
         viewHistoryButton = findViewById(R.id.viewHistoryButton)
         userSettingsButton = findViewById(R.id.userSettingsButton)
         userWelcomeShow = findViewById(R.id.userWelcomeShow)
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
-
-        //Display UserName in HomePage
-        showuserName()
-        //set up buttons click
-        setupButtonClick()
-    }
+        database = FirebaseDatabase.getInstance()}
     private fun showuserName(){
         val uid = auth.currentUser?.uid
         if (uid != null) {
-            val userRef = database.getReference("users").child(uid).child("firstName")
-            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            val userfirstname = database.getReference("users").child(uid).child("firstName")
+            userfirstname.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val firstName = snapshot.getValue(String::class.java)
                     val formattedName = firstName?.replaceFirstChar { it.uppercase() } ?: ""

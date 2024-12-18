@@ -19,7 +19,6 @@ import java.util.Locale
 
 class User_Take_Assesment : AppCompatActivity() {
 
-    //initializeUI&Firebase
     private lateinit var firestore: FirebaseFirestore
     private lateinit var redCard: LinearLayout
     private lateinit var blueCard: LinearLayout
@@ -28,7 +27,7 @@ class User_Take_Assesment : AppCompatActivity() {
     private lateinit var AssesmentBackButton: Button
     private lateinit var AssesmentsubmitButton: Button
 
-    //Counts of checked CheckBoxes for each card
+    //Counts of checked CheckBoxes for each card status
     private var redCheckNum = 0
     private var blueCheckNum = 0
     private var goldCheckNum = 0
@@ -38,7 +37,16 @@ class User_Take_Assesment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_take_assesment)
+        //initializeUI&Firebase
+        initializeUI()
+        //set up user buttons click
+        setupButtonClick()
+        // Get the emotional states from Dataset on Firestore
+        getEmotionalStates()
 
+    }
+
+    private fun initializeUI(){
         firestore = FirebaseFirestore.getInstance()
         redCard = findViewById(R.id.redCard)
         blueCard = findViewById(R.id.blueCard)
@@ -46,37 +54,24 @@ class User_Take_Assesment : AppCompatActivity() {
         whiteCard = findViewById(R.id.whiteCard)
         AssesmentBackButton = findViewById(R.id.AssesmentBackButton)
         AssesmentsubmitButton = findViewById(R.id.AssesmentsubmitButton)
-
-        // Get the emotional states from Dataset on Firestore
-        fetchEmotionalStates()
-        //set up user buttons click
-        setupButtonClick()
     }
-
     private fun setupButtonClick() {
 
         AssesmentBackButton.setOnClickListener {
             val intent = Intent(this@User_Take_Assesment, UserHomePage::class.java)
             startActivity(intent)
         }
-        // Set up the submit button click listener
         AssesmentsubmitButton.setOnClickListener {
-            setupAssesmentsubmitButton()
+            setupAssesmentSubmitButton()
         }
     }
-
-    private fun setupAssesmentsubmitButton() {
+    private fun setupAssesmentSubmitButton() {
         // Calculate the checked counts for each card layout
         val redCheckNum = getCheckedCount(redCard)
         val blueCheckNum = getCheckedCount(blueCard)
         val goldCheckNum = getCheckedCount(goldCard)
         val whiteCheckNum = getCheckedCount(whiteCard)
 
-        // Log the counts for debugging
-        Log.d("Take_Assessment", "Red Checked Count: $redCheckNum")
-        Log.d("Take_Assessment", "Blue Checked Count: $blueCheckNum")
-        Log.d("Take_Assessment", "Gold Checked Count: $goldCheckNum")
-        Log.d("Take_Assessment", "White Checked Count: $whiteCheckNum")
 
         val statuses = mutableListOf<String>()
 
@@ -123,8 +118,7 @@ class User_Take_Assesment : AppCompatActivity() {
         val intent = Intent(this@User_Take_Assesment, UserExercise::class.java)
         startActivity(intent)
     }
-
-    private fun fetchEmotionalStates() {
+    private fun getEmotionalStates() {
         firestore.collection("Emotional-States")
             .document("s4Unsfhaf6UagJhptLrr")
             .get()
@@ -135,11 +129,6 @@ class User_Take_Assesment : AppCompatActivity() {
                     val goldItems = document.get("Gold") as? List<String> ?: emptyList()
                     val whiteItems = document.get("White") as? List<String> ?: emptyList()
 
-                    // Log the fetched items
-                    Log.d("User_Take_Assesment", "Red Items: $redItems")
-                    Log.d("User_Take_Assesment", "Blue Items: $blueItems")
-                    Log.d("User_Take_Assesment", "Gold Items: $goldItems")
-                    Log.d("User_Take_Assesment", "White Items: $whiteItems")
 
                     addCheckBoxes(redItems, redCard)
                     addCheckBoxes(blueItems, blueCard)
@@ -157,7 +146,6 @@ class User_Take_Assesment : AppCompatActivity() {
                 ).show()
             }
     }
-
     private fun addCheckBoxes(items: List<String>, cardLayout: LinearLayout) {
         // Clear any existing views to avoid duplicates
         cardLayout.removeAllViews()
@@ -176,7 +164,6 @@ class User_Take_Assesment : AppCompatActivity() {
             cardLayout.addView(checkBox)
         }
     }
-
     // Function to calculate the checked CheckBoxes
     private fun getCheckedCount(cardLayout: LinearLayout): Int {
         var count = 0
