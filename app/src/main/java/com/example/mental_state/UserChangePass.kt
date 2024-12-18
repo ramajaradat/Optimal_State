@@ -103,14 +103,7 @@ class UserChangePass : AppCompatActivity() {
                     // update pass in firebase
                     user.updatePassword(newPassword).addOnCompleteListener { passwordUpdateTask ->
                         if (passwordUpdateTask.isSuccessful) {
-                            // Password updated in Firebase Auth, now update in Realtime Database
-                            val userId = user.uid
-                            val userRef = firebaseDatabase.getReference("users").child(userId)
 
-                            // update pass in firebase realtime database
-                            userRef.child("password").setValue(newPassword)
-                                .addOnCompleteListener { dbUpdateTask ->
-                                    if (dbUpdateTask.isSuccessful) {
                                         Toast.makeText(
                                             this,
                                             "Password updated successfully.",
@@ -121,14 +114,7 @@ class UserChangePass : AppCompatActivity() {
                                             UserAccountSetting::class.java
                                         )
                                         startActivity(intent)
-                                    } else {
-                                        Toast.makeText(
-                                            this,
-                                            "Failed to update password in database.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
+
                         } else {
                             Toast.makeText(
                                 this,

@@ -90,21 +90,10 @@ class ProviderChangepassword : AppCompatActivity() {
                     // Successfully re-authenticated, now update the password
                     user.updatePassword(newPassword).addOnCompleteListener { passwordUpdateTask ->
                         if (passwordUpdateTask.isSuccessful) {
-                            // Password updated in Firebase Auth, now update in Realtime Database
-                            val userId = user.uid
-                            val userRef = firebaseDatabase.getReference("users").child(userId)
-
-                            // Update the password in Firebase Realtime Database (note: it's generally not recommended to store passwords in DB)
-                            userRef.child("password").setValue(newPassword)
-                                .addOnCompleteListener { dbUpdateTask ->
-                                    if (dbUpdateTask.isSuccessful) {
-                                        Toast.makeText(this, "Password updated successfully.", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(this@ProviderChangepassword, ProviderAccountSetting::class.java)
+                            Toast.makeText(this, "Password updated successfully.", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ProviderChangepassword, ProviderAccountSetting::class.java)
                                         startActivity(intent)
-                                    } else {
-                                        Toast.makeText(this, "Failed to update password in database.", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
+
                         } else {
                             Toast.makeText(this, "Failed to update password in Firebase Authentication.", Toast.LENGTH_SHORT).show()
                         }
