@@ -14,23 +14,27 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class ForgetPassword : AppCompatActivity() {
-    private lateinit var emailtorestpass:EditText
-    //private lateinit var editTextTextPassword:EditText
-    private lateinit var restpassbutton:Button
-    private lateinit var BackrestButton:Button
+    private lateinit var emailtorestpass: EditText
+    private lateinit var restpassbutton: Button
+    private lateinit var BackrestButton: Button
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_forget_password)
+        initializeUI()
+        setupButton()
+    }
 
-        emailtorestpass=findViewById(R.id.emailtorestpass)
-        //editTextTextPassword=findViewById(R.id.editTextTextPassword)
-        restpassbutton=findViewById(R.id.restpassbutton)
-        BackrestButton=findViewById(R.id.BackrestButton)
+    private fun initializeUI() {
+        emailtorestpass = findViewById(R.id.emailtorestpass)
+        restpassbutton = findViewById(R.id.restpassbutton)
+        BackrestButton = findViewById(R.id.BackrestButton)
         firebaseAuth = FirebaseAuth.getInstance()
+    }
 
+    private fun setupButton() {
         BackrestButton.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
@@ -54,7 +58,7 @@ class ForgetPassword : AppCompatActivity() {
             checkEmailExistsInDatabase(email) { exists ->
                 if (exists) {
                     sendPasswordResetEmail(email)
-                   // promptForNewPassword(email)
+                    // promptForNewPassword(email)
                 } else {
                     emailtorestpass.error = "Email not found in the database"
                     emailtorestpass.requestFocus()
@@ -66,32 +70,41 @@ class ForgetPassword : AppCompatActivity() {
     private fun sendPasswordResetEmail(email: String) {
         firebaseAuth.sendPasswordResetEmail(email)
             .addOnSuccessListener {
-                Toast.makeText(this@ForgetPassword, "Reset Password Link has been sent to your registered Email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ForgetPassword,
+                    "Reset Password Link has been sent to your registered Email",
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 val intent = Intent(this@ForgetPassword, Login::class.java)
                 startActivity(intent)
                 finish()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this@ForgetPassword, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgetPassword, "Error: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
 
             }
     }
 
-
     private fun checkEmailExistsInDatabase(email: String, callback: (Boolean) -> Unit) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("users")
 
-        databaseReference.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                callback(snapshot.exists())
-            }
+        databaseReference.orderByChild("email").equalTo(email)
+            .addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    callback(snapshot.exists())
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@ForgetPassword, "Database error: ${error.message}", Toast.LENGTH_SHORT).show()
-                callback(false)
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(
+                        this@ForgetPassword,
+                        "Database error: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    callback(false)
+                }
+            })
     }
 }

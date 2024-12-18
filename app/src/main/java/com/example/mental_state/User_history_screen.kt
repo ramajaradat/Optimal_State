@@ -1,22 +1,18 @@
 package com.example.mental_state
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mental_state.Model.UserHistory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -196,28 +192,22 @@ class User_history_screen : AppCompatActivity() {
             setBackgroundColor(if (TableLayout.childCount % 2 == 0) 0xFFEEEEEE.toInt() else 0xFFFFFFFF.toInt())
         }
 
-        // Create cells for time and status (these could be TextViews or other views)
         val timeView = createTableCell(time)
         val statusView = createTableCell(status)
 
-        // Get the colored boxes based on the status
         val colorBoxes = getColorBoxes(status)
 
-        // Add the time and status cells to the row
         tableRow.addView(timeView)
         tableRow.addView(statusView)
 
-        // Add the colored boxes to the row
         for (box in colorBoxes) {
             tableRow.addView(box)
         }
-
-        // Add the row to the TableLayout
         TableLayout.addView(tableRow)
     }
 
 
-    fun createTableCell(text: String): View {
+    private fun createTableCell(text: String): View {
         // Create a cell for the table (this could be a TextView or any other type of view)
         val cell = TextView(this).apply {
             this.text = text
@@ -257,10 +247,10 @@ class User_history_screen : AppCompatActivity() {
             TableLayout.addView(tableRow)
         }
     }
-    fun getColorBoxes(status: String): List<View> {
+
+    private fun getColorBoxes(status: String): List<View> {
         val colorBoxes = mutableListOf<View>()
 
-        // Check the status and add the appropriate color boxes
         if ("Red" in status) {
             val redBox = createColoredBox(android.graphics.Color.RED)
             colorBoxes.add(redBox)
@@ -278,24 +268,20 @@ class User_history_screen : AppCompatActivity() {
             colorBoxes.add(yellowBox)
         }
 
-        return colorBoxes // Return the list of color boxes
+        return colorBoxes
     }
 
-    fun createColoredBox(color: Int): View {
+    private fun createColoredBox(color: Int): View {
         val box = View(this).apply {
-            // Set the size of the box (adjust the size as needed)
-            layoutParams = TableRow.LayoutParams(30, 30).apply {  // Increase size if 15x15 is too small
-                setMargins(2, 4, 2, 4) // Set margins to space out the boxes
+            layoutParams = TableRow.LayoutParams(30, 30).apply {
+                setMargins(2, 4, 2, 4)
             }
 
-            // Create a background for the square box using GradientDrawable
             val drawable = GradientDrawable().apply {
                 setColor(color) // Set the color of the box
                 setStroke(2, android.graphics.Color.BLACK) // Set black borders
-                shape = GradientDrawable.RECTANGLE // Ensure the shape is a rectangle (square due to equal width and height)
+                shape = GradientDrawable.RECTANGLE
             }
-
-            // Set the background for the box
             background = drawable
         }
         return box
