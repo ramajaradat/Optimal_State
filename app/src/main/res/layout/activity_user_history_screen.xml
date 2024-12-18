@@ -8,8 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".User_history_screen">
 
-  <!-- ImageView for App Logo -->
-  <ImageView
+]  <ImageView
       android:id="@+id/imageView2"
       android:layout_width="371dp"
       android:layout_height="172dp"
@@ -18,14 +17,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/applogo" />
-
-  <!-- Spinner for Month -->
-
-  <!-- Spinner for Day -->
-
-  <!-- Spinner for Year -->
-
-  <!-- TextView for Title -->
 
   <Spinner
       android:id="@+id/monthSpinner"
@@ -100,7 +91,6 @@
         android:layout_height="wrap_content"
         android:stretchColumns="*">
 
-      <!-- Header Row -->
       <TableRow
           android:background="#CCCCCC"
           android:padding="5dp">
@@ -152,5 +142,7 @@
       android:layout_height="wrap_content"
       app:barrierDirection="left"
       app:constraint_referenced_ids="monthSpinner,yearspin,dayspin,linearLayout" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
