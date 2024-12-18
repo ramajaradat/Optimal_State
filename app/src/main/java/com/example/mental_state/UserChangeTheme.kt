@@ -34,17 +34,16 @@ class UserChangeTheme : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Set up listeners for each button to change the theme
         UserDarkThemeButton.setOnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            recreate() // Reload to show edit
+            recreate()
             Toast.makeText(this@UserChangeTheme,"Theme will change now",Toast.LENGTH_SHORT).show()
 
         }
 
         UserLightThemeButton.setOnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            recreate() // Reload to show edit
+            recreate()
             Toast.makeText(this@UserChangeTheme,"Theme will change now",Toast.LENGTH_SHORT).show()
         }
     }

@@ -59,23 +59,20 @@ class SignUp : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance()
     }
     private fun setupButtonClick() {
-        //to allow user just check yes or no
         yesbox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                nobox.isChecked = false // Uncheck "No" if "Yes" is checked
+                nobox.isChecked = false
             }
         }
         nobox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                yesbox.isChecked = false // Uncheck "Yes" if "No" is checked
+                yesbox.isChecked = false
             }
         }
-        //set up signup back buttons click
         signupbackbutton.setOnClickListener {
             val intent = Intent(this@SignUp, Login::class.java)
             startActivity(intent)
         }
-        //set up signup buttons click
         signinButton.setOnClickListener {
 
             val firstname = firstnameinput.text.toString().trim()
@@ -85,7 +82,6 @@ class SignUp : AppCompatActivity() {
             val pass = passwordinput.text.toString().trim()
             val providerStatus = if (yesbox.isChecked) "yes" else "no"
 
-            // Validate names contain only alphabetic characters
             val nameRegex = Regex("^[a-zA-Z]+$")
             if (!nameRegex.matches(firstname)) {
                 firstnameinput.error = "Firstname should contain only letters"
@@ -99,7 +95,6 @@ class SignUp : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // format for date of birth  (dd/MM/yyyy or d/M/yyyy)
             val dobRegex = Regex("^(\\d{1,2})/(\\d{1,2})/(\\d{4})$")
             if (!dobRegex.matches(dob)) {
                 birthdaydateinput.error = "Date of Birth should be in dd/MM/yyyy or d/M/yyyy format"
@@ -108,7 +103,6 @@ class SignUp : AppCompatActivity() {
             }
             val matchResult = dobRegex.find(dob)
             val (dayString, monthString, yearString) = matchResult?.destructured ?: return@setOnClickListener
-           //test the date valid or not
             val day = dayString.toInt()
             val month = monthString.toInt()
             val year = yearString.toInt()
@@ -131,7 +125,7 @@ class SignUp : AppCompatActivity() {
             val maxDaysInMonth = when (month) {
                 1, 3, 5, 7, 8, 10, 12 -> 31
                 4, 6, 9, 11 -> 30
-                2 -> if (isLeapYear) 29 else 28 // February
+                2 -> if (isLeapYear) 29 else 28
                 else -> 0
             }
 
@@ -141,7 +135,6 @@ class SignUp : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Validate email
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Emailinput.error = "Please enter a valid email address"
                 Emailinput.requestFocus()
@@ -149,7 +142,6 @@ class SignUp : AppCompatActivity() {
             }
 
 
-            // Validate password
             if (pass.length < 8 || !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>]).+$").containsMatchIn(
                     pass
                 )
@@ -160,7 +152,6 @@ class SignUp : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Check checkbox is selected
             if (!yesbox.isChecked && !nobox.isChecked) {
                 providershow.error = "Please select the type of your account"
                 providershow.requestFocus()
@@ -172,7 +163,6 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun handelSignUpButton(email: String,pass: String,firstname: String,lastname: String,dob: String, providerStatus: String){
-        // Check if email already exists in dataset
         val databaseRef = FirebaseDatabase.getInstance().getReference("users")
         databaseRef.orderByChild("email").equalTo(email)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -196,7 +186,6 @@ class SignUp : AppCompatActivity() {
                                     )
 
                                 } else {
-                                    //save user info on realtime dataset
                                     val userInformation = UserInformation(
                                         firstname,
                                         lastname,

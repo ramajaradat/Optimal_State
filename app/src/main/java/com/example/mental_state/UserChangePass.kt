@@ -67,13 +67,11 @@ class UserChangePass : AppCompatActivity() {
             val newPassword = UserNewPass.text.toString()
             val confirmNewPassword = ConfirmUserNewPass.text.toString()
 
-            // check all files
             if (UserCurentPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // sure the password meets all the requirements
             if (newPassword.length < 8 || !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>]).+$").containsMatchIn(
                     newPassword
                 )
@@ -86,13 +84,11 @@ class UserChangePass : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // sure the new password match confirmation password
             if (newPassword != confirmNewPassword) {
                 Toast.makeText(this, "New passwords do not match.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // check user current pass
             val user = mFirebaseAuth.currentUser
             if (user == null) {
                 Toast.makeText(this, "User is not logged in", Toast.LENGTH_SHORT).show()
@@ -103,7 +99,6 @@ class UserChangePass : AppCompatActivity() {
 
             user.reauthenticate(credential).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // update pass in firebase
                     user.updatePassword(newPassword).addOnCompleteListener { passwordUpdateTask ->
                         if (passwordUpdateTask.isSuccessful) {
 

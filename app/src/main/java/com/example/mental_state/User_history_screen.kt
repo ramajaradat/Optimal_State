@@ -79,7 +79,6 @@ class User_history_screen : AppCompatActivity() {
             if (isDaySpinnerInitialized) loadUserHistory() else isDaySpinnerInitialized = true
         }
 
-        //Auto load history for current day
         loadUserHistory()
     }
 
@@ -89,7 +88,6 @@ class User_history_screen : AppCompatActivity() {
         defaultValue: String,
         onSelectionChange: () -> Unit
     ) {
-        // Create an ArrayAdapter
         val adapter =
             object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items) {
                 override fun getView(
@@ -111,11 +109,9 @@ class User_history_screen : AppCompatActivity() {
                 }
             }
 
-        // Apply  adapter to  spinner
         spinner.adapter = adapter
         spinner.setSelection(items.indexOf(defaultValue))
 
-        // Set up the item
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -210,7 +206,6 @@ class User_history_screen : AppCompatActivity() {
 
 
     private fun createTableCell(text: String): View {
-        // Create a cell for the table (this could be a TextView or any other type of view)
         val cell = TextView(this).apply {
             this.text = text
             setPadding(2, 2, 2, 2)

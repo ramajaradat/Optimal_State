@@ -12,9 +12,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class ProviderAddClients : AppCompatActivity() {
-    private lateinit var BackAddClient: Button
-    private lateinit var EnterUserEmail: EditText
-    private lateinit var ApplyAddClinetButton: Button
+    private lateinit var ProviderBackAddClientButton: Button
+    private lateinit var ProviderEnterClientEmail: EditText
+    private lateinit var ProviderAddClientButton: Button
     private lateinit var database: FirebaseDatabase
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var ClientNameShow: TextView
@@ -23,27 +23,33 @@ class ProviderAddClients : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_provider_add_clintes)
+        // Initialize UI
+        initiaizeUI()
+        //Setup Button
+        setupButton()
+    }
 
-        // Initialize Firebase Database
+    private fun initiaizeUI(){
         database = FirebaseDatabase.getInstance()
-        EnterUserEmail = findViewById(R.id.EnterUserEmail)
-        ApplyAddClinetButton = findViewById(R.id.ApplyAddClinetButton)
-        BackAddClient = findViewById(R.id.BackAddClient)
+        ProviderEnterClientEmail = findViewById(R.id.ProviderEnterClientEmail)
+        ProviderAddClientButton = findViewById(R.id.ProviderAddClientButton)
+        ProviderBackAddClientButton = findViewById(R.id.ProviderBackAddClientButton)
         mFirebaseAuth = FirebaseAuth.getInstance()
         ClientNameShow = findViewById(R.id.ClientNameShow)
-
-        BackAddClient.setOnClickListener {
+    }
+    private fun setupButton(){
+        ProviderBackAddClientButton.setOnClickListener {
             val intent = Intent(this, ProviderHomePage::class.java)
             startActivity(intent)
             finish()
         }
 
-        ApplyAddClinetButton.setOnClickListener {
-            val email = EnterUserEmail.text.toString().trim()
+        ProviderAddClientButton.setOnClickListener {
+            val email = ProviderEnterClientEmail.text.toString().trim()
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                EnterUserEmail.error = "Please enter a valid email address"
-                EnterUserEmail.requestFocus()
+                ProviderEnterClientEmail.error = "Please enter a valid email address"
+                ProviderEnterClientEmail.requestFocus()
                 return@setOnClickListener
             }
 
@@ -68,7 +74,7 @@ class ProviderAddClients : AppCompatActivity() {
                                         if (clientAlreadyAdded) {
                                             Toast.makeText(this@ProviderAddClients, "Client is already added.", Toast.LENGTH_SHORT).show()
                                         } else {
-                                            saveClientToProvider(formattedProviderEmail, email)
+                                            showClientName(formattedProviderEmail, email)
                                         }
                                     }
                                 }
@@ -82,7 +88,6 @@ class ProviderAddClients : AppCompatActivity() {
                 })
         }
     }
-
     // Function to check if the client is already added to the provider's dataset
     private fun checkIfClientAlreadyAdded(providerEmail: String, clientEmail: String, callback: (Boolean) -> Unit) {
         val providerRef = database.reference.child("Providers").child(providerEmail).child("clients")
@@ -102,62 +107,32 @@ class ProviderAddClients : AppCompatActivity() {
             }
         })
     }
-
-    // Function to save client email to provider's dataset (handling multiple clients)
-    private fun saveClientToProvider(providerEmail: String, clientEmail: String) {
+    //function to show Client FullName
+    private fun showClientName(providerEmail: String, clientEmail: String) {
         val userinfo= database.reference
         userinfo.child("users")
             .orderByChild("email")
             .equalTo(clientEmail)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Directly retrieve firstName and lastName (assuming client exists)
                     snapshot.children.forEach { userSnapshot ->
                         val firstName = userSnapshot.child("firstName").getValue(String::class.java) ?: "N/A"
                         val lastName = userSnapshot.child("lastName").getValue(String::class.java) ?: "N/A"
-
-                        // Combine firstName and lastName
                         val fullName = "$firstName $lastName"
 
-                        // Find the TextView in the layout and set the full name
                         ClientNameShow.text = fullName
+
+                        saveClientEmailOnProviderDataset(clientEmail,providerEmail)
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Handle database error
                     Toast.makeText(applicationContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
-        val providerRef = database.reference.child("Providers").child(providerEmail).child("clients")
 
-        // Get the current list of client emails
-        providerRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val clientEmails = snapshot.children.mapNotNull { it.getValue(String::class.java) }.toMutableList()
-
-                // Add the new client email if not already in the list
-                if (!clientEmails.contains(clientEmail)) {
-                    clientEmails.add(clientEmail)
-
-                    // Save the updated list of client emails
-                    providerRef.setValue(clientEmails)
-                        .addOnSuccessListener {
-                            Toast.makeText(applicationContext, "Client added successfully!", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(applicationContext, "Failed to add client: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
-                    Toast.makeText(applicationContext, "Client already added.", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
+    //Check if the email entered for provider
     private fun checkIfUserIsProvider(clientEmail: String, callback: (Boolean) -> Unit) {
         val userInfoRef = database.reference.child("users")
         userInfoRef.orderByChild("email").equalTo(clientEmail)
@@ -177,6 +152,34 @@ class ProviderAddClients : AppCompatActivity() {
                     callback(false)
                 }
             })
+    }
+    //save the client email which is added to provider realtime dataset
+    private fun saveClientEmailOnProviderDataset(clientEmail:String,providerEmail:String){
+        val providerRef = database.reference.child("Providers").child(providerEmail).child("clients")
+
+        providerRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val clientEmails = snapshot.children.mapNotNull { it.getValue(String::class.java) }.toMutableList()
+
+                if (!clientEmails.contains(clientEmail)) {
+                    clientEmails.add(clientEmail)
+
+                    providerRef.setValue(clientEmails)
+                        .addOnSuccessListener {
+                            Toast.makeText(applicationContext, "Client added successfully!", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(applicationContext, "Failed to add client: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(applicationContext, "Client already added.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
 

@@ -49,14 +49,9 @@ class UserChangeProfileInfo : AppCompatActivity() {
         val currentUser = mFirebaseAuth.currentUser
         if (currentUser != null) {
             val userUid = currentUser.uid
-
-            // Reference to the specific user's data
             val userRef = firebaseDatabase.reference.child("users").child(userUid)
-
-            // Load user data into the EditText fields
             userRef.get().addOnSuccessListener { snapshot ->
                 if (snapshot.exists()) {
-                    // Set the original data into EditText fields
                     UserFirstNameChange.setText(
                         snapshot.child("firstName").getValue(String::class.java) ?: ""
                     )
@@ -78,7 +73,6 @@ class UserChangeProfileInfo : AppCompatActivity() {
     }
 
     private fun setupButton() {
-        // Cancel button action
         UserCancelChangeProfileChange.setOnClickListener {
             val intent = Intent(this@UserChangeProfileInfo, UserAccountSetting::class.java)
             startActivity(intent)
@@ -109,7 +103,6 @@ class UserChangeProfileInfo : AppCompatActivity() {
             }
             val matchResult = dobRegex.find(dob)
             val (dayString, monthString, yearString) = matchResult?.destructured ?: return@setOnClickListener
-            //test the date valid or not
             val day = dayString.toInt()
             val month = monthString.toInt()
             val year = yearString.toInt()
@@ -142,20 +135,16 @@ class UserChangeProfileInfo : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Get the current user UID to update data
             val currentUser = mFirebaseAuth.currentUser
             if (currentUser != null) {
                 val userUid = currentUser.uid
 
-                // Reference to the user's data
                 val userRef = firebaseDatabase.reference.child("users").child(userUid)
 
-                // Update the fields in Firebase
                 userRef.child("firstName").setValue(firstname)
                 userRef.child("lastName").setValue(lastname)
                 userRef.child("dob").setValue(dob).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Update successful, navigate to UserAccountSetting or show a success message
                         startActivity(
                             Intent(
                                 this@UserChangeProfileInfo,
@@ -163,7 +152,6 @@ class UserChangeProfileInfo : AppCompatActivity() {
                             )
                         )
                     } else {
-                        // Handle errors
                         Toast.makeText(this, "Failed to update. Try again!", Toast.LENGTH_SHORT)
                             .show()
                     }

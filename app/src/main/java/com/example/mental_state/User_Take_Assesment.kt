@@ -37,7 +37,7 @@ class User_Take_Assesment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_user_take_assesment)
-        //initializeUI&Firebase
+        //initialize UI & Firebase
         initializeUI()
         //set up user buttons click
         setupButtonClick()
@@ -66,7 +66,6 @@ class User_Take_Assesment : AppCompatActivity() {
         }
     }
     private fun setupAssesmentSubmitButton() {
-        // Calculate the checked counts for each card layout
         val redCheckNum = getCheckedCount(redCard)
         val blueCheckNum = getCheckedCount(blueCard)
         val goldCheckNum = getCheckedCount(goldCard)
@@ -75,7 +74,6 @@ class User_Take_Assesment : AppCompatActivity() {
 
         val statuses = mutableListOf<String>()
 
-        // Check counts for each card if check equal or more 2 the save status
         if (redCheckNum >= 2) statuses.add("Red")
         if (blueCheckNum >= 2) statuses.add("Blue")
         if (goldCheckNum >= 2) statuses.add("Gold")
@@ -83,17 +81,14 @@ class User_Take_Assesment : AppCompatActivity() {
 
         val status = statuses.joinToString(", ")
 
-        // Get  current user’s email
         val userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown User"
 
-        // Get the current date and time
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH) + 1  // Months are 0-based, so add 1
+        val month = calendar.get(Calendar.MONTH) + 1
         val year = calendar.get(Calendar.YEAR)
         val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.time)
 
-        // Create a UserHistory object
         val userHistory = UserHistory(
             email = userEmail,
             status = status,
@@ -107,7 +102,6 @@ class User_Take_Assesment : AppCompatActivity() {
         val userHistoryRef = database.getReference("UserHistory")
             .child(FirebaseAuth.getInstance().currentUser?.uid ?: "UnknownUID")
 
-        // Push the UserHistory info to the database
         userHistoryRef.push().setValue(userHistory)
             .addOnSuccessListener {
                 Log.d("Firebase", "User history successfully written!")
@@ -147,24 +141,21 @@ class User_Take_Assesment : AppCompatActivity() {
             }
     }
     private fun addCheckBoxes(items: List<String>, cardLayout: LinearLayout) {
-        // Clear any existing views to avoid duplicates
         cardLayout.removeAllViews()
 
-        // Loop through each item and create a CheckBox
         for (item in items) {
             val checkBox = CheckBox(this)
-            checkBox.text = item // Set the text for the checkbox
+            checkBox.text = item
             checkBox.setTextColor(getColor(android.R.color.black))
             checkBox.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
-            // Add the CheckBox to the card layout
             cardLayout.addView(checkBox)
         }
     }
-    // Function to calculate the checked CheckBoxes
+    // function to calculate the number of CheckBoxes was checked
     private fun getCheckedCount(cardLayout: LinearLayout): Int {
         var count = 0
         for (i in 0 until cardLayout.childCount) {

@@ -47,17 +47,14 @@ class Login : AppCompatActivity() {
     }
     //set up user buttons click
     private fun setupButtonClick() {
-        // set up forget password button click
         userforgetpass.setOnClickListener {
             val intent = Intent(this@Login, ForgetPassword::class.java)
             startActivity(intent)
         }
-        //set up signup button click
         usersignup.setOnClickListener {
             val intent = Intent(this@Login, SignUp::class.java)
             startActivity(intent)
         }
-        // set up login button click
         userlogin.setOnClickListener {
             setupLoginButton()
         }

@@ -55,7 +55,6 @@ class UserExercise : AppCompatActivity() {
             val userHistoryRef =
                 FirebaseDatabase.getInstance().getReference("UserHistory").child(userUid)
 
-            // Get Last Status From Dataset on Firestore
             userHistoryRef.orderByKey().limitToLast(1)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -67,7 +66,6 @@ class UserExercise : AppCompatActivity() {
                             ).show()
                             val statuses = lastStatus?.split(",")?.map { it.trim() } ?: emptyList()
 
-                            // Get data from Dataset based on the user status
                             fetchDataFromFirestore(statuses)
                         } else {
                             Toast.makeText(
@@ -91,13 +89,11 @@ class UserExercise : AppCompatActivity() {
 
     private fun fetchDataFromFirestore(statuses: List<String>) {
         val db = FirebaseFirestore.getInstance()
-        //  store data to  spinners
         val breathingExercises = mutableListOf<String>()
         val foods = mutableListOf<String>()
         val otherExercises = mutableListOf<String>()
         val recommendedVideos = mutableListOf<String>()
 
-        // to get info from each query on firestore dataset
         val statusToDocId = mapOf(
             "Red" to "HgVJpyoUYLZgMfq1TMM9",
             "Blue" to "IeQGuaztpUb0iY1YPiwX",
@@ -105,10 +101,8 @@ class UserExercise : AppCompatActivity() {
             "White" to "iEUt0GdunvMBjfyTOGI9"
         )
 
-        // counter to get all exercises from dataset
         var statusProcessedCount = 0
 
-        // get exercises for each status from dataset
         statuses.forEach { status ->
             val docId = statusToDocId[status]
             if (docId != null) {
@@ -116,7 +110,6 @@ class UserExercise : AppCompatActivity() {
                 statusDocRef.get().addOnSuccessListener { document ->
                     if (document.exists()) {
                         try {
-                            // Safely cast the fields to Lists of Strings
                             val breathingList =
                                 document.get("Breath") as? List<String> ?: emptyList()
                             val foodList = document.get("Food") as? List<String> ?: emptyList()
@@ -124,18 +117,11 @@ class UserExercise : AppCompatActivity() {
                                 document.get("Other") as? List<String> ?: emptyList()
                             val videoList = document.get("Video") as? List<String> ?: emptyList()
 
-                            // Add all exercise element  into list
                             breathingExercises.addAll(breathingList)
                             foods.addAll(foodList)
                             otherExercises.addAll(otherExerciseList)
                             recommendedVideos.addAll(videoList)
 
-                            // Log the retrieved data for debugging
-                            Log.d("UserExercise", "Status: $status")
-                            Log.d("UserExercise", "Breathing: $breathingList")
-                            Log.d("UserExercise", "Foods: $foodList")
-                            Log.d("UserExercise", "Other: $otherExerciseList")
-                            Log.d("UserExercise", "Recommended: $videoList")
                         } catch (e: Exception) {
                             Log.e("UserExercise", "Error processing document: ${e.message}")
                         }
@@ -143,10 +129,8 @@ class UserExercise : AppCompatActivity() {
                         Log.e("UserExercise", "Document does not exist for status: $status")
                     }
 
-                    // Increment the counter when each document fetch is completed
                     statusProcessedCount++
 
-                    // all requests are completed show it in spinner
                     if (statusProcessedCount == statuses.size) {
                         Log.d("UserExercise", "All statuses processed, updating spinners.")
                         runOnUiThread {
@@ -159,7 +143,7 @@ class UserExercise : AppCompatActivity() {
                     Log.e(
                         "UserExercise", "Error fetching document for status $status: ${e.message}"
                     )
-                    statusProcessedCount++ // if one request fails
+                    statusProcessedCount++
                 }
             } else {
                 Log.e("UserExercise", "No Firestore document found for status: $status")
@@ -173,25 +157,14 @@ class UserExercise : AppCompatActivity() {
         otherExercises: List<String>,
         recommendedVideos: List<String>
     ) {
-        //to ensure that all exercises element insert correctly on spinner
-        Log.d("UserExercise", "Final Breathing List: $breathingExercises")
-        Log.d("UserExercise", "Final Foods List: $foods")
-        Log.d("UserExercise", "Final Other Exercises List: $otherExercises")
-        Log.d("UserExercise", "Final Recommended Videos List: $recommendedVideos")
-
-        //  initial values for each spinner
         val initialBreathingValue = "Breathing Exercises"
         val initialFoodValue = "Recommended Foods"
         val initialOtherValue = "Other Exercises"
         val initialVideoValue = "Watch Video"
 
-        // Adapter for Breath Recommended Spinner
         breathAdapter(initialBreathingValue, breathingExercises)
-        // Adapter for Foods Recommended Spinner
         foodsAdapter(initialFoodValue, foods)
-        // Adapter for Other Exercise Spinner
         otherAdapter(initialOtherValue, otherExercises)
-        // Adapter for Recommended Video Spinner
         videoAdapter(initialVideoValue, recommendedVideos)
 
     }
