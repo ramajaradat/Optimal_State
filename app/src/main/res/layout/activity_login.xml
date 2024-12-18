@@ -16,7 +16,7 @@
         android:background="#BEE2E7"
         android:ems="100"
         android:hint="Username"
-        android:inputType="text"
+        android:inputType="text|textEmailAddress"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#000000"

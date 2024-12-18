@@ -16,10 +16,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Calendar
 
 
 class SignUp : AppCompatActivity() {
-    //initializeUI&Firebase
 
     private lateinit var firstnameinput: EditText
     private lateinit var lastnameinput: EditText
@@ -38,6 +38,13 @@ class SignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_sign_up)
+        //initializeUI&Firebase
+        initializeUI()
+        //set up user buttons click
+        setupButtonClick()
+    }
+
+    private fun initializeUI(){
         firstnameinput = findViewById(R.id.firstnameinput)
         lastnameinput = findViewById(R.id.lastnameinput)
         birthdaydateinput = findViewById(R.id.birthdaydateinput)
@@ -48,13 +55,9 @@ class SignUp : AppCompatActivity() {
         signinButton = findViewById(R.id.signupButton)
         signupbackbutton = findViewById(R.id.signupbackbutton)
         providershow = findViewById(R.id.providershow)
-
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
-        //set up user buttons click
-        setupButtonClick()
     }
-
     private fun setupButtonClick() {
         //to allow user just check yes or no
         yesbox.setOnCheckedChangeListener { _, isChecked ->
@@ -62,7 +65,6 @@ class SignUp : AppCompatActivity() {
                 nobox.isChecked = false // Uncheck "No" if "Yes" is checked
             }
         }
-
         nobox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 yesbox.isChecked = false // Uncheck "Yes" if "No" is checked
@@ -104,6 +106,40 @@ class SignUp : AppCompatActivity() {
                 birthdaydateinput.requestFocus()
                 return@setOnClickListener
             }
+            val matchResult = dobRegex.find(dob)
+            val (dayString, monthString, yearString) = matchResult?.destructured ?: return@setOnClickListener
+           //test the date valid or not
+            val day = dayString.toInt()
+            val month = monthString.toInt()
+            val year = yearString.toInt()
+
+            if (month !in 1..12) {
+                birthdaydateinput.error = "Month should be between 1 and 12"
+                birthdaydateinput.requestFocus()
+                return@setOnClickListener
+            }
+
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            if (year !in 1900..currentYear) {
+                birthdaydateinput.error = "Year should be between 1900 and $currentYear"
+                birthdaydateinput.requestFocus()
+                return@setOnClickListener
+            }
+
+            val isLeapYear = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+
+            val maxDaysInMonth = when (month) {
+                1, 3, 5, 7, 8, 10, 12 -> 31
+                4, 6, 9, 11 -> 30
+                2 -> if (isLeapYear) 29 else 28 // February
+                else -> 0
+            }
+
+            if (day !in 1..maxDaysInMonth) {
+                birthdaydateinput.error = "Day should be valid for the given month"
+                birthdaydateinput.requestFocus()
+                return@setOnClickListener
+            }
 
             // Validate email
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -135,14 +171,7 @@ class SignUp : AppCompatActivity() {
 
     }
 
-    private fun handelSignUpButton(
-        email: String,
-        pass: String,
-        firstname: String,
-        lastname: String,
-        dob: String,
-        providerStatus: String,
-    ) {
+    private fun handelSignUpButton(email: String,pass: String,firstname: String,lastname: String,dob: String, providerStatus: String){
         // Check if email already exists in dataset
         val databaseRef = FirebaseDatabase.getInstance().getReference("users")
         databaseRef.orderByChild("email").equalTo(email)
@@ -167,38 +196,7 @@ class SignUp : AppCompatActivity() {
                                     )
 
                                 } else {
-                                    if (providerStatus.toString()=="yes") {
-                                        // Format the email to be Firebase-compatible
-                                        val formattedEmail =
-                                            email.replace(".", "_").replace("@", "_")
-
-
-                                        // Reference to the Firebase Realtime Database
-                                        val database =
-                                            FirebaseDatabase.getInstance().getReference("Providers")
-
-
-                                        // Create an entry with an empty email column
-                                        val providerData: MutableMap<String, Any> = HashMap()
-                                        providerData["email"] = ""
-                                        database.child(formattedEmail).setValue(providerData)
-                                            .addOnSuccessListener { aVoid: Void? ->
-                                                Toast.makeText(
-                                                    this@SignUp,
-                                                    "Provider dataset created successfully!",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-
-                                            }
-                                            .addOnFailureListener { e: Exception ->
-                                                Toast.makeText(
-                                                    this@SignUp,
-                                                    "Failed to create dataset: ",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                    }
-
+                                    //save user info on realtime dataset
                                     val userInformation = UserInformation(
                                         firstname,
                                         lastname,
@@ -233,13 +231,6 @@ class SignUp : AppCompatActivity() {
 
             })
     }
-    class ProviderModel {
-        var email: String? = null
 
-        constructor()
 
-        constructor(email: String?) {
-            this.email = email
-        }
-    }
 }

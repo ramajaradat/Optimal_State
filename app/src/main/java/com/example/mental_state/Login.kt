@@ -18,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Login : AppCompatActivity() {
-    //initializeUI&Firebase
 
     private lateinit var usersignup: Button
     private lateinit var userlogin: Button
@@ -32,6 +31,12 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
+        initializeUI()
+        setupButtonClick()
+
+    }
+    //initialize UI
+    private fun initializeUI(){
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
         usersignup = findViewById(R.id.usersignup)
@@ -39,11 +44,7 @@ class Login : AppCompatActivity() {
         usernameinput = findViewById(R.id.usernameinput)
         passwordinput = findViewById(R.id.passwordinput)
         userforgetpass = findViewById(R.id.userforgetpass)
-
-        setupButtonClick()
-
     }
-
     //set up user buttons click
     private fun setupButtonClick() {
         // set up forget password button click
@@ -58,11 +59,11 @@ class Login : AppCompatActivity() {
         }
         // set up login button click
         userlogin.setOnClickListener {
-            handelLoginButton()
+            setupLoginButton()
         }
     }
-
-    private fun handelLoginButton() {
+    //Authenticate User
+    private fun setupLoginButton() {
         val email: String = usernameinput.text.toString()
         val pass: String = passwordinput.text.toString()
 
@@ -78,7 +79,7 @@ class Login : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val firebaseUser = firebaseAuth.currentUser
                         if (firebaseUser != null) {
-                            moveToLoginPage(firebaseUser)
+                            goToHomePage(firebaseUser)
                         }
                     } else {
                         Toast.makeText(
@@ -90,8 +91,8 @@ class Login : AppCompatActivity() {
                 }
         }
     }
-
-    private fun moveToLoginPage(user: FirebaseUser) {
+    //After Authenticated User go to home page and print his full name
+    private fun goToHomePage(user: FirebaseUser) {
         val userRef = firebaseDatabase.getReference("users").child(user.uid)
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
