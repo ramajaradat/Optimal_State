@@ -25,19 +25,23 @@ class ProviderHomePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_provider_home_page)
-
-        // Initialize buttons
+        // Initialize UI
+        initialize()
+        // Get and show the user firstname on homepage
+        showUserName()
+        //setup Button
+        setupButton()
+    }
+    private fun initialize(){
         provideraddClientButton = findViewById(R.id.provideraddClientButton)
         providerremoveClientButton = findViewById(R.id.providerremoveClientButton)
         providerViewclientButton = findViewById(R.id.providerViewclientButton)
         providersettingsButton = findViewById(R.id.providersettingsButton)
-        tvwelcomeprovider = findViewById(R.id.tvwelcomeprovider) // Updated reference
-
-        // Initialize Firebase
+        tvwelcomeprovider = findViewById(R.id.tvwelcomeprovider)
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-
-        // Fetch and display the user's first name
+    }
+    private fun showUserName(){
         val uid = auth.currentUser?.uid
         if (uid != null) {
             val userRef = database.getReference("users").child(uid).child("firstName")
@@ -53,8 +57,8 @@ class ProviderHomePage : AppCompatActivity() {
                 }
             })
         }
-
-        // Navigate to ProviderAddClients page
+    }
+    private fun setupButton(){
         provideraddClientButton.setOnClickListener {
             val intent = Intent(this@ProviderHomePage, ProviderAddClients::class.java)
             startActivity(intent)
@@ -75,4 +79,5 @@ class ProviderHomePage : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }
