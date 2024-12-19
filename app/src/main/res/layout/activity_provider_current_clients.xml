@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Logo Layout -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +23,6 @@
             app:srcCompat="@drawable/applogo" />
     </LinearLayout>
 
-    <!-- Title Text -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +33,6 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <!-- Scrollable Table -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,12 +40,11 @@
         android:fillViewport="true">
 
         <TableLayout
-            android:id="@+id/clientsTableLayout"
+            android:id="@+id/clientsStatusTableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1,2,3">
 
-            <!-- Header Row -->
             <TableRow
                 android:background="#FFB74D"
                 android:padding="0dp">
@@ -84,7 +80,6 @@
         </TableLayout>
     </ScrollView>
 
-    <!-- Back Button -->
     <Button
         android:id="@+id/btnBack"
         android:layout_width="match_parent"

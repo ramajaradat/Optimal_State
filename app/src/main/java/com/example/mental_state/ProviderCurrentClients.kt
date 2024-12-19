@@ -15,9 +15,9 @@ import com.google.firebase.database.*
 
 class ProviderCurrentClients : AppCompatActivity() {
 
-    private lateinit var clientsTableLayout: TableLayout
+    private lateinit var clientsStatusTableLayout: TableLayout
     private lateinit var database: FirebaseDatabase
-    private lateinit var backButton: Button
+    private lateinit var backShowClientStatusButton: Button
     private lateinit var mFirebaseAuth: FirebaseAuth
 
 
@@ -25,44 +25,38 @@ class ProviderCurrentClients : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_provider_current_clients)
+        // Initialize UI
+        initializeUI()
+        //setup button
+        setupButton()
 
-        // Use android.R.id.content to reference the root view directly
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance()
-        clientsTableLayout = findViewById(R.id.clientsTableLayout)
-        backButton = findViewById(R.id.btnBack)
-        mFirebaseAuth = FirebaseAuth.getInstance()
-
-
-        // Format current provider email to match the Firebase structure
         val firebaseProvider = mFirebaseAuth.currentUser
         val providerEmail = firebaseProvider?.email.toString()
         val formattedProviderEmail = providerEmail.replace(".", "_").replace("@", "_")
-
-        // Back button functionality
-        backButton.setOnClickListener {
-            val intent = Intent(this, ProviderHomePage::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         // Load client data from Firebase
         loadClientData(formattedProviderEmail)
     }
 
+    private fun initializeUI(){
+        database = FirebaseDatabase.getInstance()
+        clientsStatusTableLayout = findViewById(R.id.clientsStatusTableLayout)
+        backShowClientStatusButton = findViewById(R.id.btnBack)
+        mFirebaseAuth = FirebaseAuth.getInstance()
+    }
+    private fun setupButton(){
+        backShowClientStatusButton.setOnClickListener {
+            val intent = Intent(this, ProviderHomePage::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
     private fun loadClientData(formattedProviderEmail:String) {
         val userHistoryRef = database.reference.child("UserHistory")
-        val providerRef = database.reference.child("Providers") // Assuming the provider data is stored under "Providers" node
+        val providerRef = database.reference.child("Providers")
 
         providerRef.child(formattedProviderEmail).child("clients").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(providerSnapshot: DataSnapshot) {
-                // Get the list of clients associated with this provider
                 val clientEmails = mutableSetOf<String>()
                 for (clientSnapshot in providerSnapshot.children) {
                     val clientEmail = clientSnapshot.getValue(String::class.java) ?: ""
@@ -71,17 +65,14 @@ class ProviderCurrentClients : AppCompatActivity() {
                     }
                 }
 
-                // Now load user history, but only for these clients
                 userHistoryRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        // Clear table and add header
-                        clientsTableLayout.removeAllViews()
+                        clientsStatusTableLayout.removeAllViews()
                         addTableHeader()
 
                         if (snapshot.exists()) {
                             var hasData = false
 
-                            // Loop through users' history data
                             for (userHistorySnapshot in snapshot.children) {
                                 for (historySnapshot in userHistorySnapshot.children) {
                                     val email = historySnapshot.child("email").getValue(String::class.java) ?: ""
@@ -91,7 +82,6 @@ class ProviderCurrentClients : AppCompatActivity() {
                                     val time = historySnapshot.child("time").getValue(String::class.java) ?: ""
                                     val status = historySnapshot.child("status").getValue(String::class.java) ?: ""
 
-                                    // Check if the email is in the list of clients for this provider
                                     if (clientEmails.contains(email) && email.isNotEmpty()) {
                                         val date = "$day/$month/$year"
                                         addClientRow(email, date, time, status)
@@ -100,7 +90,6 @@ class ProviderCurrentClients : AppCompatActivity() {
                                 }
                             }
 
-                            // Show placeholder if no valid data exists
                             if (!hasData) {
                                 showPlaceholderRow()
                             }
@@ -120,9 +109,6 @@ class ProviderCurrentClients : AppCompatActivity() {
             }
         })
     }
-
-
-
     private fun addTableHeader() {
         val headerRow = TableRow(this)
 
@@ -133,27 +119,23 @@ class ProviderCurrentClients : AppCompatActivity() {
                 textSize = 16f
                 setPadding(10, 10, 10, 10)
                 setTextColor(Color.WHITE)
-                setBackgroundColor(Color.parseColor("#FFB74D")) // Purple header background
+                setBackgroundColor(Color.parseColor("#FFB74D"))
                 setTypeface(null, android.graphics.Typeface.BOLD)
-                // Ensures that columns are wide enough to display text
                 layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
             }
             headerRow.addView(header)
         }
 
-        // Add header to the table layout
-        clientsTableLayout.addView(headerRow)
+        clientsStatusTableLayout.addView(headerRow)
     }
-
     private fun addClientRow(email: String, date: String, time: String, status: String) {
         val tableRow = TableRow(this).apply {
             setPadding(4, 4, 4, 4)
         }
 
-        val rowBackgroundColor = Color.parseColor("#F5F5F5") // Light gray background
+        val rowBackgroundColor = Color.parseColor("#F5F5F5")
         tableRow.setBackgroundColor(rowBackgroundColor)
 
-        // Create TextViews for each column with dynamic width adjustment
         val columns = listOf(email, date, time, status)
         columns.forEach { columnText ->
             val textView = TextView(this).apply {
@@ -161,25 +143,21 @@ class ProviderCurrentClients : AppCompatActivity() {
                 textSize = 16f
                 setPadding(16, 16, 16, 16)
                 setTextColor(Color.BLACK)
-                // Ensures that columns have even space distribution
                 layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
             }
             tableRow.addView(textView)
         }
 
-        // Add row to the table layout
-        clientsTableLayout.addView(tableRow)
+        clientsStatusTableLayout.addView(tableRow)
 
-        // Add spacing between rows
         val spacer = TableRow(this).apply {
             layoutParams = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
-                10 // Spacer height
+                10
             )
         }
-        clientsTableLayout.addView(spacer)
+        clientsStatusTableLayout.addView(spacer)
     }
-
     private fun showPlaceholderRow() {
         val placeholderRow = TableRow(this)
 
@@ -192,13 +170,13 @@ class ProviderCurrentClients : AppCompatActivity() {
                 TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT
             ).apply {
-                span = 4 // Span across all columns
+                span = 4
             }
             gravity = android.view.Gravity.CENTER
         }
 
         placeholderRow.addView(placeholder)
-        clientsTableLayout.addView(placeholderRow)
+        clientsStatusTableLayout.addView(placeholderRow)
     }
 }
 

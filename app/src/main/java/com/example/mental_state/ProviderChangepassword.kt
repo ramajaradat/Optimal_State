@@ -1,6 +1,7 @@
 package com.example.mental_state
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -24,22 +25,29 @@ class ProviderChangepassword : AppCompatActivity() {
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var firebaseDatabase: FirebaseDatabase
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_provider_change_password)
-
+        //initialize Ui
+        initializeUI()
+        // Display the current user email
+        useremail()
+        //setup button
+        setupButton()
+    }
+    private fun initializeUI(){
         tvEmailtext = findViewById(R.id.tvEmailtext)
         currentpass = findViewById(R.id.currentpass)
         newpassedite = findViewById(R.id.newpassedite)
         confirmnewpassedite = findViewById(R.id.confirmnewpassedite)
         pass_edit_button = findViewById(R.id.pass_edit_button)
         pass_cancle_button = findViewById(R.id.pass_cancle_button)
-
         mFirebaseAuth = FirebaseAuth.getInstance()
         firebaseDatabase = FirebaseDatabase.getInstance()
-
-        // Display the current user's email
+    }
+    private fun useremail(){
         val currentUser = mFirebaseAuth.currentUser
         if (currentUser != null) {
             tvEmailtext.text = currentUser.email
@@ -47,7 +55,8 @@ class ProviderChangepassword : AppCompatActivity() {
             Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show()
             return
         }
-
+    }
+    private fun setupButton(){
         pass_cancle_button.setOnClickListener {
             val intent = Intent(this@ProviderChangepassword, ProviderAccountSetting::class.java)
             startActivity(intent)
@@ -58,25 +67,21 @@ class ProviderChangepassword : AppCompatActivity() {
             val newPassword = newpassedite.text.toString()
             val confirmNewPassword = confirmnewpassedite.text.toString()
 
-            // Validate fields
             if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Ensure new password meets complexity requirements (length, uppercase, lowercase, special char)
             if (newPassword.length < 8 || !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>]).+$").containsMatchIn(newPassword)) {
                 Toast.makeText(this, "New password must be at least 8 characters, with an uppercase letter, lowercase letter, and a special character.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Ensure the new password matches the confirmation password
             if (newPassword != confirmNewPassword) {
                 Toast.makeText(this, "New passwords do not match.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Re-authenticate the user with their current password
             val user = mFirebaseAuth.currentUser
             if (user == null) {
                 Toast.makeText(this, "User is not logged in", Toast.LENGTH_SHORT).show()
@@ -87,12 +92,11 @@ class ProviderChangepassword : AppCompatActivity() {
 
             user.reauthenticate(credential).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Successfully re-authenticated, now update the password
                     user.updatePassword(newPassword).addOnCompleteListener { passwordUpdateTask ->
                         if (passwordUpdateTask.isSuccessful) {
                             Toast.makeText(this, "Password updated successfully.", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@ProviderChangepassword, ProviderAccountSetting::class.java)
-                                        startActivity(intent)
+                            startActivity(intent)
 
                         } else {
                             Toast.makeText(this, "Failed to update password in Firebase Authentication.", Toast.LENGTH_SHORT).show()

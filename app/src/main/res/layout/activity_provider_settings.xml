@@ -27,13 +27,13 @@
         android:text="Account Setting"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/NotiButton"
+        app:layout_constraintEnd_toEndOf="@+id/ChangeThemeButton"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/NotiButton"
+        app:layout_constraintStart_toStartOf="@+id/ChangeThemeButton"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
 
     <Button
-        android:id="@+id/NotiButton"
+        android:id="@+id/ChangeThemeButton"
         android:layout_width="300dp"
         android:layout_height="75dp"
         android:layout_marginTop="28dp"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="@+id/BackButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/BackButton"
-        app:layout_constraintTop_toBottomOf="@+id/NotiButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ChangeThemeButton" />
 
     <Button
         android:id="@+id/BackButton"

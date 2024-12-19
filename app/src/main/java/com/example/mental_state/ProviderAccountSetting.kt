@@ -12,17 +12,23 @@ class ProviderAccountSetting : AppCompatActivity() {
     private lateinit var ProfileInformationbutton:Button
 
     private lateinit var Changepassbutton: Button
-    private lateinit var backk2button: Button
+    private lateinit var BackChangeAccountButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_provider_account_setting)
+        //initialize UI
+        initializeUI()
+        //setup Button
+        setupButton()
+    }
+    private fun initializeUI(){
         ProfileInformationbutton=findViewById(R.id.ProfileInformationbutton)
-
         Changepassbutton=findViewById(R.id.Changepassbutton)
-        backk2button=findViewById(R.id.backk2button)
-
-        backk2button.setOnClickListener {
+        BackChangeAccountButton=findViewById(R.id.BackChangeAccountButton)
+    }
+    private fun setupButton(){
+        BackChangeAccountButton.setOnClickListener {
             val intent = Intent(this@ProviderAccountSetting, ProviderSettings::class.java)
             startActivity(intent)
         }
@@ -33,11 +39,6 @@ class ProviderAccountSetting : AppCompatActivity() {
         Changepassbutton.setOnClickListener {
             val intent = Intent(this@ProviderAccountSetting, ProviderChangepassword::class.java)
             startActivity(intent)
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
         }
     }
 }

@@ -11,32 +11,38 @@ class ProviderChangeTheme : AppCompatActivity() {
 
     private lateinit var darkButton: Button
     private lateinit var lightButton: Button
-    private lateinit var back4button:Button
+    private lateinit var providerchangethemebackButton:Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_provider_change_theme) // Ensure this XML file matches the one you provided
+        setContentView(R.layout.activity_provider_change_theme)
 
-        // Initialize the buttons
+        // Initialize UI
+        initializeUI()
+        //setup button
+        setupButton()
+
+    }
+    private fun initializeUI(){
         darkButton = findViewById(R.id.Darkbutton)
         lightButton = findViewById(R.id.Lightbutton)
-        back4button = findViewById(R.id.back4button)
-
-        back4button.setOnClickListener {
+        providerchangethemebackButton = findViewById(R.id.providerchangethemebackButton)
+    }
+    private fun setupButton(){
+        providerchangethemebackButton.setOnClickListener {
             val intent = Intent(this, ProviderSettings::class.java)
             startActivity(intent)
         }
 
-        // Set up listeners for each button to change the theme
         darkButton.setOnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            recreate() // Recreate the activity to apply the theme immediately
+            recreate()
         }
 
         lightButton.setOnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            recreate() // Recreate the activity to apply the theme immediately
+            recreate()
         }
     }
 }
