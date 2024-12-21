@@ -79,6 +79,12 @@ class User_Take_Assesment : AppCompatActivity() {
         if (goldCheckNum >= 2) statuses.add("Gold")
         if (whiteCheckNum >= 2) statuses.add("White")
 
+         if (redCheckNum ==1) statuses.add("Red")
+         if (blueCheckNum==1) statuses.add("Blue")
+         if (goldCheckNum ==1) statuses.add("Gold")
+         if (whiteCheckNum ==1) statuses.add("White")
+
+
         val status = statuses.joinToString(", ")
 
         val userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown User"
