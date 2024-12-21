@@ -11,10 +11,10 @@
         android:id="@+id/tvlogo"
         android:layout_width="410dp"
         android:layout_height="153dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/ProfileInformationbutton"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/ProfileInformationbutton"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/applogo" />
 
@@ -22,39 +22,55 @@
         android:id="@+id/ProfileInformationbutton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="56dp"
         android:backgroundTint="#EBC76F"
         android:text="Profile Information"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Changepassbutton"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/Changepassbutton"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
 
     <Button
         android:id="@+id/Changepassbutton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="#EBC76F"
         android:text="Change Password"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/PrviderDelectAccountButton"
+        app:layout_constraintStart_toStartOf="@+id/PrviderDelectAccountButton"
         app:layout_constraintTop_toBottomOf="@+id/ProfileInformationbutton" />
 
     <Button
         android:id="@+id/BackChangeAccountButton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="#EBC76F"
         android:text="Back"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PrviderDelectAccountButton" />
+
+    <Button
+        android:id="@+id/PrviderDelectAccountButton"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Delect Account"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/BackChangeAccountButton"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/BackChangeAccountButton"
         app:layout_constraintTop_toBottomOf="@+id/Changepassbutton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
