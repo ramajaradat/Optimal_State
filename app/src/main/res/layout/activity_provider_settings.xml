@@ -22,13 +22,13 @@
         android:id="@+id/AccountSettingButton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="80dp"
         android:backgroundTint="#EBC76F"
         android:text="Account Setting"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/ChangeThemeButton"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ChangeThemeButton"
         app:layout_constraintTop_toBottomOf="@+id/tvlogo" />
 
@@ -41,16 +41,29 @@
         android:text="Change Theme"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/Logoutbutton"
+        app:layout_constraintEnd_toEndOf="@+id/PrviderDelectAccountButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Logoutbutton"
+        app:layout_constraintStart_toStartOf="@+id/PrviderDelectAccountButton"
         app:layout_constraintTop_toBottomOf="@+id/AccountSettingButton" />
+
+    <Button
+        android:id="@+id/PrviderDelectAccountButton"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:backgroundTint="#EBC76F"
+        android:text="Delete Account"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/Logoutbutton"
+        app:layout_constraintEnd_toEndOf="@+id/Logoutbutton"
+        app:layout_constraintStart_toStartOf="@+id/Logoutbutton"
+        app:layout_constraintTop_toBottomOf="@+id/ChangeThemeButton" />
 
     <Button
         android:id="@+id/Logoutbutton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="108dp"
         android:backgroundTint="#EBC76F"
         android:text="LogOut"
         android:textColor="#000000"
@@ -64,13 +77,13 @@
         android:id="@+id/BackButton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#EBC76F"
         android:text="Back"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Logoutbutton" />
 

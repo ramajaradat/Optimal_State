@@ -45,7 +45,7 @@ class ProviderAddClients : AppCompatActivity() {
         }
 
         ProviderAddClientButton.setOnClickListener {
-            val email = ProviderEnterClientEmail.text.toString().trim()
+            val email = ProviderEnterClientEmail.text.toString().lowercase().trim()
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 ProviderEnterClientEmail.error = "Please enter a valid email address"
@@ -64,17 +64,16 @@ class ProviderAddClients : AppCompatActivity() {
                             val providerEmail = firebaseProvider?.email.toString()
                             val formattedProviderEmail = providerEmail.replace(".", "_").replace("@", "_")
 
-                            // Check if the client has "provider" field set to "yes"
                             checkIfUserIsProvider(email) { isProvider ->
                                 if (isProvider) {
                                     Toast.makeText(this@ProviderAddClients, "Client is  provider You cant add it.", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    // Check if the client is already added
-                                    checkIfClientAlreadyAdded(formattedProviderEmail, email) { clientAlreadyAdded ->
+                                    checkIfClientAlreadyAdded( email) { clientAlreadyAdded ->
                                         if (clientAlreadyAdded) {
                                             Toast.makeText(this@ProviderAddClients, "Client is already added.", Toast.LENGTH_SHORT).show()
                                         } else {
                                             showClientName(formattedProviderEmail, email)
+
                                         }
                                     }
                                 }
@@ -89,20 +88,29 @@ class ProviderAddClients : AppCompatActivity() {
         }
     }
     // Function to check if the client is already added to the provider's dataset
-    private fun checkIfClientAlreadyAdded(providerEmail: String, clientEmail: String, callback: (Boolean) -> Unit) {
-        val providerRef = database.reference.child("Providers").child(providerEmail).child("clients")
-        providerRef.addListenerForSingleValueEvent(object : ValueEventListener {
+    private fun checkIfClientAlreadyAdded( clientEmail: String, callback: (Boolean) -> Unit) {
+        val providersRef = database.getReference("Providers")
+
+        providersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    val clientEmails = snapshot.children.mapNotNull { it.getValue(String::class.java) }
-                    callback(clientEmails.contains(clientEmail))
+                    for (providerSnapshot in snapshot.children) {
+                        val clientsSnapshot = providerSnapshot.child("clients")
+
+                        val clientEmails = clientsSnapshot.children.mapNotNull { it.getValue(String::class.java) }
+                        if (clientEmails.contains(clientEmail)) {
+                            callback(true)
+                            return
+                        }
+                    }
+                    callback(false)
                 } else {
                     callback(false)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                println("Database error: ${error.message}")
                 callback(false)
             }
         })

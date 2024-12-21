@@ -47,10 +47,24 @@
         app:layout_constraintTop_toBottomOf="@+id/userAccountSettings" />
 
     <Button
+        android:id="@+id/UserDeleteAccount"
+        android:layout_width="284dp"
+        android:layout_height="64dp"
+        android:backgroundTint="#1E4F80"
+        android:text="Delete Account"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/userLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userChangeTheme" />
+
+    <Button
         android:id="@+id/userLogout"
         android:layout_width="284dp"
         android:layout_height="64dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="112dp"
         android:backgroundTint="#1E4F80"
         android:text="LogOut"
         android:textColor="#FFFFFF"
@@ -64,15 +78,22 @@
         android:id="@+id/UserSettingBackButton"
         android:layout_width="284dp"
         android:layout_height="64dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#1E4F80"
         android:text="Back"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userLogout" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="UserDeleteAccount,userLogout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

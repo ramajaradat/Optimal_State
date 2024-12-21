@@ -78,7 +78,7 @@ class SignUp : AppCompatActivity() {
             val firstname = firstnameinput.text.toString().trim()
             val lastname = lastnameinput.text.toString().trim()
             val dob = birthdaydateinput.text.toString().trim()
-            val email = Emailinput.text.toString().trim()
+            val email = Emailinput.text.toString().lowercase().trim()
             val pass = passwordinput.text.toString().trim()
             val providerStatus = if (yesbox.isChecked) "yes" else "no"
 
@@ -164,7 +164,7 @@ class SignUp : AppCompatActivity() {
 
     private fun handelSignUpButton(email: String,pass: String,firstname: String,lastname: String,dob: String, providerStatus: String){
         val databaseRef = FirebaseDatabase.getInstance().getReference("users")
-        databaseRef.orderByChild("email").equalTo(email)
+        databaseRef.orderByChild("email").equalTo(email.lowercase())
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -176,7 +176,7 @@ class SignUp : AppCompatActivity() {
                         ).show()
                     } else {
 
-                        firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                        firebaseAuth.createUserWithEmailAndPassword(email.lowercase(), pass)
                             .addOnCompleteListener(this@SignUp) { task ->
                                 if (!task.isSuccessful) {
                                     CustomToast.createToast(
@@ -191,7 +191,7 @@ class SignUp : AppCompatActivity() {
                                         lastname,
                                         dob,
                                         providerStatus,
-                                        email
+                                        email.lowercase()
                                     )
                                     val uid = task.result?.user?.uid
                                     firebaseDatabase.getReference("users").child(uid.toString())

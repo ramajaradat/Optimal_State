@@ -61,7 +61,7 @@ class Login : AppCompatActivity() {
     }
     //Authenticate User
     private fun setupLoginButton() {
-        val email: String = usernameinput.text.toString()
+        val email: String = usernameinput.text.toString().lowercase()
         val pass: String = passwordinput.text.toString()
 
         if (email.isEmpty()) {
