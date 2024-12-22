@@ -2,6 +2,7 @@ package com.example.mental_state
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -12,7 +13,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
+import kotlin.math.log
 
 class ProviderNotification : AppCompatActivity() {
 
@@ -45,6 +49,8 @@ class ProviderNotification : AppCompatActivity() {
             val intent = Intent(this@ProviderNotification, ProviderSettings::class.java)
             startActivity(intent)        }
     }
+
+
     // Fetch clients associated with the provider
     private fun fetchClientsAndCheckStatus() {
         val firebaseProvider = auth.currentUser
@@ -58,7 +64,7 @@ class ProviderNotification : AppCompatActivity() {
                         val clientEmails = snapshot.children.mapNotNull { it.getValue(String::class.java) }
                         if (clientEmails.isNotEmpty()) {
                             clientEmails.forEach { clientEmail ->
-                                checkClientStatus(clientEmail)
+                                getClientsUid(clientEmail)
                             }
                         } else {
                             showNoClientsMessage()
@@ -80,32 +86,46 @@ class ProviderNotification : AppCompatActivity() {
     private fun showNoClientsMessage() {
         tvNotifications.text = "No clients found for this provider."
     }
+    //get user uid
+   private fun getClientsUid(email: String) {
+        val userInfoRef = database.getReference("users")
+
+        userInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (userSnapshot in snapshot.children) {
+                    val userEmail = userSnapshot.child("email").getValue(String::class.java)
+                    if (userEmail != null && userEmail.equals(email, ignoreCase = true)) {
+                        checkClientStatus(userSnapshot.key.toString(),email)
+                        return
+                    }
+                }
+                tvNotifications.text ="Email not has UID"
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                tvNotifications.text ="Error fetching UID: ${error.message}"
+            }
+        })
+    }
     // Check the latest status of a client that hasn't passed 24 hours
-    private fun checkClientStatus(clientEmail: String) {
-        val formattedEmail = clientEmail.replace(".", "_").replace("@", "_")
-        val clientRef = database.getReference("UserHistory").child(formattedEmail)
+    private fun checkClientStatus(clientuid: String, clientEmail:String) {
+        val clientRef = database.getReference("UserHistory").child(clientuid)
 
         clientRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val lastStatusSnapshot = snapshot.children.firstOrNull()
                     if (lastStatusSnapshot != null) {
-                        try {
-                            val statusDate = lastStatusSnapshot.child("date").getValue(String::class.java) ?: ""
-                            val statusTime = lastStatusSnapshot.child("time").getValue(String::class.java) ?: ""
-                            val status = lastStatusSnapshot.child("status").getValue(String::class.java) ?: ""
 
-                            val statusTimestamp = parseDateTimeToMillis(statusDate, statusTime)
-                            val currentTimestamp = System.currentTimeMillis()
-
-                            if (statusTimestamp != null && (currentTimestamp - statusTimestamp) <= 24 * 60 * 60 * 1000) {
-                                val notificationMessage = "Client: $clientEmail, Status: $status"
-                                notificationsList.add(notificationMessage)
-                                updateNotificationsTextView()
-                            }
-                        } catch (e: Exception) {
-                            Toast.makeText(this@ProviderNotification, "Error parsing status data: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
+                        val status = lastStatusSnapshot.child("status").getValue(String::class.java) ?: ""
+                        val day = lastStatusSnapshot.child("day").getValue(Int::class.java) ?: 0
+                        val month = lastStatusSnapshot.child("month").getValue(Int::class.java) ?: 0
+                        val year = lastStatusSnapshot.child("year").getValue(Int::class.java) ?: 0
+                        val time = lastStatusSnapshot.child("time").getValue(String::class.java) ?: "12:00 AM"
+                        val date="$day-$month-$year $time"
+                        val notificationMessage = "Client: $clientEmail, \nStatus: $status \nDate: $date\n\n"
+                        notificationsList.add(notificationMessage)
+                        updateNotificationsTextView()
                     }
                 }
             }
@@ -114,25 +134,6 @@ class ProviderNotification : AppCompatActivity() {
                 Toast.makeText(this@ProviderNotification, "Error fetching client status: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
-    }
-    // Parse date and time into a timestamp in milliseconds
-    private fun parseDateTimeToMillis(date: String, time: String): Long? {
-        return try {
-            val dateParts = date.split("-").map { it.toInt() }
-            val timeParts = time.split(":").map { it.toInt() }
-
-            Calendar.getInstance().apply {
-                set(Calendar.YEAR, dateParts[0])
-                set(Calendar.MONTH, dateParts[1] - 1) // Month is 0-based
-                set(Calendar.DAY_OF_MONTH, dateParts[2])
-                set(Calendar.HOUR_OF_DAY, timeParts[0])
-                set(Calendar.MINUTE, timeParts[1])
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
-        } catch (e: Exception) {
-            null
-        }
     }
     // Update the TextView with the list of notifications
     private fun updateNotificationsTextView() {

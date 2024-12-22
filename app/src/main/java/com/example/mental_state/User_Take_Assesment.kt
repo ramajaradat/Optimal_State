@@ -73,16 +73,19 @@ class User_Take_Assesment : AppCompatActivity() {
 
 
         val statuses = mutableListOf<String>()
+        if(redCheckNum>= 2 || blueCheckNum>= 2||goldCheckNum>= 2||whiteCheckNum>= 2 ) {
+            if (redCheckNum >= 2) statuses.add("Red")
+            if (blueCheckNum >= 2) statuses.add("Blue")
+            if (goldCheckNum >= 2) statuses.add("Gold")
+            if (whiteCheckNum >= 2) statuses.add("White")
+        }
 
-        if (redCheckNum >= 2) statuses.add("Red")
-        if (blueCheckNum >= 2) statuses.add("Blue")
-        if (goldCheckNum >= 2) statuses.add("Gold")
-        if (whiteCheckNum >= 2) statuses.add("White")
-
-         if (redCheckNum ==1) statuses.add("Red")
-         if (blueCheckNum==1) statuses.add("Blue")
-         if (goldCheckNum ==1) statuses.add("Gold")
-         if (whiteCheckNum ==1) statuses.add("White")
+        else {
+            if (redCheckNum == 1) statuses.add("Red")
+            if (blueCheckNum == 1) statuses.add("Blue")
+            if (goldCheckNum == 1) statuses.add("Gold")
+            if (whiteCheckNum == 1) statuses.add("White")
+        }
 
 
         val status = statuses.joinToString(", ")

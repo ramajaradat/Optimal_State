@@ -103,7 +103,7 @@ class UserNotification : AppCompatActivity() {
                 val timeDifference = currentTime.time - lastTime.time
 
                 if (timeDifference > 24 * 60 * 60 * 1000) {
-                    tvNotifications.text = "24 hours have passed since your last status update."
+                    tvNotifications.text = "24 hours have passed since your last status update, Please take your assessment now ."
                 } else {
                     tvNotifications.text = "Your status is up to date: $status"
                 }
