@@ -1,6 +1,6 @@
-Optimal State of Living
+# Optimal State of Living
 
-Overview
+## Overview
 
 Optimal State of Living is an innovative application designed to help users monitor and improve their state of mind. The project includes both an Android application and a client website, providing users with tools to track their emotional states, access mental health exercises and techniques, and make lifestyle improvements.
 
