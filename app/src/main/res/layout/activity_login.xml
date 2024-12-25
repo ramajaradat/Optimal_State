@@ -47,7 +47,7 @@
 
     <Button
         android:id="@+id/userlogin"
-        android:layout_width="104dp"
+        android:layout_width="134dp"
         android:layout_height="63dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="200dp"
@@ -60,7 +60,7 @@
 
     <Button
         android:id="@+id/usersignup"
-        android:layout_width="104dp"
+        android:layout_width="134dp"
         android:layout_height="63dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="64dp"

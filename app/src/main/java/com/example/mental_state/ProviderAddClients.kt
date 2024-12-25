@@ -59,6 +59,7 @@ class ProviderAddClients : AppCompatActivity() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (!snapshot.exists()) {
                             Toast.makeText(this@ProviderAddClients, "Email does not exist. Please try again.", Toast.LENGTH_SHORT).show()
+                            ClientNameShow.text = null
                         } else {
                             val firebaseProvider = mFirebaseAuth.currentUser
                             val providerEmail = firebaseProvider?.email.toString()
@@ -67,10 +68,14 @@ class ProviderAddClients : AppCompatActivity() {
                             checkIfUserIsProvider(email) { isProvider ->
                                 if (isProvider) {
                                     Toast.makeText(this@ProviderAddClients, "Client is  provider You cant add it.", Toast.LENGTH_SHORT).show()
+                                    ClientNameShow.text = null
+
                                 } else {
                                     checkIfClientAlreadyAdded( email) { clientAlreadyAdded ->
                                         if (clientAlreadyAdded) {
                                             Toast.makeText(this@ProviderAddClients, "Client is already added.", Toast.LENGTH_SHORT).show()
+                                            ClientNameShow.text = null
+
                                         } else {
                                             showClientName(formattedProviderEmail, email)
 

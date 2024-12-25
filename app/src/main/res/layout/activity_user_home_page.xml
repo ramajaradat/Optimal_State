@@ -13,7 +13,7 @@
 
     <Button
         android:id="@+id/ExersisesButton"
-        android:layout_width="260dp"
+        android:layout_width="310dp"
         android:layout_height="64dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#1E4F80"
@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/viewHistoryButton"
-        android:layout_width="260dp"
+        android:layout_width="310dp"
         android:layout_height="64dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#1E4F80"
@@ -41,7 +41,7 @@
 
     <Button
         android:id="@+id/userSettingsButton"
-        android:layout_width="260dp"
+        android:layout_width="310dp"
         android:layout_height="64dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#1E4F80"
@@ -55,7 +55,7 @@
 
     <Button
         android:id="@+id/takeAssesmentButton"
-        android:layout_width="260dp"
+        android:layout_width="310dp"
         android:layout_height="64dp"
         android:layout_marginTop="31dp"
         android:backgroundTint="#1E4F80"
@@ -69,7 +69,7 @@
 
     <TextView
         android:id="@+id/userWelcomeShow"
-        android:layout_width="298dp"
+        android:layout_width="310dp"
         android:layout_height="71dp"
         android:layout_marginTop="21dp"
         android:text="Welcom &quot;User&quot;"
