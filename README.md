@@ -66,3 +66,26 @@ Users can have multiple function can do it like take assessment, current exercis
 Users can view their activity and mood tracking history in the User History section.
 
 ![User History](images/userHistory.png)
+
+
+
+### Provider HomePage
+also provider can do multiple function
+
+![User HokePage](images/roviderHomePage.png)
+
+
+### Provider Delete Client
+Providers can delete clients what are added already to their dataset when there need
+
+![User HokePage](images/provider_remove_client.png)
+
+
+
+### Provider View Cliet
+Where providers can view their clients history like client state and the date of it
+
+![User History](images/Provider view client.png)
+
+
+
