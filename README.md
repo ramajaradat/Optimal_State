@@ -46,3 +46,23 @@ Modern web technologies for the client website.
 
 Firebase Realtime Database and Firestore for data management.
 
+## Some Application Pages example
+
+### Login Page
+The login page allows users to securely sign in to their accounts.
+
+![Login Page](images/Userhomepage.png)
+
+
+
+### User HomePage
+Users can have multiple function can do it like take assessment, current exercise,etc.
+
+![User HokePage](images/Userhomepage.png)
+
+
+
+### User History
+Users can view their activity and mood tracking history in the User History section.
+
+![User History](images/userHistory.png)
