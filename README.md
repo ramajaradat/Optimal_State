@@ -51,7 +51,7 @@ Firebase Realtime Database and Firestore for data management.
 ### Login Page
 The login page allows users to securely sign in to their accounts.
 
-![Login Page](images/Userhomepage.png)
+![Login Page](images/login.png)
 
 
 
@@ -85,7 +85,7 @@ Providers can delete clients what are added already to their dataset when there 
 ### Provider View Cliet
 Where providers can view their clients history like client state and the date of it
 
-![Provider View Client](images/Provider view client.png).
+![Provider View Client](images/Provider_view_client.png).
 
 
 
