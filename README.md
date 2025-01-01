@@ -64,4 +64,5 @@ Users can have multiple function can do it like take assessment, current exercis
 
 ### User History
 Users can view their activity and mood tracking history in the User History section.
+
 ![User History](images/userHistory.png)
